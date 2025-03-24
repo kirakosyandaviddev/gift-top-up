@@ -1,35 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 import WebApp from '@twa-dev/sdk'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+     <div className="container">
+      {/* Title */}
+      <h1 className="title">
+        Welcome to <br />
+        <span className="gradient-text">Gifts Games</span>
+      </h1>
+
+      {/* Terms & Conditions */}
+      <div className="terms">
+        <span>
+          I accept the <a href="#" className="terms-link">Terms of Service</a>
+        </span>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        {/* Here we add our button with alert callback */}
-        <div className="card">
-          <button onClick={() => WebApp.showAlert(`Hello World! Current count is ${count}`)}>
-              Show Alert
-          </button>
-        </div>
-      </div>
+
+      {/* Connect Wallet Button */}
+      <button className="connect-wallet" onClick={() => WebApp.showAlert(`Connected`)}>Connect Wallet</button>
+    </div>
     </>
   )
 }
