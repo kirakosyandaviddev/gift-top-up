@@ -7,18 +7,23 @@ import {NotFoundPage} from "../pages/NotFoundPage/NotFoundPage";
 
 import {Layout} from "../components/Layout";
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        { index: true, element: <WelcomePage /> },
+        { path: 'main', element: <HomePage /> },
+        { path: 'roulette', element: <RoulettePage /> },
+      ],
+    },
+    { path: "*", element: <NotFoundPage /> },
+  ],
   {
-    path: "/",
-    element: <Layout />,
-    children: [
-      { index: true, element: <WelcomePage /> },
-      { path: 'main', element: <HomePage /> },
-      { path: 'roulette', element: <RoulettePage /> },
-    ],
-  },
-  { path: "*", element: <NotFoundPage /> },
-]);
+    basename: import.meta.env.BASE_URL,
+  }
+);
 
 export const Router = () => {
   return <RouterProvider router={router} />;
