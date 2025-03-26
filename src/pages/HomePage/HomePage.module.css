@@ -5,54 +5,63 @@
   gap: 10px;
 }
 
-.card-wrapper {
+.card {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 20px;
   border-radius: 24px;
   background-color: #272727;
+  cursor: pointer;
 }
 
-.card-info {
+.info {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.card-title {
+.title {
   font-size: 17px;
   font-weight: 600;
   line-height: 12px;
   opacity: 0.5;
 }
 
-.card-body {
+.body {
   display: flex;
   align-items: flex-end;
   gap: 8px;
 }
 
-.card-body-text {
+.body-text {
   line-height: 34px;
   font-size: 42px;
   font-weight: 800;
   color: #ffffff;
 }
 
-
 .second-card {
   height: 216px;
   border-radius: 24px;
   padding: 20px;
-  background: rgb(0,176,245);
-  background: linear-gradient(90deg, rgba(0,176,245,1) 0%, rgba(113,64,204,1) 50%, rgba(252,16,144,1) 100%);  
+  background: rgb(0, 176, 245);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 176, 245, 1) 0%,
+    rgba(113, 64, 204, 1) 50%,
+    rgba(252, 16, 144, 1) 100%
+  );
 }
 
 .third-card {
   height: 216px;
   border-radius: 24px;
   padding: 20px;
-  background: rgb(255,0,162);
-background: linear-gradient(90deg, rgba(255,0,162,1) 0%, rgba(242,96,61,1) 80%);
+  background: rgb(255, 0, 162);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 0, 162, 1) 0%,
+    rgba(242, 96, 61, 1) 80%
+  );
 }

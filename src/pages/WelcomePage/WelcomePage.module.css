@@ -1,0 +1,55 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: black;
+  padding: 0 16px 40px;
+}
+
+.title-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  color: #ffffff;
+  font-size: 28px;
+  line-height: 28px;
+  font-weight: 800;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.gradient {
+  position: absolute;
+}
+
+.connect-wallet {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  font-size: 18px;
+  line-height: 18px;
+  font-weight: 600;
+  padding: 16px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  color: #ffffff;
+  background: rgb(0, 176, 245);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 176, 245, 1) 0%,
+    rgba(113, 64, 204, 1) 25%,
+    rgba(255, 0, 162, 1) 50%,
+    rgba(227, 94, 62, 1) 100%
+  );
+}
+
+.connect-wallet:hover {
+  opacity: 0.9;
+}
