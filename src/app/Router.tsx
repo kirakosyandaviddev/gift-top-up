@@ -21,7 +21,7 @@ const router = createBrowserRouter(
     { path: "*", element: <NotFoundPage /> },
   ],
   {
-    basename: '/',
+    basename: '/gift-top-up',
 });
 
 export const Router = () => {
