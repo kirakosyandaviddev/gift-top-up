@@ -1,3 +1,4 @@
+import {FC} from 'react';
 import {Link} from 'react-router-dom';
 
 import {ROUTES} from '../../../../consts/routes';
@@ -5,13 +6,17 @@ import {ArrowRight} from '../../../../components/icons/ArrowRight';
 
 import s from './BalanceCard.module.css';
 
-export const BalanceCard = () => {
+type PropsType = {
+  balance: number;
+};
+
+export const BalanceCard: FC<PropsType> = ({balance}) => {
   return (
     <Link to={ROUTES.ROULETTE} className={s.card}>
       <div className={s.info}>
         <div className={s.title}>Your Balance</div>
         <div className={s.body}>
-          <span className={s.bodyText}>189</span>
+          <span className={s.bodyText}>{balance}</span>
 
           <svg
             width="35"

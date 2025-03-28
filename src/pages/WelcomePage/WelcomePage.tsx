@@ -1,7 +1,9 @@
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import classNames from 'classnames';
+
 import {useGetConfigQuery} from '../../hooks/data/queries/useGetConfigQuery';
+import {useWebApp} from '../../hooks/useWebApp';
 import {ROUTES} from '../../consts/routes';
 
 import s from './WelcomePage.module.css';
@@ -10,15 +12,15 @@ import {Checkbox} from './components/Checkbox/Checkbox';
 export const WelcomePage = () => {
   const navigate = useNavigate();
   const {data} = useGetConfigQuery();
+  const WebApp = useWebApp();
+
   const [termsAccepted, setTermsAccepted] = useState(false);
   console.log('data------------------', data);
+  console.log('data------------------', WebApp?.version);
 
-  // TODO: improve
   useEffect(() => {
-    // @ts-ignore
-    if (!window.Telegram.WebApp?.isFullscreen) {
-      // @ts-ignore
-      window.Telegram.WebApp?.requestFullscreen();
+    if (!WebApp?.isFullscreen) {
+      WebApp?.requestFullscreen();
     }
   }, []);
 
