@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.69.0",
-    "@twa-dev/sdk": "^8.0.2",
     "@vitejs/plugin-basic-ssl": "^2.0.0",
     "axios": "^1.8.4",
     "classnames": "^2.5.1",

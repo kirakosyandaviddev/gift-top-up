@@ -1,7 +1,6 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import classNames from 'classnames';
-
 import {useGetConfigQuery} from '../../hooks/data/queries/useGetConfigQuery';
 import {ROUTES} from '../../consts/routes';
 
@@ -15,11 +14,13 @@ export const WelcomePage = () => {
   console.log('data------------------', data);
 
   // TODO: improve
-  // useEffect(() => {
-  //   if (!WebApp.isFullscreen) {
-  //     WebApp.requestFullscreen();
-  //   }
-  // }, []);
+  useEffect(() => {
+    // @ts-ignore
+    if (!window.Telegram.WebApp?.isFullscreen) {
+      // @ts-ignore
+      window.Telegram.WebApp?.requestFullscreen();
+    }
+  }, []);
 
   const handleConnectWallet = () => {
     navigate(ROUTES.HOME);
