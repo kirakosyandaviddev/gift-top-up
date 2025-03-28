@@ -1,7 +1,11 @@
+import s from './RoulettePage.module.css';
+
 export const RoulettePage = () => {
   return (
-    <div>
-      <h1>Roulette Page</h1>
+    <div className={s.wrapper}>
+      <div className={s.titleContainer}>
+        <h3 className={s.title}>Roulette</h3>
+      </div>
     </div>
   );
 };
