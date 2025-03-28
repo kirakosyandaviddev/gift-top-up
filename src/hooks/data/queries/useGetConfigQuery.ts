@@ -1,5 +1,4 @@
 import {useQuery} from '@tanstack/react-query';
-import WebApp from '@twa-dev/sdk';
 
 import {QUERY_KEYS} from '../../../consts/queryKeys';
 import {axiosClient} from '../../../libs/axiosClient';
@@ -12,7 +11,8 @@ export const useGetConfigQuery = () => {
       axiosClient({
         method: 'POST',
         url: ENDPOINTS.GET_CONFIG,
-        data: {initData: WebApp.initData},
+        // @ts-ignore
+        data: {initData: window.Telegram?.WebApp?.initData},
       }),
   });
 
