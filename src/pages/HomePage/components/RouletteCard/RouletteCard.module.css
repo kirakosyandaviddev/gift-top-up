@@ -1,0 +1,51 @@
+.card {
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+  height: 216px;
+  border-radius: 24px;
+  padding: 20px;
+  background: rgb(0, 176, 245);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 176, 245, 1) 0%,
+    rgba(113, 64, 204, 1) 50%,
+    rgba(252, 16, 144, 1) 100%
+  );
+}
+
+.roulette-card {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 14px;
+  width: 100%;
+}
+
+.body {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 4px;
+  flex: 1;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  font-weight: 800;
+  font-size: 28px;
+  line-height: 20px;
+  color: #ffffff;
+}
+
+.subtitle {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}

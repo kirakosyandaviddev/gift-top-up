@@ -34,10 +34,11 @@
 
 * {
   box-sizing: border-box;
+  margin-block: inherit;
+  margin: 0;
 }
 
 body {
-  margin: 0;
   font-family: 'SF Pro', system-ui, sans-serif;
 }
 
