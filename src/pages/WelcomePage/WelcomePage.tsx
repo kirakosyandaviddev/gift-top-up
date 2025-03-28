@@ -16,11 +16,11 @@ export const WelcomePage = () => {
   console.log('data------------------', data);
 
   // TODO: improve
-  useEffect(() => {
-    if (!WebApp.isFullscreen) {
-      WebApp.requestFullscreen();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!WebApp.isFullscreen) {
+  //     WebApp.requestFullscreen();
+  //   }
+  // }, []);
 
   const handleConnectWallet = () => {
     navigate(ROUTES.HOME);
