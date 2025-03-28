@@ -12,7 +12,7 @@ type PropsType = {
 
 export const BalanceCard: FC<PropsType> = ({balance}) => {
   return (
-    <Link to={ROUTES.ROULETTE} className={s.card}>
+    <Link to={ROUTES.BALANCE} className={s.card}>
       <div className={s.info}>
         <div className={s.title}>Your Balance</div>
         <div className={s.body}>

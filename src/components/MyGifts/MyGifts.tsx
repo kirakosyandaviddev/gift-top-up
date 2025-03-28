@@ -8,7 +8,7 @@ import s from './MyGifts.module.css';
 
 export const MyGifts = () => {
   return (
-    <Link to={ROUTES.ROULETTE} className={s.container}>
+    <Link to={ROUTES.GIFTS} className={s.container}>
       <div className={s.group}>
         <img src={bear} className={s.image} width={42} height={42} />
         <span className={s.text}>My Gifts</span>
