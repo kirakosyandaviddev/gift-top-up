@@ -3,10 +3,14 @@ import {RouletteCard} from './components/RouletteCard/RouletteCard';
 import {GiftboxesCard} from './components/GiftboxesCard/GiftboxesCard';
 import {MyGifts} from '../../components/MyGifts/MyGifts';
 import {useGetConfigQuery} from '../../hooks/data/queries/useGetConfigQuery';
+import {useWebApp} from '../../hooks/useWebApp';
 
 import s from './HomePage.module.css';
 
 export const HomePage = () => {
+  const WebApp = useWebApp();
+  WebApp.BackButton.hide();
+
   const {data} = useGetConfigQuery();
 
   return (

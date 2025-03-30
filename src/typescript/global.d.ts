@@ -21,7 +21,13 @@ declare module 'telegram-webapp' {
     backgroundColor: string;
     isClosingConfirmationEnabled: boolean;
     isFullscreen: boolean;
-
+    BackButton: {
+      isVisible: boolean;
+      onClick(callback): void;
+      offClick(callback): void;
+      show(): void;
+      hide(): void;
+    };
     requestFullscreen(): void;
     expand(): void;
     close(): void;

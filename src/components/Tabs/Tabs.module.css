@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.list {
+  display: flex;
+  width: 100%;
+  border-radius: 25px;
+  background-color: #272727;
+}
+
+.button {
+  padding: 19px;
+  flex: 1;
+  border: none;
+  cursor: pointer;
+  background-color: #272727;
+  color: rgba(255, 255, 255, 0.5);
+
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 12px;
+  border-radius: 25px;
+}
+
+.button.active {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.panel {
+  width: 100%;
+  margin-top: 10px;
+}
