@@ -6,10 +6,11 @@ import {ENDPOINTS} from '../../../consts/endpoints';
 import {UserType} from '../../../etities/types/UserType';
 import {ResponseType} from '../../../etities/types/ResponseType';
 import {useWebApp} from '../../../hooks/useWebApp';
+import {GiftType} from '../../../etities/types/GiftType';
 
 type GetConfigResponseType = {
   user: UserType;
-  nfts: any[];
+  nfts: GiftType[];
   address: string;
   play: number;
 };

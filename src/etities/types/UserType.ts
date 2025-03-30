@@ -1,3 +1,5 @@
+import {GiftType} from './GiftType';
+
 export type UserType = {
   id: string;
   telegramId: number;
@@ -10,7 +12,7 @@ export type UserType = {
   balance: number;
   historyDeposit: any[];
   isWeb: boolean;
-  gifts: any[];
+  gifts: GiftType[];
   isMember: boolean;
   createdAt: string;
   updatedAt: string;
