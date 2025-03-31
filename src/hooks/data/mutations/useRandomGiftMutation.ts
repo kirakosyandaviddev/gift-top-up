@@ -27,7 +27,7 @@ export const useRandomGiftMutation = () => {
         url: ENDPOINTS.RANDOM_GIFT,
         data: {initData: WebApp?.initData},
       }),
-    onSuccess: (d) => {
+    onSuccess: () => {
       // TODO: improve optimistic updates
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.GET_CONFIG]});
     },

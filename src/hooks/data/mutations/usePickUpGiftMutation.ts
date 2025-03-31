@@ -23,7 +23,7 @@ export const usePickUpGiftMutation = () => {
         url: ENDPOINTS.PICK_UP_GIFT,
         data: {initData: WebApp?.initData, id},
       }),
-    onSuccess: (d) => {
+    onSuccess: () => {
       // TODO: improve optimistic updates
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.GET_CONFIG]});
     },

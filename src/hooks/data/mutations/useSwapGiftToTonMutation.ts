@@ -23,7 +23,7 @@ export const useSwapGiftToTonMutation = () => {
         url: ENDPOINTS.SWAP_GIFT_TO_TON,
         data: {initData: WebApp?.initData, id},
       }),
-    onSuccess: (d) => {
+    onSuccess: () => {
       // TODO: improve optimistic updates
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.GET_CONFIG]});
     },
