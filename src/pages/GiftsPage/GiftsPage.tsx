@@ -1,21 +1,32 @@
-import {useNavigate} from 'react-router-dom';
 import {GiftCard} from '../../components/GiftCard/GiftCard';
 import {Tabs} from '../../components/Tabs/Tabs';
+import {usePickUpGiftMutation} from '../../hooks/data/mutations/usePickUpGiftMutation';
+import {useSwapGiftToTonMutation} from '../../hooks/data/mutations/useSwapGiftToTonMutation';
 import {useGetConfigQuery} from '../../hooks/data/queries/useGetConfigQuery';
-import {useWebApp} from '../../hooks/useWebApp';
+import {useBackButton} from '../../hooks/data/useBackButton';
 
 import s from './GiftsPage.module.css';
 
 export const GiftsPage = () => {
-  // TODO: Handle this logic and make it reusable
-  const navigate = useNavigate();
-  const WebApp = useWebApp();
-  WebApp.BackButton.show();
-  WebApp.BackButton.onClick(() => {
-    navigate(-1);
-  });
-
+  useBackButton();
   const {data} = useGetConfigQuery();
+  const {mutate: pickUpGift, isPending: pickUpGiftPending} =
+    usePickUpGiftMutation();
+  const {mutate: swapGiftToTon, isPending: swapGiftToTonPending} =
+    useSwapGiftToTonMutation();
+
+  const botGifts =
+    data?.data?.user?.gifts?.filter(({status}) =>
+      ['awaiting', 'swap'].includes(status),
+    ) || [];
+
+  const profileGifts = data?.data?.nfts || [];
+
+  const emptyStateMarkup = (
+    <div className={s.emptyContainer}>
+      <p className={s.emptyText}>No gifts yet...</p>
+    </div>
+  );
 
   return (
     <div className={s.wrapper}>
@@ -30,15 +41,53 @@ export const GiftsPage = () => {
         </Tabs.List>
 
         <Tabs.Panel tab="bot">
-          <div className={s.container}>
-            {data?.data?.user?.gifts?.map((gift) => (
-              <GiftCard key={gift.id} gift={gift} />
-            ))}
-          </div>
+          {!!botGifts.length ? (
+            <div className={s.container}>
+              {botGifts.map((gift) => (
+                <GiftCard
+                  key={gift.id}
+                  gift={gift}
+                  onAdd={
+                    gift.status === 'swap'
+                      ? undefined
+                      : (id) => {
+                          if (pickUpGiftPending) return;
+                          pickUpGift(id);
+                        }
+                  }
+                  onSell={
+                    gift.status === 'swap'
+                      ? undefined
+                      : (id) => {
+                          if (swapGiftToTonPending) return;
+                          swapGiftToTon(id);
+                        }
+                  }
+                />
+              ))}
+            </div>
+          ) : (
+            emptyStateMarkup
+          )}
         </Tabs.Panel>
 
         <Tabs.Panel tab="profile">
-          <p>Content for myProfile</p>
+          {!!profileGifts.length ? (
+            <div className={s.container}>
+              {data?.data?.nfts?.map((gift) => (
+                <GiftCard
+                  key={gift.id}
+                  gift={gift}
+                  onSell={(id) => {
+                    if (swapGiftToTonPending) return;
+                    swapGiftToTon(id);
+                  }}
+                />
+              ))}
+            </div>
+          ) : (
+            emptyStateMarkup
+          )}
         </Tabs.Panel>
       </Tabs>
     </div>

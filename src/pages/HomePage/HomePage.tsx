@@ -6,12 +6,18 @@ import {useGetConfigQuery} from '../../hooks/data/queries/useGetConfigQuery';
 import {useWebApp} from '../../hooks/useWebApp';
 
 import s from './HomePage.module.css';
+import {useEffect} from 'react';
 
 export const HomePage = () => {
+  const {data} = useGetConfigQuery();
   const WebApp = useWebApp();
   WebApp.BackButton.hide();
 
-  const {data} = useGetConfigQuery();
+  useEffect(() => {
+    if (WebApp?.BackButton?.isVisible) {
+      WebApp?.BackButton.hide();
+    }
+  }, []);
 
   return (
     <div className={s.wrapper}>

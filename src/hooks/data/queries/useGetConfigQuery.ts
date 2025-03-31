@@ -3,14 +3,14 @@ import {useQuery} from '@tanstack/react-query';
 import {QUERY_KEYS} from '../../../consts/queryKeys';
 import {axiosClient} from '../../../libs/axiosClient';
 import {ENDPOINTS} from '../../../consts/endpoints';
-import {UserType} from '../../../etities/types/UserType';
+import {User} from '../../../etities/types/User';
 import {ResponseType} from '../../../etities/types/ResponseType';
 import {useWebApp} from '../../../hooks/useWebApp';
-import {GiftType} from '../../../etities/types/GiftType';
+import {Gift} from '../../../etities/types/Gift';
 
-type GetConfigResponseType = {
-  user: UserType;
-  nfts: GiftType[];
+export type GetConfigResponseType = {
+  user: User;
+  nfts: Gift[];
   address: string;
   play: number;
 };
@@ -26,6 +26,7 @@ export const useGetConfigQuery = () => {
         url: ENDPOINTS.GET_CONFIG,
         data: {initData: WebApp?.initData},
       }),
+    staleTime: 3 * 60 * 1000,
   });
 
   return {

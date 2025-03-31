@@ -1,6 +1,6 @@
-export type GiftStatusType = 'sent' | 'swap' | 'awaiting';
+export type GiftStatus = 'sent' | 'swap' | 'awaiting';
 
-export type BackdropType = {
+export type Backdrop = {
   name: string;
   rarityPermille: number;
   centerColor: number;
@@ -9,27 +9,29 @@ export type BackdropType = {
   textColor: number;
 };
 
-export type PatternType = {
+export type Pattern = {
   name: string;
   rarityPermille: number;
 };
 
-export type ModelType = {
+export type Model = {
   name: string;
   rarityPermille: number;
+  photoUrl: string;
 };
 
-export type GiftType = {
+export type Gift = {
   id: string;
   num: number;
   slug: string;
   ton: number;
   title: string;
-  model: ModelType;
-  pattern: PatternType;
-  backdrop: BackdropType;
+  model: Model;
+  pattern: Pattern;
+  backdrop: Backdrop;
+  photoUrl: string;
   historyTon: any[];
-  status: GiftStatusType;
+  status: GiftStatus;
   createdAt: Date;
   updatedAt: Date;
 };
