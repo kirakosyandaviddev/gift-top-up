@@ -11,7 +11,7 @@ type PropsType = {
   transaction: Transaction;
 };
 
-export const TransactionCard: FC<PropsType> = ({transaction}) => {
+export const TransactionCard: FC<PropsType> = () => {
   return (
     <div className={s.container}>
       <img className={s.img} src="public/img/incoming.png" />
