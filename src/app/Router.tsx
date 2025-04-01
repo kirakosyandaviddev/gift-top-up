@@ -6,6 +6,7 @@ import {RoulettePage} from '../pages/RoulettePage/RoulettePage';
 import {GiftsPage} from '../pages/GiftsPage/GiftsPage';
 import {BalancePage} from '../pages/BalancePage/BalancePage';
 import {NotFoundPage} from '../pages/NotFoundPage/NotFoundPage';
+import {GiftTopUpPage} from '../pages/GiftTopUpPage/GiftTopUpPage';
 
 import {Layout} from '../components/Layout';
 
@@ -20,6 +21,7 @@ const router = createBrowserRouter(
         {path: 'roulette', element: <RoulettePage />},
         {path: 'gifts', element: <GiftsPage />},
         {path: 'balance', element: <BalancePage />},
+        {path: 'gift-top-up', element: <GiftTopUpPage />},
       ],
     },
     {path: '*', element: <NotFoundPage />},

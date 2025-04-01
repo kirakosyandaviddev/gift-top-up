@@ -2,13 +2,13 @@ export const ArrowRight = () => {
   return (
     <svg
       width="22"
-      height="23"
-      viewBox="0 0 22 23"
+      height="22"
+      viewBox="0 0 22 22"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M8 18.5L15 11.5L8 4.5"
+        d="M8 18L15 11L8 4"
         stroke="white"
         strokeWidth="3"
         strokeLinecap="round"

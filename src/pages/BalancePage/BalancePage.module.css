@@ -3,7 +3,6 @@
   padding: 114px 16px 38px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
   background: linear-gradient(180deg, #000000 0%, #212121 50%, #000000 90%);
 }
 

@@ -1,0 +1,50 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 28px;
+  margin-bottom: 16px;
+}
+
+.text {
+  text-align: center;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn {
+  height: 50px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  font-size: 17px;
+  line-height: 12px;
+  font-weight: 600;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.ton {
+  background: #00b0f5;
+  background: linear-gradient(90deg, #00b0f5 0%, #7140cc 50%);
+}
+
+.gifts {
+  background: #7140cc;
+  background: linear-gradient(90deg, #7140cc 0%, #ff00a2 50%);
+}

@@ -4,4 +4,5 @@ export const ROUTES = {
   ROULETTE: '/roulette',
   GIFTS: '/gifts',
   BALANCE: '/balance',
+  GIFT_TOP_UP: '/gift-top-up',
 };

@@ -14,12 +14,15 @@
   "dependencies": {
     "@tanstack/react-query": "^5.69.0",
     "@vitejs/plugin-basic-ssl": "^2.0.0",
+    "add": "^2.0.6",
     "axios": "^1.8.4",
     "classnames": "^2.5.1",
+    "dayjs": "^1.11.13",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.4.0",
-    "remove": "^0.1.5"
+    "remove": "^0.1.5",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@eslint/js": "^9.23.0",
