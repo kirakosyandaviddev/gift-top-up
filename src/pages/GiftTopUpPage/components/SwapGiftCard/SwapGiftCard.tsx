@@ -10,7 +10,7 @@ type PropsType = {
   gift: Gift;
 };
 
-export const SwapGiftCard: FC<PropsType> = ({gift}) => {
+export const SwapGiftCard: FC<PropsType> = () => {
   return (
     <div className={s.container}>
       <img className={s.img} src="public/img/cap.png" />
