@@ -35,7 +35,7 @@ export const GiftCard: FC<PropsType> = ({
         <div className={s.buttonList}>
           {onAdd && (
             <button className={s.button} onClick={() => onAdd(gift.id)}>
-              Add to Profile
+              <span>Add to Profile</span>
             </button>
           )}
           {onSell && (
@@ -45,12 +45,12 @@ export const GiftCard: FC<PropsType> = ({
                 onSell(gift.id);
               }}
             >
-              Sell for {gift.ton} <TonIcon12 />
+              <span>Sell for {gift.ton}</span> <TonIcon12 />
             </button>
           )}
           {showPrice && (
             <button className={s.button}>
-              {gift.ton} <TonIcon12 />
+              <span>{gift.ton}</span> <TonIcon12 />
             </button>
           )}
         </div>

@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 73px 0 45px;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 42px;
+  line-height: 30px;
+  font-weight: 800;
+}
+
+.wallet-button {
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 25px;
+  color: #ffffff;
+  background-color: #272727;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 12px;
+}
+
+.wallet-button:hover {
+  opacity: 0.9;
+}
