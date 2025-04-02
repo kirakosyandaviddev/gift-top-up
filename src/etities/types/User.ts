@@ -1,4 +1,5 @@
 import {Gift} from './Gift';
+import {Transaction} from './Transaction';
 
 export type User = {
   id: string;
@@ -11,6 +12,7 @@ export type User = {
   photoUrl: string;
   balance: number;
   historyDeposit: any[];
+  historyTransaction: Transaction[];
   isWeb: boolean;
   gifts: Gift[];
   isMember: boolean;

@@ -1,3 +1,5 @@
+import {useEffect} from 'react';
+
 import {BalanceCard} from './components/BalanceCard/BalanceCard';
 import {RouletteCard} from './components/RouletteCard/RouletteCard';
 import {GiftboxesCard} from './components/GiftboxesCard/GiftboxesCard';
@@ -6,7 +8,6 @@ import {useGetConfigQuery} from '../../hooks/data/queries/useGetConfigQuery';
 import {useWebApp} from '../../hooks/useWebApp';
 
 import s from './HomePage.module.css';
-import {useEffect} from 'react';
 
 export const HomePage = () => {
   const {data} = useGetConfigQuery();
@@ -25,9 +26,17 @@ export const HomePage = () => {
         <h3 className={s.title}>Gifts Games</h3>
       </div>
 
-      <BalanceCard balance={data?.data?.user?.balance || 0} />
-      <RouletteCard />
-      <GiftboxesCard />
+      <div className={s.list}>
+        <div className={s.item}>
+          <BalanceCard balance={data?.data?.user?.balance} />
+        </div>
+        <div className={s.item}>
+          <RouletteCard />
+        </div>
+        <div className={s.item}>
+          <GiftboxesCard />
+        </div>
+      </div>
 
       <MyGifts />
     </div>

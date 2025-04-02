@@ -1,0 +1,32 @@
+.container {
+  background-color: #272727;
+  border-radius: 25px;
+  padding: 15px 28px 15px 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon {
+  color: #ffcc00;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.title {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 12px;
+  color: #ffffff;
+}
+
+.text {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 15px;
+  color: #ffffff;
+}

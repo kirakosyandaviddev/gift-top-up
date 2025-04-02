@@ -2,30 +2,28 @@ import {FC} from 'react';
 
 import {TonIcon16} from '../../../../components/icons/TonIcon16';
 import {Gift} from '../../../../etities/types/Gift';
+import {ArrowRight22} from '../../../../components/icons/ArrowRight22';
 
 import s from './SwapGiftCard.module.css';
-import {ArrowRight22} from '../../../../components/icons/ArrowRight22';
 
 type PropsType = {
   gift: Gift;
 };
 
-export const SwapGiftCard: FC<PropsType> = () => {
+export const SwapGiftCard: FC<PropsType> = ({gift}) => {
   return (
     <div className={s.container}>
-      <img className={s.img} src="public/img/cap.png" />
+      <img className={s.img} src={gift.model.photoUrl} />
 
-      <div className={s.wrapper}>
-        <div className={s.titleContainer}>
-          <p className={s.title}>Durov’s Cap</p>
-        </div>
+      <div className={s.grid}>
+        <div className={s.title}>{gift.title}</div>
 
         <div className={s.arrowContainer}>
           <ArrowRight22 />
         </div>
 
         <p className={s.price}>
-          <span>31</span> <TonIcon16 />
+          <span>{gift.ton}</span> <TonIcon16 />
         </p>
       </div>
     </div>

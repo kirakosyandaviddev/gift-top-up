@@ -1,25 +1,21 @@
+import {FC} from 'react';
 import {Tabs} from '../../../../components/Tabs/Tabs';
+import {Transaction} from '../../../../etities/types/Transaction';
 import {TransactionCard} from '../TransactionCard/TransactionCard';
 
 import s from './Transactions.module.css';
 
-export type Transaction = {
-  id: string;
+type PropsType = {
+  transactions?: Transaction[];
 };
 
-const deposits: Transaction[] = [
-  {id: '1'},
-  {id: '2'},
-  {id: '3'},
-  {id: '4'},
-  {id: '5'},
-];
+export const Transactions: FC<PropsType> = ({transactions = []}) => {
+  const incoming: Transaction[] =
+    transactions.filter((t) => t.type === 'deposit_gift') || [];
 
-const incoming: Transaction[] = [];
+  const upcoming: Transaction[] =
+    transactions.filter((t) => t.type === 'spin') || [];
 
-const upcoming: Transaction[] = [];
-
-export const Transactions = () => {
   const emptyStateMarkup = (
     <div className={s.emptyContainer}>
       <p className={s.emptyText}>No transactions yet...</p>
@@ -35,10 +31,13 @@ export const Transactions = () => {
       </Tabs.List>
 
       <Tabs.Panel tab="all">
-        {!!deposits.length ? (
+        {!!transactions.length ? (
           <div className={s.container}>
-            {deposits.map((deposit) => (
-              <TransactionCard key={deposit.id} transaction={deposit} />
+            {transactions.map((transaction, i) => (
+              <TransactionCard
+                key={`transaction.id-${i}`}
+                transaction={transaction}
+              />
             ))}
           </div>
         ) : (
@@ -49,8 +48,11 @@ export const Transactions = () => {
       <Tabs.Panel tab="incoming">
         {!!incoming.length ? (
           <div className={s.container}>
-            {incoming.map((deposit) => (
-              <TransactionCard key={deposit.id} transaction={deposit} />
+            {incoming.map((deposit, i) => (
+              <TransactionCard
+                key={`transaction.id-${i}`}
+                transaction={deposit}
+              />
             ))}
           </div>
         ) : (
@@ -61,8 +63,11 @@ export const Transactions = () => {
       <Tabs.Panel tab="outgoing">
         {!!upcoming.length ? (
           <div className={s.container}>
-            {upcoming.map((deposit) => (
-              <TransactionCard key={deposit.id} transaction={deposit} />
+            {upcoming.map((deposit, i) => (
+              <TransactionCard
+                key={`transaction.id-${i}`}
+                transaction={deposit}
+              />
             ))}
           </div>
         ) : (
