@@ -7,10 +7,6 @@ import {Transactions} from './components/Transactions/Transactions';
 
 import s from './BalancePage.module.css';
 
-export type Transaction = {
-  id: string;
-};
-
 export const BalancePage = () => {
   useBackButton();
   const {data} = useGetConfigQuery();
@@ -26,7 +22,7 @@ export const BalancePage = () => {
         address={data?.data?.address}
       />
       <TopUpWith />
-      <Transactions />
+      <Transactions transactions={data?.data?.user?.historyTransaction} />
     </div>
   );
 };

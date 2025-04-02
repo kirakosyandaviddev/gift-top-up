@@ -11,6 +11,7 @@ import {Gift} from '../../../etities/types/Gift';
 export type GetConfigResponseType = {
   user: User;
   nfts: Gift[];
+  prices: Gift[];
   address: string;
   play: number;
 };

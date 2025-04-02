@@ -3,7 +3,7 @@
   padding: 10px 15px 10px 10px;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
 }
 
 .img {
@@ -11,28 +11,22 @@
   height: 50px;
 }
 
-.wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.grid {
   width: 100%;
-}
-
-.title-container {
-  display: flex;
-  flex-direction: column;
-  gap: 13px;
+  display: grid;
+  grid-template-columns: 50% 1fr 1fr;
 }
 
 .title {
-  max-width: 102px;
   font-size: 17px;
   font-weight: 600;
-  line-height: 12px;
+  line-height: 17px;
   color: #ffffff;
 }
 
 .arrow-container {
+  display: flex;
+  justify-content: center;
   color: #ffffff;
 }
 
@@ -42,6 +36,7 @@
   line-height: 12px;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 4px;
   color: #ffffff;
 }

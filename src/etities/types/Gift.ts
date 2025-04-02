@@ -31,7 +31,7 @@ export type Gift = {
   backdrop: Backdrop;
   photoUrl: string;
   historyTon: any[];
-  status: GiftStatus;
+  status?: GiftStatus;
   createdAt: Date;
   updatedAt: Date;
 };

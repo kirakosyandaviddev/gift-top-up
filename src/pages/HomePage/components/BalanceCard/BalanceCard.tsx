@@ -7,10 +7,10 @@ import {ArrowRight} from '../../../../components/icons/ArrowRight';
 import s from './BalanceCard.module.css';
 
 type PropsType = {
-  balance: number;
+  balance?: number;
 };
 
-export const BalanceCard: FC<PropsType> = ({balance}) => {
+export const BalanceCard: FC<PropsType> = ({balance = 0}) => {
   return (
     <Link to={ROUTES.BALANCE} className={s.card}>
       <div className={s.info}>

@@ -1,23 +1,60 @@
-import {useGetConfigQuery} from '../../../../hooks/data/queries/useGetConfigQuery';
+import {FC, useMemo} from 'react';
+
 import {GiftCard} from '../../../../components/GiftCard/GiftCard';
 import {Tabs} from '../../../../components/Tabs/Tabs';
 import {Gift} from '../../../../etities/types/Gift';
+import {useWebApp} from '../../../../hooks/useWebApp';
+import {useSwapGiftToTonMutation} from '../../../../hooks/data/mutations/useSwapGiftToTonMutation';
 
-import s from './Gifts.module.css';
 import {SwapGiftCard} from '../SwapGiftCard/SwapGiftCard';
+import s from './Gifts.module.css';
 
-export const Gifts = () => {
-  const {data} = useGetConfigQuery();
+type PropsType = {
+  prices?: Gift[];
+  nfts?: Gift[];
+  gifts?: Gift[];
+};
 
-  const allGifts: Gift[] = [
-    {id: '1'},
-    {id: '2'},
-    {id: '3'},
-    {id: '4'},
-    {id: '5'},
-  ] as Gift[];
+export const Gifts: FC<PropsType> = ({prices = [], nfts = [], gifts = []}) => {
+  const WebApp = useWebApp();
+  const {mutate: swapGiftToTon} = useSwapGiftToTonMutation();
 
-  const profileGifts = data?.data?.user?.gifts || [];
+  const profileGifts = [
+    ...nfts,
+    ...gifts.filter((g) => g.status === 'awaiting'),
+  ];
+
+  const onPriceClick = (gift: Gift) => {
+    // When the Gift is from nfts
+    if (!gift.status) {
+      WebApp.openTelegramLink(`https://t.me/m/CtWO8BXgMzlk`);
+      return;
+    }
+
+    WebApp.showPopup(
+      {
+        buttons: [
+          {
+            id: '1',
+            text: 'Продать',
+            type: 'ok',
+          },
+          {
+            id: '0',
+            text: 'Отменить',
+            type: 'cancel',
+          },
+        ],
+        message: 'Мгновенная продажа',
+        title: 'Вы точно хотите продать?',
+      },
+      (id: string) => {
+        if (id === '1') {
+          swapGiftToTon(gift.id);
+        }
+      },
+    );
+  };
 
   const emptyStateMarkup = (
     <div className={s.emptyContainer}>
@@ -33,9 +70,9 @@ export const Gifts = () => {
       </Tabs.List>
 
       <Tabs.Panel tab="all">
-        {!!allGifts.length ? (
+        {!!prices.length ? (
           <div className={s.list}>
-            {allGifts.map((gift) => (
+            {prices.map((gift) => (
               <SwapGiftCard key={gift.id} gift={gift} />
             ))}
           </div>
@@ -48,7 +85,7 @@ export const Gifts = () => {
         {!!profileGifts.length ? (
           <div className={s.container}>
             {profileGifts.map((gift) => (
-              <GiftCard key={gift.id} gift={gift} showPrice />
+              <GiftCard key={gift.id} gift={gift} onPrice={onPriceClick} />
             ))}
           </div>
         ) : (

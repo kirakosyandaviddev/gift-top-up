@@ -2,30 +2,45 @@ import {FC} from 'react';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
 
-import {Transaction} from '../../BalancePage';
 import {TonIcon16} from '../../../../components/icons/TonIcon16';
 
 import s from './TransactionCard.module.css';
+import {Transaction} from '../../../../etities/types/Transaction';
 
 type PropsType = {
   transaction: Transaction;
 };
 
-export const TransactionCard: FC<PropsType> = () => {
+const TITLES = {
+  spin: 'One Spin',
+  deposit_ton: 'D Ton',
+  deposit_gift: 'D Gift',
+  deposit_partner: 'D Partner',
+};
+
+export const TransactionCard: FC<PropsType> = ({transaction}) => {
+  const {type, value, createdAt, payload} = transaction;
+
+  console.log('=---------------', transaction);
   return (
     <div className={s.container}>
-      <img className={s.img} src="public/img/incoming.png" />
+      {type !== 'spin' && (
+        <img className={s.img} src="public/img/incoming.png" />
+      )}
+      {type === 'spin' && <img className={s.img} src={payload.photoUrl} />}
 
       <div className={s.textContainer}>
-        <p className={s.title}>One Spin</p>
-        <p className={s.text}>Gift Name #0</p>
+        <p className={s.title}>{TITLES[type]}</p>
+        {type === 'spin' && (
+          <p className={s.text}>{`${payload.title || ''} #${payload.num}`}</p>
+        )}
       </div>
 
       <div className={s.detailsContainer}>
-        <p className={classNames(s.price, s.success)}>
-          <span>+31</span> <TonIcon16 />
+        <p className={classNames(s.price)}>
+          <span>-{value}</span> <TonIcon16 />
         </p>
-        <p className={s.date}>{dayjs().format('MMM D HH:mm')}</p>
+        <p className={s.date}>{dayjs(createdAt).format('MMM D HH:mm')}</p>
       </div>
     </div>
   );

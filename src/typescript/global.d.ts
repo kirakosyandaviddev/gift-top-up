@@ -28,6 +28,7 @@ declare module 'telegram-webapp' {
       show(): void;
       hide(): void;
     };
+    openTelegramLink(url: string): void;
     requestFullscreen(): void;
     expand(): void;
     close(): void;
@@ -39,6 +40,18 @@ declare module 'telegram-webapp' {
     onEvent(eventType: string, callback: (...args: any[]) => void): void;
     offEvent(eventType: string, callback: (...args: any[]) => void): void;
     sendData(data: string): void;
+    showPopup(
+      params: {
+        title?: string;
+        message: string;
+        buttons?: {
+          id?: string;
+          type?: 'default' | 'ok' | 'close' | 'cancel' | 'destructive';
+          text?: string;
+        }[];
+      },
+      callback?: (id: string) => void,
+    );
   }
 
   export interface TelegramGlobal {

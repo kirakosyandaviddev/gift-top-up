@@ -17,7 +17,7 @@ export const GiftsPage = () => {
 
   const botGifts =
     data?.data?.user?.gifts?.filter(({status}) =>
-      ['awaiting', 'swap'].includes(status),
+      ['awaiting', 'swap'].includes(status || ''),
     ) || [];
 
   const profileGifts = data?.data?.nfts || [];
