@@ -1,4 +1,4 @@
-import {FC, useMemo} from 'react';
+import {FC} from 'react';
 
 import {GiftCard} from '../../../../components/GiftCard/GiftCard';
 import {Tabs} from '../../../../components/Tabs/Tabs';
