@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import classNames from 'classnames';
+import {useTonConnectModal} from '@tonconnect/ui-react';
 
 import {useGetConfigQuery} from '../../hooks/data/queries/useGetConfigQuery';
 import {useWebApp} from '../../hooks/useWebApp';
@@ -13,6 +14,7 @@ export const WelcomePage = () => {
   const navigate = useNavigate();
   const {data} = useGetConfigQuery();
   const WebApp = useWebApp();
+  const {state, open: openModal, close: closeModal} = useTonConnectModal();
 
   const [termsAccepted, setTermsAccepted] = useState(false);
   console.log('data------------------', data);
@@ -22,6 +24,35 @@ export const WelcomePage = () => {
     if (!WebApp?.isFullscreen) {
       WebApp?.requestFullscreen();
     }
+    WebApp.expand();
+  }, []);
+
+  // TODO: improve
+  useEffect(() => {
+    if (state.status === 'opened') {
+      WebApp.MainButton.hide();
+    } else {
+      WebApp.MainButton.show();
+    }
+  }, [state]);
+
+  // TODO: improve
+  useEffect(() => {
+    const handleMainButton = () => {
+      openModal();
+    };
+
+    WebApp.MainButton.setParams({
+      text: 'Connect Wallet',
+      is_visible: true,
+    });
+
+    WebApp.MainButton.onClick(handleMainButton);
+
+    return () => {
+      WebApp.MainButton.offClick(handleMainButton);
+      closeModal();
+    };
   }, []);
 
   const handleConnectWallet = () => {

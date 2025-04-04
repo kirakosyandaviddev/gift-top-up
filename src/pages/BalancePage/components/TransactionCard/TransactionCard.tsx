@@ -21,7 +21,6 @@ const TITLES = {
 export const TransactionCard: FC<PropsType> = ({transaction}) => {
   const {type, value, createdAt, payload} = transaction;
 
-  console.log('=---------------', transaction);
   return (
     <div className={s.container}>
       {type !== 'spin' && (
