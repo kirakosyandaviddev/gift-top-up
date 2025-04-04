@@ -6,7 +6,7 @@
   "homepage": "https://kirakosyandaviddev.github.io/",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && cp ./404.html ./docs",
     "lint": "eslint . --ext .ts,.tsx --fix",
     "format": "prettier --write .",
     "preview": "vite preview"
