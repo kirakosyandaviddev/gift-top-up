@@ -13,7 +13,7 @@ function App() {
   return (
     <div>
       <TonConnectUIProvider
-        manifestUrl={`${location.origin}${location.pathname}/tonconnect-manifest.json`}
+        manifestUrl={`${location.origin}${location.pathname}tonconnect-manifest.json`}
       >
         <QueryClientProvider client={queryClient}>
           <Router />
