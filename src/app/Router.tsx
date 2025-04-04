@@ -10,26 +10,21 @@ import {GiftTopUpPage} from '../pages/GiftTopUpPage/GiftTopUpPage';
 
 import {Layout} from '../components/Layout';
 
-const router = createBrowserRouter(
-  [
-    {
-      path: '/',
-      element: <Layout />,
-      children: [
-        {index: true, element: <WelcomePage />},
-        {path: 'main', element: <HomePage />},
-        {path: 'roulette', element: <RoulettePage />},
-        {path: 'gifts', element: <GiftsPage />},
-        {path: 'balance', element: <BalancePage />},
-        {path: 'gift-top-up', element: <GiftTopUpPage />},
-      ],
-    },
-    {path: '*', element: <NotFoundPage />},
-  ],
+const router = createBrowserRouter([
   {
-    basename: '/gift-top-up',
+    path: '/',
+    element: <Layout />,
+    children: [
+      {index: true, element: <WelcomePage />},
+      {path: 'main', element: <HomePage />},
+      {path: 'roulette', element: <RoulettePage />},
+      {path: 'gifts', element: <GiftsPage />},
+      {path: 'balance', element: <BalancePage />},
+      {path: 'gift-top-up', element: <GiftTopUpPage />},
+    ],
   },
-);
+  {path: '*', element: <NotFoundPage />},
+]);
 
 export const Router = () => {
   return <RouterProvider router={router} />;
