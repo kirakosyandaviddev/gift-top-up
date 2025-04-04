@@ -36,17 +36,17 @@ export const Gifts: FC<PropsType> = ({prices = [], nfts = [], gifts = []}) => {
         buttons: [
           {
             id: '1',
-            text: 'Продать',
+            text: 'Confirm',
             type: 'ok',
           },
           {
             id: '0',
-            text: 'Отменить',
+            text: 'Cancel',
             type: 'cancel',
           },
         ],
-        message: 'Мгновенная продажа',
-        title: 'Вы точно хотите продать?',
+        message: 'Instant sale',
+        title: 'Are you sure you want to sell?',
       },
       (id: string) => {
         if (id === '1') {

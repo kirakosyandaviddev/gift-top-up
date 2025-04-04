@@ -4,11 +4,13 @@ import {usePickUpGiftMutation} from '../../hooks/data/mutations/usePickUpGiftMut
 import {useSwapGiftToTonMutation} from '../../hooks/data/mutations/useSwapGiftToTonMutation';
 import {useGetConfigQuery} from '../../hooks/data/queries/useGetConfigQuery';
 import {useBackButton} from '../../hooks/data/useBackButton';
+import {useWebApp} from '../../hooks/useWebApp';
 
 import s from './GiftsPage.module.css';
 
 export const GiftsPage = () => {
   useBackButton();
+  const WebApp = useWebApp();
   const {data} = useGetConfigQuery();
   const {mutate: pickUpGift, isPending: pickUpGiftPending} =
     usePickUpGiftMutation();
@@ -21,6 +23,59 @@ export const GiftsPage = () => {
     ) || [];
 
   const profileGifts = data?.data?.nfts || [];
+
+  const onAddClick = (giftId: string) => {
+    WebApp.showPopup(
+      {
+        buttons: [
+          {
+            id: '1',
+            text: 'Confirm',
+            type: 'ok',
+          },
+          {
+            id: '0',
+            text: 'Cancel',
+            type: 'cancel',
+          },
+        ],
+        message:
+          'This gift will be added to your profile. This action cannot be undone.',
+        title: 'Send gift to your profile?',
+      },
+      (id: string) => {
+        if (id === '1') {
+          pickUpGift(giftId);
+        }
+      },
+    );
+  };
+
+  const onSellClick = (giftId: string) => {
+    WebApp.showPopup(
+      {
+        buttons: [
+          {
+            id: '1',
+            text: 'Confirm',
+            type: 'ok',
+          },
+          {
+            id: '0',
+            text: 'Cancel',
+            type: 'cancel',
+          },
+        ],
+        message: 'Instant sale',
+        title: 'Are you sure you want to sell?',
+      },
+      (id: string) => {
+        if (id === '1') {
+          swapGiftToTon(giftId);
+        }
+      },
+    );
+  };
 
   const emptyStateMarkup = (
     <div className={s.emptyContainer}>
@@ -52,7 +107,7 @@ export const GiftsPage = () => {
                       ? undefined
                       : (id) => {
                           if (pickUpGiftPending) return;
-                          pickUpGift(id);
+                          onAddClick(id);
                         }
                   }
                   onSell={
@@ -60,7 +115,7 @@ export const GiftsPage = () => {
                       ? undefined
                       : (id) => {
                           if (swapGiftToTonPending) return;
-                          swapGiftToTon(id);
+                          onSellClick(id);
                         }
                   }
                 />
@@ -74,13 +129,12 @@ export const GiftsPage = () => {
         <Tabs.Panel tab="profile">
           {!!profileGifts.length ? (
             <div className={s.container}>
-              {data?.data?.nfts?.map((gift) => (
+              {profileGifts?.map((gift) => (
                 <GiftCard
                   key={gift.id}
                   gift={gift}
-                  onSell={(id) => {
-                    if (swapGiftToTonPending) return;
-                    swapGiftToTon(id);
+                  onSell={() => {
+                    WebApp.openTelegramLink(`https://t.me/m/CtWO8BXgMzlk`);
                   }}
                 />
               ))}

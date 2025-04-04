@@ -28,6 +28,7 @@ declare module 'telegram-webapp' {
       show(): void;
       hide(): void;
     };
+    openLink: any;
     openTelegramLink(url: string): void;
     requestFullscreen(): void;
     expand(): void;
