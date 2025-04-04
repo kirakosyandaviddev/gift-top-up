@@ -9,7 +9,6 @@ export default defineConfig({
   build: {
     outDir: './docs',
   },
-  base: '/gift-top-up/',
   css: {
     modules: {
       localsConvention: 'camelCaseOnly',
