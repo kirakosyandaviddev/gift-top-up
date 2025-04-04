@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import classNames from 'classnames';
-import {useTonConnectModal} from '@tonconnect/ui-react';
+import {TonConnectButton, useTonConnectModal} from '@tonconnect/ui-react';
 
 import {useGetConfigQuery} from '../../hooks/data/queries/useGetConfigQuery';
 import {useWebApp} from '../../hooks/useWebApp';
@@ -101,6 +101,7 @@ export const WelcomePage = () => {
           </svg>
           <span>Connect Wallet</span>
         </button>
+        <TonConnectButton />
       </div>
     </div>
   );

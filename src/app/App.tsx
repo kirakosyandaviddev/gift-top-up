@@ -13,7 +13,7 @@ function App() {
   return (
     <div>
       <TonConnectUIProvider
-        manifestUrl={`https://gift-top-up.vercel.app/tonconnect-manifest.json`}
+        manifestUrl={`https://192.168.5.62:5173/tonconnect-manifest.json`}
       >
         <QueryClientProvider client={queryClient}>
           <Router />
