@@ -54,11 +54,9 @@ declare module 'telegram-webapp' {
       callback?: (id: string) => void,
     );
   }
-
   export interface TelegramGlobal {
     WebApp: TelegramWebApp;
   }
-
   declare global {
     interface Window {
       Telegram: TelegramGlobal;

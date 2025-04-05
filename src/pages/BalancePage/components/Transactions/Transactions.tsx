@@ -11,9 +11,9 @@ type PropsType = {
 
 export const Transactions: FC<PropsType> = ({transactions = []}) => {
   const incoming: Transaction[] =
-    transactions.filter((t) => t.type === 'deposit_gift') || [];
+    transactions.filter((t) => t.type !== 'spin') || [];
 
-  const upcoming: Transaction[] =
+  const outgoing: Transaction[] =
     transactions.filter((t) => t.type === 'spin') || [];
 
   const emptyStateMarkup = (
@@ -48,10 +48,10 @@ export const Transactions: FC<PropsType> = ({transactions = []}) => {
       <Tabs.Panel tab="incoming">
         {!!incoming.length ? (
           <div className={s.container}>
-            {incoming.map((deposit, i) => (
+            {incoming.map((transaction, i) => (
               <TransactionCard
-                key={`transaction.id-${i}`}
-                transaction={deposit}
+                key={`transaction-id-${i}`}
+                transaction={transaction}
               />
             ))}
           </div>
@@ -61,12 +61,12 @@ export const Transactions: FC<PropsType> = ({transactions = []}) => {
       </Tabs.Panel>
 
       <Tabs.Panel tab="outgoing">
-        {!!upcoming.length ? (
+        {!!outgoing.length ? (
           <div className={s.container}>
-            {upcoming.map((deposit, i) => (
+            {outgoing.map((transaction, i) => (
               <TransactionCard
-                key={`transaction.id-${i}`}
-                transaction={deposit}
+                key={`transaction-id-${i}`}
+                transaction={transaction}
               />
             ))}
           </div>

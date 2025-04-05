@@ -1,4 +1,5 @@
 import {FC} from 'react';
+import {useSearchParams} from 'react-router-dom';
 
 import {GiftCard} from '../../../../components/GiftCard/GiftCard';
 import {Tabs} from '../../../../components/Tabs/Tabs';
@@ -18,7 +19,10 @@ type PropsType = {
 export const Gifts: FC<PropsType> = ({prices = [], nfts = [], gifts = []}) => {
   const WebApp = useWebApp();
   const {mutate: swapGiftToTon} = useSwapGiftToTonMutation();
+  const [searchParams] = useSearchParams();
+  console.log('searchParams', searchParams.get('tab'));
 
+  // nfts should be after gifts
   const profileGifts = [
     ...gifts.filter((g) => g.status === 'awaiting'),
     ...nfts,
@@ -63,7 +67,7 @@ export const Gifts: FC<PropsType> = ({prices = [], nfts = [], gifts = []}) => {
   );
 
   return (
-    <Tabs defaultTab="all">
+    <Tabs defaultTab={searchParams.get('tab') || 'all'}>
       <Tabs.List>
         <Tabs.Tab tab="all">All Gifts</Tabs.Tab>
         <Tabs.Tab tab="my">My Gifts</Tabs.Tab>
