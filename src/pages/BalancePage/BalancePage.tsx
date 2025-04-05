@@ -11,6 +11,12 @@ export const BalancePage = () => {
   useBackButton();
   const {data} = useGetConfigQuery();
 
+  const transactions = data?.data?.user?.historyTransaction
+    ? [...data?.data?.user?.historyTransaction]
+        .filter(({type}) => type !== 'deposit_partner')
+        .reverse()
+    : [];
+
   return (
     <div className={s.wrapper}>
       <div className={s.titleContainer}>
@@ -22,7 +28,7 @@ export const BalancePage = () => {
         address={data?.data?.address}
       />
       <TopUpWith />
-      <Transactions transactions={data?.data?.user?.historyTransaction} />
+      <Transactions transactions={transactions} />
     </div>
   );
 };

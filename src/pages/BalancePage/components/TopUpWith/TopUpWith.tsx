@@ -1,6 +1,6 @@
 import {useNavigate} from 'react-router-dom';
 import classNames from 'classnames';
-import {useTonAddress, useTonConnectUI} from '@tonconnect/ui-react';
+import {useTonConnectUI} from '@tonconnect/ui-react';
 import {beginCell, toNano} from '@ton/ton';
 
 import {TonIcon16} from '../../../../components/icons/TonIcon16';
@@ -14,11 +14,6 @@ export const TopUpWith = () => {
   const navigate = useNavigate();
   const [tonConnectUI] = useTonConnectUI();
   const {data} = useGetConfigQuery();
-
-  const userFriendlyAddress = useTonAddress();
-  const rawAddress = useTonAddress(false);
-  console.log('=================userFriendlyAddress', userFriendlyAddress);
-  console.log('=================rawAddress', rawAddress);
 
   const onTopUpByTon = () => {
     const amount = Number(
@@ -64,7 +59,7 @@ export const TopUpWith = () => {
         <button
           className={classNames(s.btn, s.gifts)}
           onClick={() => {
-            navigate(ROUTES.GIFT_TOP_UP);
+            navigate(`${ROUTES.GIFT_TOP_UP}?tab=my`);
           }}
         >
           <GiftIcon16 />
