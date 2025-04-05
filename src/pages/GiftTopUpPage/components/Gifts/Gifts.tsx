@@ -20,8 +20,8 @@ export const Gifts: FC<PropsType> = ({prices = [], nfts = [], gifts = []}) => {
   const {mutate: swapGiftToTon} = useSwapGiftToTonMutation();
 
   const profileGifts = [
-    ...nfts,
     ...gifts.filter((g) => g.status === 'awaiting'),
+    ...nfts,
   ];
 
   const onPriceClick = (gift: Gift) => {
