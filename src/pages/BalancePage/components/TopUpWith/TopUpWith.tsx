@@ -49,7 +49,7 @@ export const TopUpWith = () => {
       })
       .catch((e) => {
         console.error(e);
-        console.log('================= eror', amount);
+        console.log('================= error', amount);
       });
   };
 
