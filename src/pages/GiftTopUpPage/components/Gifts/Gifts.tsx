@@ -20,7 +20,6 @@ export const Gifts: FC<PropsType> = ({prices = [], nfts = [], gifts = []}) => {
   const WebApp = useWebApp();
   const {mutate: swapGiftToTon} = useSwapGiftToTonMutation();
   const [searchParams] = useSearchParams();
-  console.log('searchParams', searchParams.get('tab'));
 
   // nfts should be after gifts
   const profileGifts = [

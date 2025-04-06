@@ -1,4 +1,4 @@
-import {useMutation, useQueryClient} from '@tanstack/react-query';
+import {useMutation} from '@tanstack/react-query';
 
 import {QUERY_KEYS} from '../../../consts/queryKeys';
 import {axiosClient} from '../../../libs/axiosClient';
@@ -6,6 +6,7 @@ import {ENDPOINTS} from '../../../consts/endpoints';
 import {User} from '../../../etities/types/User';
 import {ResponseType} from '../../../etities/types/ResponseType';
 import {useWebApp} from '../../useWebApp';
+import {useUpdateCache} from '../../utils/useUpdateCache';
 
 type SwapGiftToTonResponseType = {
   user: User;
@@ -13,19 +14,22 @@ type SwapGiftToTonResponseType = {
 
 export const useSwapGiftToTonMutation = () => {
   const WebApp = useWebApp();
-  const queryClient = useQueryClient();
+  const updateCache = useUpdateCache();
 
   const {data, mutate, isSuccess, isPending, error} = useMutation({
     mutationKey: [QUERY_KEYS.SWAP_GIFT_TO_TON],
-    mutationFn: (id: string) =>
-      axiosClient<ResponseType<SwapGiftToTonResponseType>>({
+    mutationFn: async (id: string) => {
+      const response = await axiosClient<
+        ResponseType<SwapGiftToTonResponseType>
+      >({
         method: 'POST',
         url: ENDPOINTS.SWAP_GIFT_TO_TON,
         data: {initData: WebApp?.initData, id},
-      }),
-    onSuccess: () => {
-      // TODO: improve optimistic updates
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.GET_CONFIG]});
+      });
+      return response.data;
+    },
+    onSuccess: (d) => {
+      updateCache(d.data.user);
     },
   });
 

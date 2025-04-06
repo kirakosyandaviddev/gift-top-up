@@ -23,7 +23,7 @@ export const SwapGiftCard: FC<PropsType> = ({gift}) => {
         </div>
 
         <p className={s.price}>
-          <span>{gift.ton}</span> <TonIcon16 />
+          <span>{gift.min}</span> <TonIcon16 />
         </p>
       </div>
     </div>

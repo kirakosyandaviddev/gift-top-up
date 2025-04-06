@@ -7,6 +7,7 @@ import {TonIcon16} from '../../../../components/icons/TonIcon16';
 import {GiftIcon16} from '../../../../components/icons/GiftIcon16';
 import {ROUTES} from '../../../../consts/routes';
 import {useGetConfigQuery} from '../../../../hooks/data/queries/useGetConfigQuery';
+import {useWebApp} from '../../../../hooks/useWebApp';
 
 import s from './TopUpWith.module.css';
 
@@ -14,16 +15,9 @@ export const TopUpWith = () => {
   const navigate = useNavigate();
   const [tonConnectUI] = useTonConnectUI();
   const {data} = useGetConfigQuery();
+  const WebApp = useWebApp();
 
-  const onTopUpByTon = () => {
-    const amount = Number(
-      window.prompt('Enter the amount you want to deposit', ''),
-    );
-
-    if (amount === null || amount === 0 || Number.isNaN(amount)) return;
-
-    console.log('=================', amount);
-
+  const handleTopUp = (amount: number) => {
     const payload = beginCell()
       .storeUint(0, 32)
       .storeStringTail(data?.data?.user.id || '')
@@ -31,8 +25,8 @@ export const TopUpWith = () => {
       .toBoc()
       .toString('base64');
 
-    tonConnectUI
-      .sendTransaction({
+    try {
+      tonConnectUI.sendTransaction({
         validUntil: Date.now() + 5 * 60 * 1000,
         messages: [
           {
@@ -41,11 +35,33 @@ export const TopUpWith = () => {
             payload,
           },
         ],
-      })
-      .catch((e) => {
-        console.error(e);
-        console.log('================= error', amount);
       });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const onTopUpByTon = () => {
+    const amount = Number(
+      window.prompt('Enter the amount you want to deposit', ''),
+    );
+
+    if (amount === null || amount === 0 || Number.isNaN(amount)) {
+      WebApp.showPopup({
+        buttons: [
+          {
+            id: '0',
+            text: 'Cancel',
+            type: 'cancel',
+          },
+        ],
+        message: 'Enter the amount you want to deposit with numbers',
+        title: 'Invalid amount!',
+      });
+      return;
+    }
+
+    handleTopUp(amount);
   };
 
   return (

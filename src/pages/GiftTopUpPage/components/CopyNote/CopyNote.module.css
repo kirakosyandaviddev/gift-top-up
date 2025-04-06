@@ -17,11 +17,16 @@
   max-width: 256px;
 }
 
-.title {
+.link {
   font-size: 17px;
   font-weight: 600;
   line-height: 12px;
   color: #ffffff;
+  background: none;
+  border: none;
+  outline: none;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .text {
