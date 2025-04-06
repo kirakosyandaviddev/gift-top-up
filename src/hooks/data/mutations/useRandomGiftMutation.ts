@@ -1,4 +1,4 @@
-import {useMutation, useQueryClient} from '@tanstack/react-query';
+import {useMutation} from '@tanstack/react-query';
 
 import {QUERY_KEYS} from '../../../consts/queryKeys';
 import {axiosClient} from '../../../libs/axiosClient';
@@ -8,6 +8,7 @@ import {ResponseType} from '../../../etities/types/ResponseType';
 import {useWebApp} from '../../useWebApp';
 import {WinType} from '../../../etities/types/WinType';
 import {Gift} from '../../../etities/types/Gift';
+import {useUpdateCache} from '../../utils/useUpdateCache';
 
 type RandomGiftResponseType = {
   winType: WinType;
@@ -16,20 +17,21 @@ type RandomGiftResponseType = {
 };
 
 export const useRandomGiftMutation = () => {
-  const queryClient = useQueryClient();
   const WebApp = useWebApp();
+  const updateCache = useUpdateCache();
 
   const {data, mutate, isSuccess, isPending, error} = useMutation({
     mutationKey: [QUERY_KEYS.RANDOM_GIFT],
-    mutationFn: () =>
-      axiosClient<ResponseType<RandomGiftResponseType>>({
+    mutationFn: async () => {
+      const response = await axiosClient<ResponseType<RandomGiftResponseType>>({
         method: 'POST',
         url: ENDPOINTS.RANDOM_GIFT,
         data: {initData: WebApp?.initData},
-      }),
-    onSuccess: () => {
-      // TODO: improve optimistic updates
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.GET_CONFIG]});
+      });
+      return response.data;
+    },
+    onSuccess: (d) => {
+      updateCache(d.data.user);
     },
   });
 

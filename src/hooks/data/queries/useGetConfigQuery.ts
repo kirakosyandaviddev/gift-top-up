@@ -8,7 +8,7 @@ import {ResponseType} from '../../../etities/types/ResponseType';
 import {useWebApp} from '../../../hooks/useWebApp';
 import {Gift} from '../../../etities/types/Gift';
 
-export type GetConfigResponseType = {
+export type GetConfig = {
   user: User;
   nfts: Gift[];
   prices: Gift[];
@@ -16,21 +16,25 @@ export type GetConfigResponseType = {
   play: number;
 };
 
+export type GetConfigResponseType = ResponseType<GetConfig>;
+
 export const useGetConfigQuery = () => {
   const WebApp = useWebApp();
 
   const {data} = useQuery({
     queryKey: [QUERY_KEYS.GET_CONFIG],
-    queryFn: () =>
-      axiosClient<ResponseType<GetConfigResponseType>>({
+    queryFn: async () => {
+      const response = await axiosClient<GetConfigResponseType>({
         method: 'POST',
         url: ENDPOINTS.GET_CONFIG,
         data: {initData: WebApp?.initData},
-      }),
+      });
+      return response.data;
+    },
     staleTime: 3 * 60 * 1000,
   });
 
   return {
-    data: data?.data,
+    data: data,
   };
 };

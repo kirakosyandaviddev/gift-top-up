@@ -23,10 +23,7 @@ export const BalancePage = () => {
         <h3 className={s.title}>Balance</h3>
       </div>
 
-      <BalanceInfo
-        balance={data?.data?.user?.balance}
-        address={data?.data?.address}
-      />
+      <BalanceInfo balance={data?.data?.user?.balance} />
       <TopUpWith />
       <Transactions transactions={transactions} />
     </div>

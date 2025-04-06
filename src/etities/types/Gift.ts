@@ -25,7 +25,10 @@ export type Gift = {
   num: number;
   slug: string;
   ton: number;
+  min: number;
+  avg: number;
   title: string;
+  animationUrl: string;
   model: Model;
   pattern: Pattern;
   backdrop: Backdrop;

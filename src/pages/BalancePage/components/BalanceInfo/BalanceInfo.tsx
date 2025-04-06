@@ -1,21 +1,25 @@
-import {FC} from 'react';
-import {ChainIcon22} from '../../../../components/icons/ChainIcon22';
+import {FC, useEffect} from 'react';
+import {TonConnectButton, useTonWallet} from '@tonconnect/ui-react';
+
 import {TonIcon30} from '../../../../components/icons/TonIcon30';
 
 import s from './BalanceInfo.module.css';
+import {ROUTES} from '../../../../consts/routes';
+import {useNavigate} from 'react-router-dom';
 
 type PropsType = {
   balance?: number;
-  address?: string;
 };
 
-const shortenText = (text: string, startLength = 4, endLength = 4) => {
-  if (text.length <= startLength + endLength) return text;
-  return `${text.slice(0, startLength)}...${text.slice(-endLength)}`;
-};
+export const BalanceInfo: FC<PropsType> = ({balance = 0}) => {
+  const wallet = useTonWallet();
+  const navigate = useNavigate();
 
-export const BalanceInfo: FC<PropsType> = ({balance = 0, address = ''}) => {
-  const shorAddress = shortenText(address, 4, 4);
+  useEffect(() => {
+    if (!wallet) {
+      navigate(ROUTES.WELCOME);
+    }
+  }, [wallet]);
 
   return (
     <div className={s.container}>
@@ -24,17 +28,7 @@ export const BalanceInfo: FC<PropsType> = ({balance = 0, address = ''}) => {
         <TonIcon30 />
       </p>
 
-      {!!address ? (
-        <button className={s.walletButton}>
-          <ChainIcon22 />
-          <span>{shorAddress}</span>
-        </button>
-      ) : (
-        <button className={s.walletButton}>
-          <ChainIcon22 />
-          <span>Connect Wallet</span>
-        </button>
-      )}
+      <TonConnectButton />
     </div>
   );
 };

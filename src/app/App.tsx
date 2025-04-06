@@ -4,11 +4,9 @@ import {TonConnectUIProvider} from '@tonconnect/ui-react';
 import {useSocketConnection} from '../hooks/useSocketConnection';
 import {queryClient} from '../libs/queryClient';
 import {Router} from './Router';
-import {useNewTransaction} from '../hooks/subscriptions/useNewTransaction';
 
 function App() {
   useSocketConnection();
-  useNewTransaction();
 
   return (
     <div>

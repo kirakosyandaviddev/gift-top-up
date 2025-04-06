@@ -47,7 +47,7 @@ export const GiftCard: FC<PropsType> = ({gift, onAdd, onSell, onPrice}) => {
                 onSell(gift.id);
               }}
             >
-              <span>Sell for {gift.ton}</span> <TonIcon12 />
+              <span>Sell for {gift.avg}</span> <TonIcon12 />
             </button>
           )}
           {onPrice && (
@@ -57,7 +57,7 @@ export const GiftCard: FC<PropsType> = ({gift, onAdd, onSell, onPrice}) => {
                 onPrice(gift);
               }}
             >
-              <span>{gift.ton}</span> <TonIcon12 />
+              <span>{gift.avg}</span> <TonIcon12 />
             </button>
           )}
         </div>
