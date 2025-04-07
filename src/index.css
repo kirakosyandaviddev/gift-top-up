@@ -45,3 +45,10 @@ body {
 a {
   text-decoration: none;
 }
+
+.main-wrapper {
+  display: flex;
+  justify-content: center;
+  background-color: #000000;
+  background: linear-gradient(180deg, #000000 0%, #212121 50%, #000000 90%);
+}

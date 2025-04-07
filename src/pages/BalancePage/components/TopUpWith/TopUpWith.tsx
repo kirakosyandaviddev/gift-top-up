@@ -46,7 +46,11 @@ export const TopUpWith = () => {
       window.prompt('Enter the amount you want to deposit', ''),
     );
 
-    if (amount === null || amount === 0 || Number.isNaN(amount)) {
+    if (amount === null || amount === 0) {
+      return;
+    }
+
+    if (Number.isNaN(amount)) {
       WebApp.showPopup({
         buttons: [
           {

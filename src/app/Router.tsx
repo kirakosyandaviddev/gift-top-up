@@ -9,9 +9,10 @@ import {NotFoundPage} from '../pages/NotFoundPage/NotFoundPage';
 import {GiftTopUpPage} from '../pages/GiftTopUpPage/GiftTopUpPage';
 
 import {useNewTransaction} from '../hooks/subscriptions/useNewTransaction';
-import {useUpdateMinGifts} from '../hooks/subscriptions/useUpdateMinGifts';
+import {useWalletTheme} from '../hooks/useWalletTheme';
 
 import {Layout} from '../components/Layout';
+import {useUpdatePrice} from '../hooks/subscriptions/useUpdatePrice';
 
 const router = createBrowserRouter([
   {
@@ -31,8 +32,9 @@ const router = createBrowserRouter([
 
 export const Router = () => {
   // Move subscriptions to the Additional Layer
+  useWalletTheme();
   useNewTransaction();
-  useUpdateMinGifts();
+  useUpdatePrice();
 
   return <RouterProvider router={router} />;
 };

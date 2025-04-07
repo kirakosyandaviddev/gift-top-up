@@ -6,12 +6,13 @@ import {Tabs} from '../../../../components/Tabs/Tabs';
 import {Gift} from '../../../../etities/types/Gift';
 import {useWebApp} from '../../../../hooks/useWebApp';
 import {useSwapGiftToTonMutation} from '../../../../hooks/data/mutations/useSwapGiftToTonMutation';
+import {Price} from '../../../../etities/types/Price';
 
 import {SwapGiftCard} from '../SwapGiftCard/SwapGiftCard';
 import s from './Gifts.module.css';
 
 type PropsType = {
-  prices?: Gift[];
+  prices?: Price[];
   nfts?: Gift[];
   gifts?: Gift[];
 };
@@ -75,8 +76,8 @@ export const Gifts: FC<PropsType> = ({prices = [], nfts = [], gifts = []}) => {
       <Tabs.Panel tab="all">
         {!!prices.length ? (
           <div className={s.list}>
-            {prices.map((gift) => (
-              <SwapGiftCard key={gift.id} gift={gift} />
+            {prices.map((price) => (
+              <SwapGiftCard key={price.id} price={price} />
             ))}
           </div>
         ) : (

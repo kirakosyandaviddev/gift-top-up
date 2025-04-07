@@ -17,7 +17,8 @@ export const CopyNote = () => {
             className={s.link}
           >
             @GiftTopUp
-          </button>{' '}
+          </button>
+          <br />
           and get TON on your balance
         </div>
       </div>

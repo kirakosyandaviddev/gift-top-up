@@ -19,9 +19,9 @@ export const TransactionCard: FC<PropsType> = ({transaction}) => {
   return (
     <div className={s.container}>
       {isSpin ? (
-        <img className={s.img} src={payload.photoUrl} />
+        <img className={s.img} src={payload.photoUrl} width={50} height={50} />
       ) : (
-        <img className={s.img} src="public/img/incoming.png" />
+        <img className={s.img} src="img/incoming.png" width={50} height={50} />
       )}
 
       <div className={s.textContainer}>

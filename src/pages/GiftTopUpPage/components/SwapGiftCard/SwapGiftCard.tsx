@@ -1,29 +1,29 @@
 import {FC} from 'react';
 
 import {TonIcon16} from '../../../../components/icons/TonIcon16';
-import {Gift} from '../../../../etities/types/Gift';
+import {Price} from '../../../../etities/types/Price';
 import {ArrowRight22} from '../../../../components/icons/ArrowRight22';
 
 import s from './SwapGiftCard.module.css';
 
 type PropsType = {
-  gift: Gift;
+  price: Price;
 };
 
-export const SwapGiftCard: FC<PropsType> = ({gift}) => {
+export const SwapGiftCard: FC<PropsType> = ({price}) => {
   return (
     <div className={s.container}>
-      <img className={s.img} src={gift.model.photoUrl} />
+      <img className={s.img} src={price.photoUrl} width={50} height={50} />
 
       <div className={s.grid}>
-        <div className={s.title}>{gift.title}</div>
+        <div className={s.title}>{price.title}</div>
 
         <div className={s.arrowContainer}>
           <ArrowRight22 />
         </div>
 
         <p className={s.price}>
-          <span>{gift.min}</span> <TonIcon16 />
+          <span>{price.price}</span> <TonIcon16 />
         </p>
       </div>
     </div>
