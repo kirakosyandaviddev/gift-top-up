@@ -1,14 +1,20 @@
 .wrapper {
+  max-width: 400px;
+  width: 100%;
+  flex: 1;
   min-height: 100vh;
   padding: 114px 16px 38px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background: linear-gradient(180deg, #000000 0%, #212121 50%, #000000 90%);
+  z-index: 10;
 }
 
-.title-container {
-  margin-bottom: 16px;
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
 }
 
 .title {
@@ -16,6 +22,39 @@
   line-height: 20px;
   font-weight: 800;
   color: #ffffff;
+}
+
+.balance-container {
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: #ffffff;
+}
+
+.balance {
+  font-size: 28px;
+  line-height: 20px;
+  font-weight: 800;
+}
+
+.empty {
+  color: #ff513e;
+}
+
+.chevron {
+  color: #ffffff;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
 }
 
 .btn-container {
@@ -47,18 +86,13 @@
   );
 }
 
-.btn:disabled {
-  opacity: 0.3;
-}
-
-.swipe-button {
+.bg {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   width: 100%;
-  padding: 16px;
-  background-color: #444;
-  color: white;
-  border: none;
-  border-radius: 25px;
-  font-size: 16px;
-  font-weight: bold;
-  touch-action: pan-y; /* Allow horizontal swipe only */
+  height: 100%;
 }

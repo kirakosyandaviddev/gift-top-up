@@ -7,11 +7,12 @@ import {User} from '../../../etities/types/User';
 import {ResponseType} from '../../../etities/types/ResponseType';
 import {useWebApp} from '../../../hooks/useWebApp';
 import {Gift} from '../../../etities/types/Gift';
+import {Price} from '../../../etities/types/Price';
 
 export type GetConfig = {
   user: User;
   nfts: Gift[];
-  prices: Gift[];
+  prices: Price[];
   address: string;
   play: number;
 };
