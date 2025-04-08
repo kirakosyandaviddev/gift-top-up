@@ -13,7 +13,7 @@ export const BalancePage = () => {
 
   const transactions = data?.data?.user?.historyTransaction
     ? [...data?.data?.user?.historyTransaction]
-        .filter(({type}) => type !== 'deposit_partner')
+        .filter(({type}) => !['pick_up_gift', 'deposit_partner'].includes(type))
         .reverse()
     : [];
 

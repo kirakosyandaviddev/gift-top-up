@@ -11,30 +11,43 @@ type PropsType = {
   transaction: Transaction;
 };
 
+const TITLES = {
+  spin: 'One Spin',
+  swap_gift: 'Top Up',
+  pick_up_gift: 'Top Up',
+  deposit_ton: 'Top Up',
+  deposit_gift: 'Top Up',
+  deposit_partner: 'Top Up',
+};
+
 export const TransactionCard: FC<PropsType> = ({transaction}) => {
   const {type, value, createdAt, payload} = transaction;
 
-  const isSpin = type === 'spin';
+  const isIncoming = ['swap_gift', 'deposit_ton', 'deposit_gift'].includes(
+    type,
+  );
+
+  const hasGift = typeof payload !== 'string';
 
   return (
     <div className={s.container}>
-      {isSpin ? (
+      {hasGift ? (
         <img className={s.img} src={payload.photoUrl} width={50} height={50} />
       ) : (
         <img className={s.img} src="img/incoming.png" width={50} height={50} />
       )}
 
       <div className={s.textContainer}>
-        <p className={s.title}>{isSpin ? 'One Spin' : 'Top Up'}</p>
-        {isSpin && (
+        <p className={s.title}>{TITLES[type]}</p>
+        {hasGift && (
           <p className={s.text}>{`${payload.title || ''} #${payload.num}`}</p>
         )}
       </div>
 
       <div className={s.detailsContainer}>
-        <p className={classNames(s.price, {[s.success]: !isSpin})}>
+        <p className={classNames(s.price, {[s.success]: isIncoming})}>
           <span>
-            {isSpin ? '-' : '+'}
+            {isIncoming ? '+' : '-'}
             {value}
           </span>{' '}
           <TonIcon16 />
