@@ -1,4 +1,5 @@
 import {FC} from 'react';
+
 import {Tabs} from '../../../../components/Tabs/Tabs';
 import {Transaction} from '../../../../etities/types/Transaction';
 import {TransactionCard} from '../TransactionCard/TransactionCard';
@@ -11,10 +12,12 @@ type PropsType = {
 
 export const Transactions: FC<PropsType> = ({transactions = []}) => {
   const incoming: Transaction[] =
-    transactions.filter((t) => t.type !== 'spin') || [];
+    transactions.filter((t) =>
+      ['swap_gift', 'deposit_ton', 'deposit_gift'].includes(t.type),
+    ) || [];
 
   const outgoing: Transaction[] =
-    transactions.filter((t) => t.type === 'spin') || [];
+    transactions.filter((t) => ['spin'].includes(t.type)) || [];
 
   const emptyStateMarkup = (
     <div className={s.emptyContainer}>

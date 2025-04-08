@@ -9,10 +9,11 @@ import {NotFoundPage} from '../pages/NotFoundPage/NotFoundPage';
 import {GiftTopUpPage} from '../pages/GiftTopUpPage/GiftTopUpPage';
 
 import {useNewTransaction} from '../hooks/subscriptions/useNewTransaction';
-import {useWalletTheme} from '../hooks/useWalletTheme';
+import {useUpdatePrice} from '../hooks/subscriptions/useUpdatePrice';
+import {useNewPrice} from '../hooks/subscriptions/useNewPrice';
+import {useUpdateAvgGift} from '../hooks/subscriptions/useUpdateAvgGift';
 
 import {Layout} from '../components/Layout';
-import {useUpdatePrice} from '../hooks/subscriptions/useUpdatePrice';
 
 const router = createBrowserRouter([
   {
@@ -32,9 +33,10 @@ const router = createBrowserRouter([
 
 export const Router = () => {
   // Move subscriptions to the Additional Layer
-  useWalletTheme();
   useNewTransaction();
   useUpdatePrice();
+  useNewPrice();
+  useUpdateAvgGift();
 
   return <RouterProvider router={router} />;
 };

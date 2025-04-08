@@ -10,12 +10,16 @@ function App() {
   useSocketConnection();
   const WebApp = useWebApp();
 
+  WebApp.setBackgroundColor('#242424');
+  WebApp.setBottomBarColor('#242424');
+  WebApp.setHeaderColor('#242424');
+
   return (
     <div className="main-wrapper">
       <TonConnectUIProvider
         manifestUrl={`https://gift-top-up.vercel.app/tonconnect-manifest.json`}
         uiPreferences={{
-          theme: WebApp.colorScheme === 'dark' ? THEME.DARK : THEME.LIGHT,
+          theme: THEME.DARK,
         }}
       >
         <QueryClientProvider client={queryClient}>

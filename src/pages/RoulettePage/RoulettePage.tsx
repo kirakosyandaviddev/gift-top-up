@@ -1,4 +1,4 @@
-import {useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import classNames from 'classnames';
 import {useNavigate} from 'react-router-dom';
 import lottie from 'lottie-web';
@@ -12,6 +12,8 @@ import {ChevronRight22} from '../../components/icons/ChevronRight22';
 import {ROUTES} from '../../consts/routes';
 
 import s from './RoulettePage.module.css';
+import {Roulette} from './roulette';
+import {MyGifts} from '../../components/MyGifts/MyGifts';
 
 const loadTGS = async (tgsUrl: string, container: HTMLDivElement) => {
   const response = await fetch(tgsUrl);
@@ -42,6 +44,9 @@ export const RoulettePage = () => {
   console.log('data-----------------useRandomGiftMutation', getRandomGiftData);
   console.log('error-----------------useRandomGiftMutation', error);
 
+  const [isRunning, setIsRunning] = useState(false);
+  const [isLoopVisible, setIsLoopVisible] = useState(true);
+
   useEffect(() => {
     if (ref?.current && getRandomGiftData?.data?.gift?.animationUrl) {
       loadTGS(getRandomGiftData?.data?.gift?.animationUrl, ref?.current);
@@ -69,15 +74,33 @@ export const RoulettePage = () => {
       </div>
 
       <div className={s.content}>
-        <div ref={ref} style={{width: 320, height: 320}}></div>
+        {isLoopVisible && <Roulette isRunning={isRunning} />}
+        {!isLoopVisible && (
+          <div className={s.giftContainer}>
+            <div ref={ref} style={{width: 320, height: 320}}></div>
+            <span className={s.giftTitle}>
+              {getRandomGiftData?.data?.gift
+                ? `${getRandomGiftData?.data?.gift?.title} #${getRandomGiftData?.data?.gift?.num}`
+                : ''}
+            </span>
+          </div>
+        )}
       </div>
 
       <div className={s.btnContainer}>
         <button
           onClick={() => {
-            getRandomGift();
-            ref?.current?.firstChild &&
-              ref.current.removeChild(ref.current.firstChild);
+            setIsLoopVisible(true);
+            setIsRunning(true);
+
+            setTimeout(() => {
+              setIsLoopVisible(false);
+              setIsRunning(false);
+
+              getRandomGift();
+              ref?.current?.firstChild &&
+                ref.current.removeChild(ref.current.firstChild);
+            }, 3000);
           }}
           disabled={isPending}
           className={s.btn}
@@ -99,6 +122,8 @@ export const RoulettePage = () => {
           </svg>
         </button>
       </div>
+
+      <MyGifts />
     </div>
   );
 };
