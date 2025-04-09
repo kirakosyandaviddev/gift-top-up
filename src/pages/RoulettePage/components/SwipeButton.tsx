@@ -8,8 +8,10 @@ export const SwipeButton = ({onTouchStart, onTouchEnd, disabled}: any) => {
   const [startX, setStartX] = useState(0);
 
   const handleTouchStart = (e: any) => {
+    console.log(isSwiped);
     const touchStartX = e.touches[0].clientX;
     setStartX(touchStartX);
+    onTouchStart();
   };
 
   const handleTouchEnd = (e: any) => {
