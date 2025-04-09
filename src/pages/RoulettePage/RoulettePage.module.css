@@ -117,7 +117,7 @@
 }
 
 .backdrop {
-  background-image: url('img/ellipse.png');
+  background-image: url('/img/ellipse.png');
   position: absolute;
   height: 1282px;
   width: 1282px;
