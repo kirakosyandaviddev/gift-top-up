@@ -10,7 +10,13 @@ export const MyGifts = () => {
   return (
     <Link to={ROUTES.GIFTS} className={s.container}>
       <div className={s.group}>
-        <img src={bear} className={s.image} width={42} height={42} />
+        <img
+          src={bear}
+          className={s.image}
+          width={42}
+          height={42}
+          draggable={false}
+        />
         <span className={s.text}>My Gifts</span>
       </div>
       <ArrowDown />

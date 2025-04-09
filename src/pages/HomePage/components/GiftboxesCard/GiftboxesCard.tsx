@@ -9,7 +9,7 @@ import s from './GiftboxesCard.module.css';
 export const GiftboxesCard = () => {
   return (
     <Link to={ROUTES.GIFT_TOP_UP} className={s.card}>
-      <img src={soonBadge} className={s.soonBadge} />
+      <img src={soonBadge} className={s.soonBadge} draggable={false} />
 
       <div className={s.body}>
         <div className={s.content}>

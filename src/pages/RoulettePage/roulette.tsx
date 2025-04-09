@@ -38,7 +38,7 @@ export const Roulette = ({isRunning}: {isRunning: boolean}) => {
       <div className={classNames(s.sliderTrack, {[s.animate]: isRunning})}>
         {slides.map((src, i) => (
           <div className={s.slide} key={`slide-item-${i}`}>
-            <img src={src} width={180} height={180} />
+            <img src={src} width={180} height={180} draggable={false} />
           </div>
         ))}
       </div>

@@ -20,7 +20,6 @@ export const WelcomePage = () => {
 
   const [termsAccepted, setTermsAccepted] = useState(false);
   console.log('data------------------', data);
-  console.log('data------------------', WebApp?.version);
 
   useEffect(() => {
     if (!WebApp?.isFullscreen) {

@@ -1,4 +1,5 @@
 import {useEffect} from 'react';
+import {motion} from 'framer-motion';
 
 import {BalanceCard} from './components/BalanceCard/BalanceCard';
 import {RouletteCard} from './components/RouletteCard/RouletteCard';
@@ -8,6 +9,19 @@ import {useGetConfigQuery} from '../../hooks/data/queries/useGetConfigQuery';
 import {useWebApp} from '../../hooks/useWebApp';
 
 import s from './HomePage.module.css';
+
+const cardVariants = {
+  hidden: {opacity: 0, y: 50},
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.2,
+      duration: 0.4,
+      ease: 'easeOut',
+    },
+  }),
+};
 
 export const HomePage = () => {
   const {data} = useGetConfigQuery();
@@ -20,6 +34,12 @@ export const HomePage = () => {
     }
   }, []);
 
+  const cards = [
+    <BalanceCard balance={data?.data?.user?.balance} />,
+    <RouletteCard />,
+    <GiftboxesCard />,
+  ];
+
   return (
     <div className={s.wrapper}>
       <div className={s.titleContainer}>
@@ -27,15 +47,19 @@ export const HomePage = () => {
       </div>
 
       <div className={s.list}>
-        <div className={s.item}>
-          <BalanceCard balance={data?.data?.user?.balance} />
-        </div>
-        <div className={s.item}>
-          <RouletteCard />
-        </div>
-        <div className={s.item}>
-          <GiftboxesCard />
-        </div>
+        {cards.map((CardComponent, i) => (
+          <motion.div
+            key={i}
+            custom={i}
+            variants={cardVariants}
+            initial="hidden"
+            animate="visible"
+            whileInView="visible"
+            viewport={{once: true}}
+          >
+            {CardComponent}
+          </motion.div>
+        ))}
       </div>
 
       <MyGifts />

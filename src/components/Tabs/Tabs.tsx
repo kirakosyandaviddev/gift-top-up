@@ -1,5 +1,6 @@
 import {createContext, useContext, useState, ReactNode} from 'react';
 import classNames from 'classnames';
+import {motion} from 'framer-motion';
 
 import s from './Tabs.module.css';
 
@@ -38,6 +39,14 @@ export const Tab = ({tab, children}: {tab: string; children: ReactNode}) => {
       className={classNames(s.button, {[s.active]: activeTab === tab})}
       onClick={() => setActiveTab(tab)}
     >
+      {activeTab === tab && (
+        <motion.span
+          layoutId="bubble"
+          className={s.buttonBubble}
+          style={{borderRadius: 9999}}
+          transition={{type: 'spring', bounce: 0, duration: 0.4}}
+        />
+      )}
       {children}
     </button>
   );

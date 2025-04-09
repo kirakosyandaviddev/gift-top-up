@@ -85,6 +85,13 @@ export const RoulettePage = () => {
             </span>
           </div>
         )}
+        {isLoopVisible && (
+          <div
+            className={classNames(s.backdrop, {
+              [s.backdropAnimation]: isRunning,
+            })}
+          />
+        )}
       </div>
 
       <div className={s.btnContainer}>
