@@ -9,7 +9,7 @@ import s from './RouletteCard.module.css';
 export const RouletteCard = () => {
   return (
     <Link to={ROUTES.ROULETTE} className={s.card}>
-      <img src={rouletteCard} className={s.rouletteCard} />
+      <img src={rouletteCard} className={s.rouletteCard} draggable={false} />
 
       <div className={s.body}>
         <div className={s.content}>

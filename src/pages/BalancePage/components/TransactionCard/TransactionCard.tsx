@@ -32,9 +32,21 @@ export const TransactionCard: FC<PropsType> = ({transaction}) => {
   return (
     <div className={s.container}>
       {hasGift ? (
-        <img className={s.img} src={payload.photoUrl} width={50} height={50} />
+        <img
+          className={s.img}
+          src={payload.photoUrl}
+          width={50}
+          height={50}
+          draggable={false}
+        />
       ) : (
-        <img className={s.img} src="img/incoming.png" width={50} height={50} />
+        <img
+          className={s.img}
+          src="img/incoming.png"
+          width={50}
+          height={50}
+          draggable={false}
+        />
       )}
 
       <div className={s.textContainer}>

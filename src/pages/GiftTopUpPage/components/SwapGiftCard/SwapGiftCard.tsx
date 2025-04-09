@@ -13,7 +13,13 @@ type PropsType = {
 export const SwapGiftCard: FC<PropsType> = ({price}) => {
   return (
     <div className={s.container}>
-      <img className={s.img} src={price.photoUrl} width={50} height={50} />
+      <img
+        className={s.img}
+        src={price.photoUrl}
+        width={50}
+        height={50}
+        draggable={false}
+      />
 
       <div className={s.grid}>
         <div className={s.title}>{price.title}</div>

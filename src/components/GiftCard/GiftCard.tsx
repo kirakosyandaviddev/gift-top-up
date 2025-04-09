@@ -29,7 +29,13 @@ export const GiftCard: FC<PropsType> = ({gift, onAdd, onSell, onPrice}) => {
       style={{backgroundColor: getHex(gift.backdrop.edgeColor)}}
     >
       <div className={s.imgContainer} role="button" onClick={onCardClick}>
-        <img className={s.img} src={gift.photoUrl} width={180} height={180} />
+        <img
+          className={s.img}
+          src={gift.photoUrl}
+          width={180}
+          height={180}
+          draggable={false}
+        />
         <p className={s.title}>{`${gift.title || ''} #${gift.num}`}</p>
       </div>
 
