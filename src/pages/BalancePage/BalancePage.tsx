@@ -5,6 +5,8 @@ import {BalanceInfo} from './components/BalanceInfo/BalanceInfo';
 import {TopUpWith} from './components/TopUpWith/TopUpWith';
 import {Transactions} from './components/Transactions/Transactions';
 
+import titleOverlay from '/svg/balancePage-title-overlay.svg';
+
 import s from './BalancePage.module.css';
 
 export const BalancePage = () => {
@@ -21,6 +23,7 @@ export const BalancePage = () => {
     <div className={s.wrapper}>
       <div className={s.titleContainer}>
         <h3 className={s.title}>Balance</h3>
+        <img src={titleOverlay} draggable={false} />
       </div>
 
       <BalanceInfo balance={data?.data?.user?.balance} />

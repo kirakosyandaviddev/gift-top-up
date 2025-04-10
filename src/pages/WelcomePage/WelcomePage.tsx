@@ -9,6 +9,8 @@ import {ROUTES} from '../../consts/routes';
 import {Checkbox} from './components/Checkbox/Checkbox';
 import {ChainIcon22} from '../../components/icons/ChainIcon22';
 
+import titleOverlay from '/svg/giftsGames-title.overlay.svg';
+
 import s from './WelcomePage.module.css';
 
 export const WelcomePage = () => {
@@ -45,6 +47,7 @@ export const WelcomePage = () => {
           <h5 className={s.title}>
             Welcome to <br />
             Gifts Games
+            <img src={titleOverlay} draggable={false} />
           </h5>
         </div>
 

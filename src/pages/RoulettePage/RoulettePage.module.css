@@ -17,11 +17,25 @@
   margin-bottom: 24px;
 }
 
+.title-container {
+  position: relative;
+  width: fit-content;
+  z-index: 10;
+}
+
 .title {
   font-size: 28px;
   line-height: 20px;
   font-weight: 800;
   color: #ffffff;
+  letter-spacing: 6px;
+}
+
+.title-container img {
+  position: absolute;
+  top: -16px;
+  left: -12px;
+  z-index: -1;
 }
 
 .balance-container {

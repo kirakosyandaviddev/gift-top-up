@@ -5,6 +5,8 @@ import dayjs from 'dayjs';
 import {TonIcon16} from '../../../../components/icons/TonIcon16';
 import {Transaction} from '../../../../etities/types/Transaction';
 
+import incomingTransactionImg from '/svg/incoming-transaction.svg';
+
 import s from './TransactionCard.module.css';
 
 type PropsType = {
@@ -42,7 +44,7 @@ export const TransactionCard: FC<PropsType> = ({transaction}) => {
       ) : (
         <img
           className={s.img}
-          src="img/incoming.png"
+          src={incomingTransactionImg}
           width={50}
           height={50}
           draggable={false}

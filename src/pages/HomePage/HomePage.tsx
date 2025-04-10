@@ -8,6 +8,8 @@ import {MyGifts} from '../../components/MyGifts/MyGifts';
 import {useGetConfigQuery} from '../../hooks/data/queries/useGetConfigQuery';
 import {useWebApp} from '../../hooks/useWebApp';
 
+import titleOverlay from '/svg/homePage-title-overlay.svg';
+
 import s from './HomePage.module.css';
 
 const cardVariants = {
@@ -44,6 +46,7 @@ export const HomePage = () => {
     <div className={s.wrapper}>
       <div className={s.titleContainer}>
         <h3 className={s.title}>Gifts Games</h3>
+        <img src={titleOverlay} draggable={false} />
       </div>
 
       <div className={s.list}>
