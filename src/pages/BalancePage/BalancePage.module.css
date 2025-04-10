@@ -10,6 +10,8 @@
 
 .title-container {
   margin-bottom: 16px;
+  z-index: 10;
+  position: relative;
 }
 
 .title {
@@ -17,4 +19,12 @@
   line-height: 20px;
   font-weight: 800;
   color: #ffffff;
+  letter-spacing: 6px;
+}
+
+.title-container img {
+  position: absolute;
+  top: -16px;
+  left: -12px;
+  z-index: -1;
 }

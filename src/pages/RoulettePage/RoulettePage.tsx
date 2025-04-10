@@ -10,10 +10,12 @@ import {useBackButton} from '../../hooks/data/useBackButton';
 import {TonIcon22} from '../../components/icons/TonIcon22';
 import {ChevronRight22} from '../../components/icons/ChevronRight22';
 import {ROUTES} from '../../consts/routes';
-
-import s from './RoulettePage.module.css';
-import {Roulette} from './roulette';
 import {MyGifts} from '../../components/MyGifts/MyGifts';
+
+import titleOverlay from '/svg/roulettePage-title-overlay.svg';
+
+import {Roulette} from './roulette';
+import s from './RoulettePage.module.css';
 
 const loadTGS = async (tgsUrl: string, container: HTMLDivElement) => {
   const response = await fetch(tgsUrl);
@@ -56,7 +58,10 @@ export const RoulettePage = () => {
   return (
     <div className={s.wrapper}>
       <div className={s.header}>
-        <h3 className={s.title}>Roulette</h3>
+        <div className={s.titleContainer}>
+          <h3 className={s.title}>Roulette</h3>
+          <img src={titleOverlay} draggable={false} />
+        </div>
         <button
           className={classNames(s.balanceContainer, {
             [s.empty]: data?.data?.user ? !data?.data?.user?.balance : false,

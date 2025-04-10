@@ -6,6 +6,8 @@ import {useGetConfigQuery} from '../../hooks/data/queries/useGetConfigQuery';
 import {useBackButton} from '../../hooks/data/useBackButton';
 import {useWebApp} from '../../hooks/useWebApp';
 
+import titleOverlay from '/svg/giftsPage-title-overlay.svg';
+
 import s from './GiftsPage.module.css';
 
 export const GiftsPage = () => {
@@ -87,6 +89,7 @@ export const GiftsPage = () => {
     <div className={s.wrapper}>
       <div className={s.titleContainer}>
         <h3 className={s.title}>My Gifts</h3>
+        <img src={titleOverlay} draggable={false} />
       </div>
 
       <Tabs defaultTab="bot">

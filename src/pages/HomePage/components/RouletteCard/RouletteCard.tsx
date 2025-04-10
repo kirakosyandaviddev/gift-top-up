@@ -2,14 +2,15 @@ import {Link} from 'react-router-dom';
 
 import {ROUTES} from '../../../../consts/routes';
 import {ArrowRight} from '../../../../components/icons/ArrowRight';
-import rouletteCard from './roulette-card.png';
+
+import img from '/svg/roulette-icon.svg';
 
 import s from './RouletteCard.module.css';
 
 export const RouletteCard = () => {
   return (
     <Link to={ROUTES.ROULETTE} className={s.card}>
-      <img src={rouletteCard} className={s.rouletteCard} draggable={false} />
+      <img src={img} className={s.rouletteCard} draggable={false} />
 
       <div className={s.body}>
         <div className={s.content}>

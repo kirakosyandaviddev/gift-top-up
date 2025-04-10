@@ -4,6 +4,8 @@ import {CopyNote} from './components/CopyNote/CopyNote';
 import {Gifts} from './components/Gifts/Gifts';
 import {WarningNote} from './components/WarningNote/WarningNote';
 
+import titleOverlay from '/svg/topUpPage-title-overlay.svg';
+
 import s from './GiftTopUpPage.module.css';
 
 export const GiftTopUpPage = () => {
@@ -14,6 +16,7 @@ export const GiftTopUpPage = () => {
     <div className={s.wrapper}>
       <div className={s.titleContainer}>
         <h3 className={s.title}>Gift Top Up</h3>
+        <img src={titleOverlay} draggable={false} />
       </div>
 
       <CopyNote />
