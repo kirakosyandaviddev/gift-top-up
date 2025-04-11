@@ -1,0 +1,18 @@
+.container {
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 12px;
+  color: #ffffff;
+  padding: 17px;
+
+  background: #00b0f5;
+  background: linear-gradient(90deg, #00b0f5 0%, #7140cc 90%);
+}

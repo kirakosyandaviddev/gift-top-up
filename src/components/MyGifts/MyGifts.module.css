@@ -13,6 +13,119 @@
   gap: 4px;
 }
 
+.imgGroup {
+  position: relative;
+  width: 42px;
+  height: 42px;
+}
+
+.bear {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  transform: rotate(-9deg);
+}
+
+.stone {
+  position: absolute;
+  bottom: 10px;
+  right: 6px;
+  transform: rotate(18deg);
+}
+
+.stars {
+  position: relative;
+  color: #ffffff;
+}
+
+.stars svg {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  animation: twinkle 2s infinite ease-in-out;
+  transform-origin: center;
+}
+
+.stars svg:nth-child(1) {
+  top: 23px;
+  left: 22px;
+  animation-delay: 0s;
+}
+
+.stars svg:nth-child(2) {
+  top: 6px;
+  left: 20px;
+  animation-delay: 0.2s;
+}
+
+.stars svg:nth-child(3) {
+  top: 2px;
+  left: 37px;
+  animation-delay: 0.4s;
+}
+
+.stars svg:nth-child(4) {
+  top: -3px;
+  left: 14px;
+  animation-delay: 0.6s;
+}
+
+.stars svg:nth-child(5) {
+  top: 41px;
+  left: -1.5px;
+  animation-delay: 0.8s;
+}
+
+.stars svg:nth-child(6) {
+  top: 42px;
+  left: 25px;
+  animation-delay: 1s;
+}
+
+.stars svg:nth-child(7) {
+  top: 18px;
+  left: -3.5px;
+  animation-delay: 1.2s;
+}
+
+.stars svg:nth-child(8) {
+  top: 26.5px;
+  left: 0.5px;
+  animation-delay: 1.4s;
+}
+
+.stars svg:nth-child(9) {
+  top: 19.5px;
+  left: 6.5px;
+  animation-delay: 1.6s;
+}
+
+/* Twinkle animation */
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.75);
+  }
+}
+
 .text {
   font-weight: 600;
   font-size: 18px;

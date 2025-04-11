@@ -13,7 +13,7 @@ type PropsType = {
   onPrice?: (gift: Gift) => void;
 };
 
-const getHex = (color: number) =>
+export const getHex = (color: number) =>
   '#' + color.toString(16).toUpperCase().padStart(6, '0');
 
 export const GiftCard: FC<PropsType> = ({gift, onAdd, onSell, onPrice}) => {

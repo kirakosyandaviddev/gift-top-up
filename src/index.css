@@ -52,4 +52,5 @@ a {
   background-color: #000000;
   background: linear-gradient(180deg, #000000 0%, #212121 50%, #000000 90%);
   overflow: hidden;
+  position: relative;
 }
