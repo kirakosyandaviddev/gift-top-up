@@ -65,6 +65,9 @@
 
 .gift-container {
   position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .content {
@@ -73,7 +76,6 @@
   justify-content: center;
   flex: 1;
   width: 100%;
-  position: relative;
 }
 
 .gift-title {
@@ -83,15 +85,44 @@
   color: #ffffff;
 
   position: absolute;
-  bottom: 32px;
+  bottom: -32px;
   left: 0;
   right: 0;
   text-align: center;
 }
 
+.circle {
+  position: absolute;
+  animation: scaleAndHide 1.2s forwards;
+}
+
+@keyframes scaleAndHide {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.hide-after-animation {
+  animation-fill-mode: forwards;
+  animation: scaleAndHide 1.2s forwards;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .btn-container {
   margin-top: auto;
   padding: 9px 0;
+  width: 100%;
 }
 
 .bg {
@@ -117,7 +148,7 @@
 }
 
 .backdrop-animation {
-  animation: rotateLeftInfinite 0.4s linear infinite;
+  animation: rotateLeftInfinite 0.6s linear infinite;
 }
 
 @keyframes rotateLeftInfinite {

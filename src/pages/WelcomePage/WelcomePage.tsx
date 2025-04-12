@@ -47,8 +47,8 @@ export const WelcomePage = () => {
           <h5 className={s.title}>
             Welcome to <br />
             Gifts Games
-            <img src={titleOverlay} draggable={false} />
           </h5>
+          <img src={titleOverlay} draggable={false} />
         </div>
 
         <div className={s.list}>

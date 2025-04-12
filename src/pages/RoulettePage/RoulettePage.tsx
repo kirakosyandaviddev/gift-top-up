@@ -15,20 +15,29 @@ import {MyGifts} from '../../components/MyGifts/MyGifts';
 import titleOverlay from '/svg/roulettePage-title-overlay.svg';
 import {SwipeButton} from './components/SwipeButton/SwipeButton';
 
-import {Roulette} from './roulette';
-
 import s from './RoulettePage.module.css';
+
 import {TopUpButton} from './components/TopUpButton/TopUpButton';
 import {BG} from './bg';
 import {getHex} from '../../components/GiftCard/GiftCard';
+import {Confetti} from './components/Confetti/Confetti';
+import {Roulette} from './components/Roulette/Roulette';
+import {Gift} from '../../etities/types/Gift';
 
-const loadTGS = async (tgsUrl: string, container: HTMLDivElement) => {
+import circle from './svg/circle.svg';
+
+const loadTGS = async (
+  tgsUrl: string,
+  name: string,
+  container: HTMLDivElement,
+) => {
   const response = await fetch(tgsUrl);
   const buffer = await response.arrayBuffer();
   const decompressed = pako.ungzip(new Uint8Array(buffer), {to: 'string'});
   const animationData = JSON.parse(decompressed);
 
   lottie.loadAnimation({
+    name: name,
     container,
     renderer: 'svg',
     loop: true,
@@ -45,24 +54,25 @@ export const RoulettePage = () => {
   const {
     mutate: getRandomGift,
     data: getRandomGiftData,
-    error,
-    isPending,
+    error: getRandomGiftError,
   } = useRandomGiftMutation();
   console.log('data-----------------useRandomGiftMutation', getRandomGiftData);
-  console.log('error-----------------useRandomGiftMutation', error);
+  console.log(
+    'error-----------------useRandomGiftMutation',
+    getRandomGiftError,
+  );
 
   const [isRunning, setIsRunning] = useState(false);
-  const [isLoopVisible, setIsLoopVisible] = useState(true);
+  const [isRouletteVisible, setIsRouletteVisible] = useState(true);
+  const [winGift, setWinGift] = useState<null | Gift>(null);
 
   const userBalance = data?.data?.user?.balance || 0;
-  // const wonGift = data?.data?.user?.gifts[0];
-  const wonGift = getRandomGiftData?.data?.gift;
 
   useEffect(() => {
-    if (ref?.current && wonGift?.animationUrl) {
-      loadTGS(wonGift.animationUrl, ref?.current);
+    if (ref?.current && winGift) {
+      loadTGS(winGift.model.animationUrl, winGift.title, ref?.current);
     }
-  }, [wonGift?.animationUrl]);
+  }, [winGift]);
 
   return (
     <div className={s.wrapper}>
@@ -88,16 +98,38 @@ export const RoulettePage = () => {
       </div>
 
       <div className={s.content}>
-        {isLoopVisible && <Roulette isRunning={isRunning} />}
-        {!isLoopVisible && (
+        {isRouletteVisible && (
+          <Roulette
+            isRunning={isRunning}
+            targetId={getRandomGiftData?.data?.gift?.id}
+            onRunEnd={() => {
+              console.log('==========================onRunEnd');
+              setIsRouletteVisible(false);
+              setIsRunning(false);
+
+              if (getRandomGiftData?.data.gift) {
+                setWinGift(getRandomGiftData?.data.gift);
+              }
+
+              setTimeout(() => {
+                setIsRouletteVisible(true);
+                setWinGift(null);
+                lottie.destroy(winGift?.title);
+              }, 5000);
+            }}
+          />
+        )}
+        {winGift && <Confetti />}
+        {winGift && (
           <div className={s.giftContainer}>
-            <div ref={ref} />
+            <img className={s.circle} src={circle} width={206} height={206} />
+            <div ref={ref} style={{width: 200, height: 200}} />
             <span className={s.giftTitle}>
-              {wonGift ? `${wonGift?.title} #${wonGift?.num}` : ''}
+              {winGift ? `${winGift?.title} #${winGift?.num}` : ''}
             </span>
           </div>
         )}
-        {isLoopVisible && (
+        {isRouletteVisible && (
           <div
             className={classNames(s.backdrop, {
               [s.backdropAnimation]: isRunning,
@@ -106,36 +138,31 @@ export const RoulettePage = () => {
         )}
       </div>
 
-      <div className={s.btnContainer}>
-        {!!userBalance ? (
-          <SwipeButton
-            onSwipe={() => {
-              setIsLoopVisible(true);
-              setIsRunning(true);
-
-              setTimeout(() => {
-                setIsLoopVisible(false);
-                setIsRunning(false);
-
+      <div className={s.footer}>
+        <div className={s.btnContainer}>
+          {!!userBalance ? (
+            <SwipeButton
+              onSwipe={() => {
+                setIsRunning(true);
                 getRandomGift();
-                ref?.current?.firstChild &&
-                  ref.current.removeChild(ref.current.firstChild);
-              }, 3000);
-            }}
-            disabled={isPending}
-          />
-        ) : (
-          <TopUpButton
-            onClick={() => {
-              navigate(ROUTES.BALANCE);
-            }}
-          />
-        )}
+              }}
+              isRunning={isRunning}
+              showDisabled={!isRouletteVisible || isRunning}
+            />
+          ) : (
+            <TopUpButton
+              onClick={() => {
+                navigate(ROUTES.BALANCE);
+              }}
+            />
+          )}
+        </div>
+
+        <MyGifts />
       </div>
-
-      <BG style={{color: getHex(wonGift?.backdrop?.edgeColor || 0)}} />
-
-      <MyGifts />
+      {!isRunning && (
+        <BG style={{color: getHex(winGift?.backdrop?.edgeColor || 0)}} />
+      )}
     </div>
   );
 };

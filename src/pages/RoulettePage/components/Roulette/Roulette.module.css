@@ -1,6 +1,7 @@
 .slider-container {
   width: 100%;
   overflow: hidden;
+  position: absolute;
 }
 
 .slider-track {
@@ -8,11 +9,6 @@
   align-items: center;
   width: max-content;
   height: 320px;
-  transform: translateX(-110px);
-}
-
-.animate {
-  animation: scrollRight 0.5s linear infinite;
 }
 
 .slide {
@@ -22,13 +18,4 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-@keyframes scrollRight {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-2244px); /* matches the width of original 11 items */
-  }
 }

@@ -26,6 +26,7 @@
     "lottie-web": "^5.12.2",
     "pako": "^2.1.0",
     "react": "^19.0.0",
+    "react-confetti-boom": "^1.1.2",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.4.0",
     "remove": "^0.1.5",

@@ -18,6 +18,7 @@ export type Model = {
   name: string;
   rarityPermille: number;
   photoUrl: string;
+  animationUrl: string;
 };
 
 export type Gift = {
