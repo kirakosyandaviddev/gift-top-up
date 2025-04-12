@@ -26,6 +26,10 @@
   height: 14px;
 }
 
+.disabled {
+  pointer-events: none;
+}
+
 .arrowsWrapper {
   position: absolute;
   left: 14px;

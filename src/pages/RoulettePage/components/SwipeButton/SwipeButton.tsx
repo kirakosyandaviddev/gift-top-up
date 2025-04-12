@@ -1,11 +1,19 @@
 import {useState, useRef, useEffect} from 'react';
 
 import background from './svg/background.svg';
+import noBackground from './svg/no-background.svg';
 
 import {Arrows} from './Arrows';
-import s from './SwipeButton.module.css';
 
-export const SwipeButton = ({onSwipe}: any) => {
+import s from './SwipeButton.module.css';
+import classNames from 'classnames';
+
+type PropsType = {
+  isRunning: boolean;
+  showDisabled: boolean;
+  onSwipe: () => void;
+};
+export const SwipeButton = ({onSwipe, isRunning, showDisabled}: PropsType) => {
   const [isSwiped, setIsSwiped] = useState(false);
   const ref = useRef(null);
   const [startX, setStartX] = useState<number | null>(null);
@@ -18,7 +26,7 @@ export const SwipeButton = ({onSwipe}: any) => {
 
   const handleEnd = (x: number) => {
     if (startX === null) return;
-    if (startX - x > 160) {
+    if (startX - x > 100) {
       setIsSwiped(true);
     }
     setStartX(null);
@@ -43,7 +51,7 @@ export const SwipeButton = ({onSwipe}: any) => {
   };
 
   useEffect(() => {
-    if (isSwiped) {
+    if (isSwiped && !isRunning) {
       onSwipe();
       setIsSwiped(false);
     }
@@ -52,7 +60,7 @@ export const SwipeButton = ({onSwipe}: any) => {
   return (
     <div
       role="button"
-      className={s.wrapper}
+      className={classNames(s.wrapper, {[s.disabled]: showDisabled})}
       ref={ref}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
@@ -77,8 +85,12 @@ export const SwipeButton = ({onSwipe}: any) => {
         </svg>
       </div>
 
-      <Arrows className={s.arrowsWrapper} />
-      <img src={background} className={s.background} draggable={false} />
+      {!showDisabled && <Arrows className={s.arrowsWrapper} />}
+      <img
+        src={showDisabled ? noBackground : background}
+        className={s.background}
+        draggable={false}
+      />
     </div>
   );
 };

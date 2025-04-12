@@ -11,7 +11,7 @@ import s from './GiftboxesCard.module.css';
 
 export const GiftboxesCard = () => {
   return (
-    <Link to={ROUTES.GIFT_TOP_UP} className={s.card}>
+    <Link to={ROUTES.HOME} className={s.card}>
       <img src={soonBadge} className={s.soonBadge} draggable={false} />
       <img src={boxes} className={s.boxes} draggable={false} />
       <img src={shadow} className={s.shadow} draggable={false} />
