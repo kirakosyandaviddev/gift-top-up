@@ -3,12 +3,7 @@ import {useGetRouletteGifts} from '../../../../hooks/data/queries/useGetRoulette
 import s from './Roulette.module.css';
 
 import {useRef, useEffect} from 'react';
-import {
-  motion,
-  useAnimation,
-  useAnimationFrame,
-  useMotionValue,
-} from 'framer-motion';
+import {motion, useAnimation} from 'framer-motion';
 
 const ITEM_WIDTH = 204; // 180px + 24px margin
 
