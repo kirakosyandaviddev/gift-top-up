@@ -15,16 +15,15 @@
 }
 
 .title {
-  font-size: 28px;
+  font-size: 40px;
   line-height: 20px;
   font-weight: 800;
   color: #ffffff;
-  letter-spacing: 6px;
 }
 
 .title-container img {
   position: absolute;
-  top: -16px;
-  left: -12px;
+  top: -10px;
+  left: -4px;
   z-index: -1;
 }

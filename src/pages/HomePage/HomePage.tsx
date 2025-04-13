@@ -5,7 +5,7 @@ import {BalanceCard} from './components/BalanceCard/BalanceCard';
 import {RouletteCard} from './components/RouletteCard/RouletteCard';
 import {GiftboxesCard} from './components/GiftboxesCard/GiftboxesCard';
 import {MyGifts} from '../../components/MyGifts/MyGifts';
-import {useGetConfigQuery} from '../../hooks/data/queries/useGetConfigQuery';
+import {useGetInfo} from '../../hooks/data/queries/useGetInfo';
 import {useWebApp} from '../../hooks/useWebApp';
 
 import titleOverlay from '/svg/homePage-title-overlay.svg';
@@ -18,15 +18,15 @@ const cardVariants = {
     opacity: 1,
     y: 0,
     transition: {
-      delay: i * 0.2,
-      duration: 0.4,
+      delay: i * 0.1,
+      duration: 0.3,
       ease: 'easeOut',
     },
   }),
 };
 
 export const HomePage = () => {
-  const {data} = useGetConfigQuery();
+  const {data} = useGetInfo();
   const WebApp = useWebApp();
   WebApp.BackButton.hide();
 

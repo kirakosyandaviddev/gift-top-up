@@ -7,9 +7,7 @@ import {ResponseType} from '../../../etities/types/ResponseType';
 import {useWebApp} from '../../../hooks/useWebApp';
 import {Gift} from '../../../etities/types/Gift';
 
-export type GetRouletteGifts = Gift[];
-
-export type GetConfigResponseType = ResponseType<GetRouletteGifts>;
+export type GetRouletteGiftsResponseType = ResponseType<Gift[]>;
 
 export const useGetRouletteGifts = () => {
   const WebApp = useWebApp();
@@ -17,14 +15,14 @@ export const useGetRouletteGifts = () => {
   const {data} = useQuery({
     queryKey: [QUERY_KEYS.GET_ROULETTE_GIFTS],
     queryFn: async () => {
-      const response = await axiosClient<GetConfigResponseType>({
+      const response = await axiosClient<GetRouletteGiftsResponseType>({
         method: 'POST',
         url: ENDPOINTS.GET_ROULETTE_GIFTS,
         data: {initData: WebApp?.initData},
       });
       return response.data;
     },
-    staleTime: 3 * 60 * 1000,
+    // staleTime: 3 * 60 * 1000,
   });
 
   return {

@@ -5,12 +5,12 @@ import lottie from 'lottie-web';
 import pako from 'pako';
 
 import {useRandomGiftMutation} from '../../hooks/data/mutations/useRandomGiftMutation';
-import {useGetConfigQuery} from '../../hooks/data/queries/useGetConfigQuery';
 import {useBackButton} from '../../hooks/data/useBackButton';
 import {TonIcon22} from '../../components/icons/TonIcon22';
 import {ChevronRight22} from '../../components/icons/ChevronRight22';
 import {ROUTES} from '../../consts/routes';
 import {MyGifts} from '../../components/MyGifts/MyGifts';
+import {useGetInfo} from '../../hooks/data/queries/useGetInfo';
 
 import titleOverlay from '/svg/roulettePage-title-overlay.svg';
 import {SwipeButton} from './components/SwipeButton/SwipeButton';
@@ -50,7 +50,7 @@ export const RoulettePage = () => {
   useBackButton();
   const ref = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
-  const {data} = useGetConfigQuery();
+  const {data} = useGetInfo();
   const {
     mutate: getRandomGift,
     data: getRandomGiftData,
@@ -101,14 +101,14 @@ export const RoulettePage = () => {
         {isRouletteVisible && (
           <Roulette
             isRunning={isRunning}
-            targetId={getRandomGiftData?.data?.gift?.id}
+            targetId={getRandomGiftData?.data?.winGift?.id}
             onRunEnd={() => {
               console.log('==========================onRunEnd');
               setIsRouletteVisible(false);
               setIsRunning(false);
 
-              if (getRandomGiftData?.data.gift) {
-                setWinGift(getRandomGiftData?.data.gift);
+              if (getRandomGiftData?.data.winGift) {
+                setWinGift(getRandomGiftData?.data.winGift);
               }
 
               setTimeout(() => {

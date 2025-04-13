@@ -14,6 +14,7 @@ import {useNewPrice} from '../hooks/subscriptions/useNewPrice';
 import {useUpdateAvgGift} from '../hooks/subscriptions/useUpdateAvgGift';
 
 import {Layout} from '../components/Layout';
+import {useGetInfo} from '../hooks/data/queries/useGetInfo';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
 
 export const Router = () => {
   // Move subscriptions to the Additional Layer
+  useGetInfo();
   useNewTransaction();
   useUpdatePrice();
   useNewPrice();

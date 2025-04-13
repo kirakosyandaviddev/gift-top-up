@@ -7,29 +7,33 @@ import {Gift} from '../../../../etities/types/Gift';
 import {useWebApp} from '../../../../hooks/useWebApp';
 import {useSwapGiftToTonMutation} from '../../../../hooks/data/mutations/useSwapGiftToTonMutation';
 import {Price} from '../../../../etities/types/Price';
+import {PriceCard} from '../PriceCard/PriceCard';
 
-import {SwapGiftCard} from '../SwapGiftCard/SwapGiftCard';
 import s from './Gifts.module.css';
 
 type PropsType = {
   prices?: Price[];
-  nfts?: Gift[];
+  giftsProfile?: Gift[];
   gifts?: Gift[];
 };
 
-export const Gifts: FC<PropsType> = ({prices = [], nfts = [], gifts = []}) => {
+export const Gifts: FC<PropsType> = ({
+  prices = [],
+  giftsProfile = [],
+  gifts = [],
+}) => {
   const WebApp = useWebApp();
   const {mutate: swapGiftToTon} = useSwapGiftToTonMutation();
   const [searchParams] = useSearchParams();
 
-  // nfts should be after gifts
+  // giftsProfile should be after gifts
   const profileGifts = [
     ...gifts.filter((g) => g.status === 'awaiting'),
-    ...nfts,
+    ...giftsProfile,
   ];
 
   const onPriceClick = (gift: Gift) => {
-    // When the Gift is from nfts
+    // When the Gift is from giftsProfile
     if (!gift.status) {
       WebApp.openTelegramLink(`https://t.me/m/CtWO8BXgMzlk`);
       return;
@@ -77,7 +81,7 @@ export const Gifts: FC<PropsType> = ({prices = [], nfts = [], gifts = []}) => {
         {!!prices.length ? (
           <div className={s.list}>
             {prices.map((price) => (
-              <SwapGiftCard key={price.id} price={price} />
+              <PriceCard key={price.id} price={price} />
             ))}
           </div>
         ) : (

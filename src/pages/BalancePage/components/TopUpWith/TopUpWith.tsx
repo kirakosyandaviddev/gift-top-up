@@ -6,7 +6,7 @@ import {beginCell, toNano} from '@ton/ton';
 import {TonIcon16} from '../../../../components/icons/TonIcon16';
 import {GiftIcon16} from '../../../../components/icons/GiftIcon16';
 import {ROUTES} from '../../../../consts/routes';
-import {useGetConfigQuery} from '../../../../hooks/data/queries/useGetConfigQuery';
+import {useGetInfo} from '../../../../hooks/data/queries/useGetInfo';
 import {useWebApp} from '../../../../hooks/useWebApp';
 
 import s from './TopUpWith.module.css';
@@ -14,7 +14,7 @@ import s from './TopUpWith.module.css';
 export const TopUpWith = () => {
   const navigate = useNavigate();
   const [tonConnectUI] = useTonConnectUI();
-  const {data} = useGetConfigQuery();
+  const {data} = useGetInfo();
   const WebApp = useWebApp();
 
   const handleTopUp = (amount: number) => {

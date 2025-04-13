@@ -1,20 +1,27 @@
-import {useMutation} from '@tanstack/react-query';
+import {useMutation, useQueryClient} from '@tanstack/react-query';
 
 import {QUERY_KEYS} from '../../../consts/queryKeys';
 import {axiosClient} from '../../../libs/axiosClient';
 import {ENDPOINTS} from '../../../consts/endpoints';
-import {User} from '../../../etities/types/User';
 import {ResponseType} from '../../../etities/types/ResponseType';
 import {useWebApp} from '../../useWebApp';
-import {useUpdateCache} from '../../utils/useUpdateCache';
+import {GetFullGiftsResponseType} from '../queries/useGetFullGifts';
 
-type PickUpGiftResponseType = {
-  user: User;
+type PickUpGiftResponseType = boolean;
+
+const prepareGifts = (
+  cacheData: GetFullGiftsResponseType,
+  giftId: string,
+): GetFullGiftsResponseType => {
+  return {
+    ...cacheData,
+    data: [...cacheData.data].filter((gift) => gift.id !== giftId),
+  };
 };
 
 export const usePickUpGiftMutation = () => {
   const WebApp = useWebApp();
-  const updateCache = useUpdateCache();
+  const queryClient = useQueryClient();
 
   const {data, mutate, isSuccess, isPending, error} = useMutation({
     mutationKey: [QUERY_KEYS.PICK_UP_GIFT],
@@ -26,8 +33,16 @@ export const usePickUpGiftMutation = () => {
       });
       return response.data;
     },
-    onSuccess: (d) => {
-      updateCache(d.data.user);
+    onSuccess: (d, v) => {
+      console.log('pickUpGift onSuccess', d);
+
+      queryClient.setQueryData(
+        [QUERY_KEYS.GET_FULL_GIFTS],
+        (cacheData: GetFullGiftsResponseType) => {
+          if (!cacheData) return cacheData;
+          return prepareGifts(cacheData, v);
+        },
+      );
     },
   });
 
