@@ -1,8 +1,10 @@
-import {useGetConfigQuery} from '../../hooks/data/queries/useGetConfigQuery';
 import {useBackButton} from '../../hooks/data/useBackButton';
 import {CopyNote} from './components/CopyNote/CopyNote';
 import {Gifts} from './components/Gifts/Gifts';
 import {WarningNote} from './components/WarningNote/WarningNote';
+import {useGetPrices} from '../../hooks/data/queries/useGetPrices';
+import {useGetFullGiftsProfile} from '../../hooks/data/queries/useGetFullGiftsProfile';
+import {useGetFullGifts} from '../../hooks/data/queries/useGetFullGifts';
 
 import titleOverlay from '/svg/topUpPage-title-overlay.svg';
 
@@ -10,7 +12,9 @@ import s from './GiftTopUpPage.module.css';
 
 export const GiftTopUpPage = () => {
   useBackButton();
-  const {data} = useGetConfigQuery();
+  const {data: prices} = useGetPrices();
+  const {data: gifts} = useGetFullGifts();
+  const {data: giftsProfile} = useGetFullGiftsProfile();
 
   return (
     <div className={s.wrapper}>
@@ -22,9 +26,9 @@ export const GiftTopUpPage = () => {
       <CopyNote />
       <WarningNote />
       <Gifts
-        prices={data?.data?.prices}
-        nfts={data?.data?.nfts}
-        gifts={data?.data?.user?.gifts}
+        prices={prices?.data}
+        giftsProfile={giftsProfile?.data}
+        gifts={gifts?.data}
       />
     </div>
   );

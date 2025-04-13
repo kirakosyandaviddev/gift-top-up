@@ -3,22 +3,19 @@ import {useQueryClient} from '@tanstack/react-query';
 
 import {wsClient} from '../../libs/wsClient';
 import {QUERY_KEYS} from '../../consts/queryKeys';
-import {GetConfigResponseType} from '../data/queries/useGetConfigQuery';
+import {GetPricesResponseType} from '../data/queries/useGetPrices';
 
 type UpdatePrice = {id: string; value: number};
 
 const prepareCache = (
-  cacheData: GetConfigResponseType,
+  cacheData: GetPricesResponseType,
   data: UpdatePrice,
-): GetConfigResponseType => {
+): GetPricesResponseType => {
   return {
     ...cacheData,
-    data: {
-      ...cacheData.data,
-      prices: cacheData.data.prices.map((p) =>
-        p.id === data.id ? {...p, price: data.value} : p,
-      ),
-    },
+    data: [...cacheData.data].map((p) =>
+      p.id === data.id ? {...p, price: data.value} : p,
+    ),
   };
 };
 
@@ -30,8 +27,8 @@ export const useUpdatePrice = () => {
       console.log('onUpdatePrice fires::: ', data);
 
       queryClient.setQueryData(
-        [QUERY_KEYS.GET_CONFIG],
-        (cacheData: GetConfigResponseType) => {
+        [QUERY_KEYS.GET_PRICES],
+        (cacheData: GetPricesResponseType) => {
           if (!cacheData) return cacheData;
           return prepareCache(cacheData, data);
         },

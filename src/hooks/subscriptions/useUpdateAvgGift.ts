@@ -3,28 +3,32 @@ import {useQueryClient} from '@tanstack/react-query';
 
 import {wsClient} from '../../libs/wsClient';
 import {QUERY_KEYS} from '../../consts/queryKeys';
-import {GetConfigResponseType} from '../data/queries/useGetConfigQuery';
+import {GetFullGiftsProfileResponseType} from '../data/queries/useGetFullGiftsProfile';
+import {GetFullGiftsResponseType} from '../data/queries/useGetFullGifts';
 
 type UpdateAvgGift = {id: string; value: number};
 
-const prepareCache = (
-  cacheData: GetConfigResponseType,
+const prepareGiftsProfile = (
+  cacheData: GetFullGiftsProfileResponseType,
   data: UpdateAvgGift,
-): GetConfigResponseType => {
+): GetFullGiftsProfileResponseType => {
   return {
     ...cacheData,
-    data: {
-      ...cacheData.data,
-      user: {
-        ...cacheData.data.user,
-        gifts: cacheData.data.user.gifts.map((gift) =>
-          gift.id === data.id ? {...gift, avg: data.value} : gift,
-        ),
-      },
-      nfts: cacheData.data.nfts.map((gift) =>
-        gift.id === data.id ? {...gift, avg: data.value} : gift,
-      ),
-    },
+    data: [...cacheData.data].map((gift) =>
+      gift.id === data.id ? {...gift, avg: data.value} : gift,
+    ),
+  };
+};
+
+const prepareGifts = (
+  cacheData: GetFullGiftsResponseType,
+  data: UpdateAvgGift,
+): GetFullGiftsResponseType => {
+  return {
+    ...cacheData,
+    data: [...cacheData.data].map((gift) =>
+      gift.id === data.id ? {...gift, avg: data.value} : gift,
+    ),
   };
 };
 
@@ -36,10 +40,18 @@ export const useUpdateAvgGift = () => {
       console.log('onUpdateAvgGift fires::: ', data);
 
       queryClient.setQueryData(
-        [QUERY_KEYS.GET_CONFIG],
-        (cacheData: GetConfigResponseType) => {
+        [QUERY_KEYS.GET_FULL_GIFTS_PROFILE],
+        (cacheData: GetFullGiftsProfileResponseType) => {
           if (!cacheData) return cacheData;
-          return prepareCache(cacheData, data);
+          return prepareGiftsProfile(cacheData, data);
+        },
+      );
+
+      queryClient.setQueryData(
+        [QUERY_KEYS.GET_FULL_GIFTS],
+        (cacheData: GetFullGiftsResponseType) => {
+          if (!cacheData) return cacheData;
+          return prepareGifts(cacheData, data);
         },
       );
     };

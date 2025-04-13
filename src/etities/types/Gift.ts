@@ -12,6 +12,7 @@ export type Backdrop = {
 export type Pattern = {
   name: string;
   rarityPermille: number;
+  animationUrl: string;
 };
 
 export type Model = {

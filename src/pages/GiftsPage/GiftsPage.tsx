@@ -2,9 +2,10 @@ import {GiftCard} from '../../components/GiftCard/GiftCard';
 import {Tabs} from '../../components/Tabs/Tabs';
 import {usePickUpGiftMutation} from '../../hooks/data/mutations/usePickUpGiftMutation';
 import {useSwapGiftToTonMutation} from '../../hooks/data/mutations/useSwapGiftToTonMutation';
-import {useGetConfigQuery} from '../../hooks/data/queries/useGetConfigQuery';
 import {useBackButton} from '../../hooks/data/useBackButton';
 import {useWebApp} from '../../hooks/useWebApp';
+import {useGetFullGiftsProfile} from '../../hooks/data/queries/useGetFullGiftsProfile';
+import {useGetFullGifts} from '../../hooks/data/queries/useGetFullGifts';
 
 import titleOverlay from '/svg/giftsPage-title-overlay.svg';
 
@@ -13,18 +14,20 @@ import s from './GiftsPage.module.css';
 export const GiftsPage = () => {
   useBackButton();
   const WebApp = useWebApp();
-  const {data} = useGetConfigQuery();
+  const {data: gifts} = useGetFullGifts();
+  const {data: giftsProfile} = useGetFullGiftsProfile();
+
   const {mutate: pickUpGift, isPending: pickUpGiftPending} =
     usePickUpGiftMutation();
   const {mutate: swapGiftToTon, isPending: swapGiftToTonPending} =
     useSwapGiftToTonMutation();
 
   const botGifts =
-    data?.data?.user?.gifts?.filter(({status}) =>
+    gifts?.data.filter(({status}) =>
       ['awaiting', 'swap'].includes(status || ''),
     ) || [];
 
-  const profileGifts = data?.data?.nfts || [];
+  const profileGifts = giftsProfile?.data || [];
 
   const onAddClick = (giftId: string) => {
     WebApp.showPopup(
@@ -101,9 +104,9 @@ export const GiftsPage = () => {
         <Tabs.Panel tab="bot">
           {!!botGifts.length ? (
             <div className={s.container}>
-              {botGifts.map((gift) => (
+              {botGifts.map((gift, i) => (
                 <GiftCard
-                  key={gift.id}
+                  key={`${gift.id}-${i}`}
                   gift={gift}
                   onAdd={
                     gift.status === 'swap'
@@ -132,9 +135,9 @@ export const GiftsPage = () => {
         <Tabs.Panel tab="profile">
           {!!profileGifts.length ? (
             <div className={s.container}>
-              {profileGifts?.map((gift) => (
+              {profileGifts?.map((gift, i) => (
                 <GiftCard
-                  key={gift.id}
+                  key={`${gift.id}-${i}`}
                   gift={gift}
                   onSell={() => {
                     WebApp.openTelegramLink(`https://t.me/m/CtWO8BXgMzlk`);

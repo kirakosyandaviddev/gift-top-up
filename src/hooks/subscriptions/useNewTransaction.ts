@@ -4,14 +4,15 @@ import {useQueryClient} from '@tanstack/react-query';
 import {wsClient} from '../../libs/wsClient';
 import {Transaction} from '../../etities/types/Transaction';
 import {QUERY_KEYS} from '../../consts/queryKeys';
-import {GetConfigResponseType} from '../data/queries/useGetConfigQuery';
+import {GetFullTransactionsResponseType} from '../data/queries/useGetFullTransactions';
+import {GetInfoResponseType} from '../data/queries/useGetInfo';
 
 type NewTransaction = {balance: number; transaction: Transaction};
 
-const prepareCache = (
-  cacheData: GetConfigResponseType,
+const prepareInfo = (
+  cacheData: GetInfoResponseType,
   data: NewTransaction,
-): GetConfigResponseType => {
+): GetInfoResponseType => {
   return {
     ...cacheData,
     data: {
@@ -19,12 +20,18 @@ const prepareCache = (
       user: {
         ...cacheData.data.user,
         balance: data.balance,
-        historyTransaction: [
-          ...cacheData.data.user.historyTransaction,
-          data.transaction,
-        ],
       },
     },
+  };
+};
+
+const prepareTransactions = (
+  cacheData: GetFullTransactionsResponseType,
+  data: NewTransaction,
+): GetFullTransactionsResponseType => {
+  return {
+    ...cacheData,
+    data: [data.transaction, ...cacheData.data],
   };
 };
 
@@ -36,11 +43,19 @@ export const useNewTransaction = () => {
       console.log('onNewTransaction fires::: ', data);
 
       queryClient.setQueryData(
-        [QUERY_KEYS.GET_CONFIG],
-        (cacheData: GetConfigResponseType) => {
+        [QUERY_KEYS.GET_INFO],
+        (cacheData: GetInfoResponseType) => {
           if (!cacheData) return cacheData;
 
-          return prepareCache(cacheData, data);
+          return prepareInfo(cacheData, data);
+        },
+      );
+
+      queryClient.setQueryData(
+        [QUERY_KEYS.GET_FULL_TRANSACTIONS],
+        (cacheData: GetFullTransactionsResponseType) => {
+          if (!cacheData) return cacheData;
+          return prepareTransactions(cacheData, data);
         },
       );
     };

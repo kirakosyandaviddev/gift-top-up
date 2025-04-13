@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import classNames from 'classnames';
 import {useTonConnectModal, useTonWallet} from '@tonconnect/ui-react';
 
-import {useGetConfigQuery} from '../../hooks/data/queries/useGetConfigQuery';
+import {useGetInfo} from '../../hooks/data/queries/useGetInfo';
 import {useWebApp} from '../../hooks/useWebApp';
 import {ROUTES} from '../../consts/routes';
 import {Checkbox} from './components/Checkbox/Checkbox';
@@ -15,7 +15,7 @@ import s from './WelcomePage.module.css';
 
 export const WelcomePage = () => {
   const navigate = useNavigate();
-  const {data} = useGetConfigQuery();
+  const {data} = useGetInfo();
   const WebApp = useWebApp();
   const wallet = useTonWallet();
   const {open: openModal} = useTonConnectModal();
@@ -44,10 +44,10 @@ export const WelcomePage = () => {
     <div className={s.wrapper}>
       <div className={s.container}>
         <div className={s.titleContainer}>
-          <h5 className={s.title}>
+          <h3 className={s.title}>
             Welcome to <br />
             Gifts Games
-          </h5>
+          </h3>
           <img src={titleOverlay} draggable={false} />
         </div>
 
