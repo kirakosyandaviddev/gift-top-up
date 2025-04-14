@@ -23,6 +23,7 @@ import {getHex} from '../../components/GiftCard/GiftCard';
 import {Confetti} from './components/Confetti/Confetti';
 import {Roulette} from './components/Roulette/Roulette';
 import {Gift} from '../../etities/types/Gift';
+import {GiftIcons} from './components/GiftIcons/GiftIcons';
 
 import circle from './svg/circle.svg';
 
@@ -97,8 +98,10 @@ export const RoulettePage = () => {
         </button>
       </div>
 
-      <div className={s.content}>
-        {isRouletteVisible && (
+      {winGift && <Confetti />}
+
+      {isRouletteVisible && (
+        <div className={s.rouletteContent}>
           <Roulette
             isRunning={isRunning}
             targetId={getRandomGiftData?.data?.winGift?.id}
@@ -118,25 +121,26 @@ export const RoulettePage = () => {
               }, 5000);
             }}
           />
-        )}
-        {winGift && <Confetti />}
-        {winGift && (
-          <div className={s.giftContainer}>
-            <img className={s.circle} src={circle} width={206} height={206} />
-            <div ref={ref} style={{width: 200, height: 200}} />
-            <span className={s.giftTitle}>
-              {winGift ? `${winGift?.title} #${winGift?.num}` : ''}
-            </span>
-          </div>
-        )}
-        {isRouletteVisible && (
           <div
             className={classNames(s.backdrop, {
               [s.backdropAnimation]: isRunning,
             })}
           />
-        )}
-      </div>
+        </div>
+      )}
+
+      {winGift && (
+        <div className={s.giftContent}>
+          <GiftIcons animationUrl={winGift.pattern.animationUrl} />
+          <div className={s.giftContainer}>
+            <img className={s.circle} src={circle} width={206} height={206} />
+            <div ref={ref} style={{width: 200, height: 200}} />
+            <span className={s.giftTitle}>
+              {`${winGift?.title} #${winGift?.num}`}
+            </span>
+          </div>
+        </div>
+      )}
 
       <div className={s.footer}>
         <div className={s.btnContainer}>

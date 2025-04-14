@@ -1,5 +1,6 @@
-import {useEffect} from 'react';
-import {motion} from 'framer-motion';
+import {useEffect, useRef} from 'react';
+import {gsap} from 'gsap';
+import {ScrollTrigger} from 'gsap/ScrollTrigger';
 
 import {BalanceCard} from './components/BalanceCard/BalanceCard';
 import {RouletteCard} from './components/RouletteCard/RouletteCard';
@@ -12,28 +13,42 @@ import titleOverlay from '/svg/homePage-title-overlay.svg';
 
 import s from './HomePage.module.css';
 
-const cardVariants = {
-  hidden: {opacity: 0, y: 50},
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: i * 0.1,
-      duration: 0.3,
-      ease: 'easeOut',
-    },
-  }),
-};
+gsap.registerPlugin(ScrollTrigger);
 
 export const HomePage = () => {
   const {data} = useGetInfo();
   const WebApp = useWebApp();
   WebApp.BackButton.hide();
+  const cardsRef = useRef<HTMLDivElement[]>([]);
 
   useEffect(() => {
     if (WebApp?.BackButton?.isVisible) {
       WebApp?.BackButton.hide();
     }
+  }, []);
+
+  useEffect(() => {
+    if (!cardsRef.current.length) return;
+
+    cardsRef.current.forEach((card, index) => {
+      if (!card) return;
+      gsap.fromTo(
+        card,
+        {opacity: 0, y: 50},
+        {
+          opacity: 1,
+          y: 0,
+          delay: index * 0.05,
+          duration: 0.6,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 90%',
+            toggleActions: 'play none none none',
+          },
+        },
+      );
+    });
   }, []);
 
   const cards = [
@@ -51,17 +66,15 @@ export const HomePage = () => {
 
       <div className={s.list}>
         {cards.map((CardComponent, i) => (
-          <motion.div
+          <div
             key={i}
-            custom={i}
-            variants={cardVariants}
-            initial="hidden"
-            animate="visible"
-            whileInView="visible"
-            viewport={{once: true}}
+            ref={(el) => {
+              if (el) cardsRef.current[i] = el;
+            }}
+            className={s.cardWrapper}
           >
             {CardComponent}
-          </motion.div>
+          </div>
         ))}
       </div>
 
