@@ -17,7 +17,7 @@ export const useGetPrices = () => {
     queryFn: async () => {
       const response = await axiosClient<GetPricesResponseType>({
         method: 'POST',
-        url: ENDPOINTS.GET_ROULETTE_GIFTS,
+        url: ENDPOINTS.GET_PRICES,
         data: {initData: WebApp?.initData},
       });
       return response.data;

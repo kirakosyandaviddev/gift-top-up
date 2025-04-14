@@ -1,6 +1,13 @@
-import {createContext, useContext, useState, ReactNode} from 'react';
+import {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useRef,
+  useEffect,
+} from 'react';
 import classNames from 'classnames';
-import {motion} from 'framer-motion';
+import {gsap} from 'gsap';
 
 import s from './Tabs.module.css';
 
@@ -34,19 +41,38 @@ export const Tab = ({tab, children}: {tab: string; children: ReactNode}) => {
 
   const {activeTab, setActiveTab} = context;
 
+  const bubbleRef = useRef<HTMLSpanElement | null>(null);
+
+  useEffect(() => {
+    if (activeTab === tab && bubbleRef.current) {
+      // GSAP animation on tab activation
+      gsap.to(bubbleRef.current, {
+        opacity: 1,
+        scale: 1,
+        duration: 0.4,
+        ease: 'power2.out',
+      });
+    } else if (bubbleRef.current) {
+      // Hide the bubble when tab is not active
+      gsap.to(bubbleRef.current, {
+        opacity: 0,
+        scale: 0.5,
+        duration: 0.4,
+        ease: 'power2.out',
+      });
+    }
+  }, [activeTab, tab]);
+
   return (
     <button
       className={classNames(s.button, {[s.active]: activeTab === tab})}
       onClick={() => setActiveTab(tab)}
     >
-      {activeTab === tab && (
-        <motion.span
-          layoutId="bubble"
-          className={s.buttonBubble}
-          style={{borderRadius: 9999}}
-          transition={{type: 'spring', bounce: 0, duration: 0.4}}
-        />
-      )}
+      <span
+        ref={bubbleRef}
+        className={s.buttonBubble}
+        style={{borderRadius: 9999}}
+      />
       {children}
     </button>
   );

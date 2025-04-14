@@ -1,11 +1,11 @@
+import {useRef, useEffect, useMemo} from 'react';
+import gsap from 'gsap';
+
 import {useGetRouletteGifts} from '../../../../hooks/data/queries/useGetRouletteGifts';
 
 import s from './Roulette.module.css';
 
-import {useRef, useEffect} from 'react';
-import {motion, useAnimation} from 'framer-motion';
-
-const ITEM_WIDTH = 204; // 180px + 24px margin
+const ITEM_WIDTH = 204;
 
 export const Roulette = ({
   isRunning,
@@ -17,36 +17,64 @@ export const Roulette = ({
   onRunEnd: () => void;
 }) => {
   const {data} = useGetRouletteGifts();
-  const controls = useAnimation();
   const trackRef = useRef<HTMLDivElement>(null);
+  const scrollTween = useRef<gsap.core.Tween | gsap.core.Timeline | null>(null);
 
-  console.log('=-----------------------', targetId);
+  const dublicatedData = useMemo(() => {
+    if (!data?.data?.length) return [];
+    return [...data.data, ...data.data, ...data.data];
+  }, [data?.data]);
 
   useEffect(() => {
     if (!isRunning || !data?.data?.length) return;
 
-    const runAnimation = async () => {
-      const endTargetId = data?.data[data?.data.length - 1]?.id;
-      const targetEl = document.getElementById(targetId || endTargetId);
+    const runAnimation = () => {
       const trackEl = trackRef.current;
-      if (!targetEl || !trackEl) return;
+      if (!trackEl) return;
 
-      const containerWidth = trackEl.offsetParent?.clientWidth || 0;
-      const targetOffset = targetEl.offsetLeft;
+      const original = data.data;
 
-      const stopX = -targetOffset + containerWidth / 2 - ITEM_WIDTH / 2;
+      const middleIndexOffset = original.length;
+      const target = targetId
+        ? original.find((g) => g.id === targetId)
+        : original[original.length - 1];
+      if (!target) return;
 
-      // Accelerate, fast scroll, decelerate and stop
-      await controls.start({
-        x: [0, stopX],
-        transition: {
-          duration: 3,
-          ease: 'easeInOut',
-          times: [0, 0.4, 0.9, 1],
-        },
+      const targetIndex = original.findIndex((g) => g.id === target.id);
+      const duplicatedTargetIndex = middleIndexOffset + targetIndex;
+
+      const finalOffset = duplicatedTargetIndex * ITEM_WIDTH;
+      const containerWidth =
+        trackEl.offsetParent?.clientWidth || ITEM_WIDTH * 3;
+      const stopX = -finalOffset + containerWidth / 2 - ITEM_WIDTH / 2;
+
+      // Clear any existing tween
+      scrollTween.current?.kill();
+
+      const timeline = gsap.timeline({onComplete: onRunEnd});
+
+      // 1️⃣ Ease-in start
+      timeline.to(trackEl, {
+        x: `-=${ITEM_WIDTH * original.length * 0.5}`,
+        duration: 1,
+        ease: 'power1.in',
       });
 
-      onRunEnd();
+      // 2️⃣ Fast linear scroll
+      timeline.to(trackEl, {
+        x: `-=${ITEM_WIDTH * original.length * 2}`,
+        duration: 1.2,
+        ease: 'none',
+      });
+
+      // 3️⃣ Ease out to target
+      timeline.to(trackEl, {
+        x: stopX,
+        duration: 1.2,
+        ease: 'power3.out',
+      });
+
+      scrollTween.current = timeline;
     };
 
     runAnimation();
@@ -54,14 +82,9 @@ export const Roulette = ({
 
   return (
     <div className={s.sliderContainer}>
-      <motion.div
-        ref={trackRef}
-        className={s.sliderTrack}
-        animate={controls}
-        initial={{x: -60}}
-      >
-        {!!data?.data?.length &&
-          data?.data.map((gift) => (
+      <div ref={trackRef} className={s.sliderTrack}>
+        {!!dublicatedData.length &&
+          dublicatedData.map((gift) => (
             <div className={s.slide} key={gift.id} id={gift.id}>
               <img
                 src={gift.model.photoUrl}
@@ -71,7 +94,7 @@ export const Roulette = ({
               />
             </div>
           ))}
-      </motion.div>
+      </div>
     </div>
   );
 };
