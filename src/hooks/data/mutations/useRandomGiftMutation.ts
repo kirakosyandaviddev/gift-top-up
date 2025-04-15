@@ -5,53 +5,27 @@ import {axiosClient} from '../../../libs/axiosClient';
 import {ENDPOINTS} from '../../../consts/endpoints';
 import {ResponseType} from '../../../etities/types/ResponseType';
 import {useWebApp} from '../../useWebApp';
-import {WinType} from '../../../etities/types/WinType';
 import {Gift} from '../../../etities/types/Gift';
-import {Transaction} from '../../../etities/types/Transaction';
-import {GetInfoResponseType} from '../queries/useGetInfo';
-import {GetFullGiftsResponseType} from '../queries/useGetFullGifts';
-import {GetFullTransactionsResponseType} from '../queries/useGetFullTransactions';
+import {GetPricesResponseType} from '../queries/useGetPrices';
 
 type RandomGiftResponseType = {
-  winGift: Gift;
-  winType: WinType;
-  balance: number;
-  transaction: Transaction;
+  gifts: string[];
+  gift: Gift;
+  index: number;
 };
 
-const prepareInfo = (
-  cacheData: GetInfoResponseType,
-  data: RandomGiftResponseType,
-): GetInfoResponseType => {
-  return {
-    ...cacheData,
-    data: {
-      ...cacheData.data,
-      user: {
-        ...cacheData.data.user,
-        balance: data.balance,
-      },
-    },
-  };
-};
+const prepareCache = (
+  cacheData: GetPricesResponseType,
+  data: string[], // array of ids in desired order
+): GetPricesResponseType => {
+  const idOrderMap = new Map(data.map((id, index) => [id, index]));
 
-const prepareGifts = (
-  cacheData: GetFullGiftsResponseType,
-  data: RandomGiftResponseType,
-): GetFullGiftsResponseType => {
   return {
     ...cacheData,
-    data: [...cacheData.data, data.winGift],
-  };
-};
-
-const prepareTransactions = (
-  cacheData: GetFullTransactionsResponseType,
-  data: RandomGiftResponseType,
-): GetFullTransactionsResponseType => {
-  return {
-    ...cacheData,
-    data: [data.transaction, ...cacheData.data],
+    data: [...cacheData.data].sort(
+      (a, b) =>
+        (idOrderMap.get(a.id) ?? Infinity) - (idOrderMap.get(b.id) ?? Infinity),
+    ),
   };
 };
 
@@ -71,26 +45,10 @@ export const useRandomGiftMutation = () => {
     },
     onSuccess: (d) => {
       queryClient.setQueryData(
-        [QUERY_KEYS.GET_INFO],
-        (cacheData: GetInfoResponseType) => {
+        [QUERY_KEYS.GET_PRICES],
+        (cacheData: GetPricesResponseType) => {
           if (!cacheData) return cacheData;
-          return prepareInfo(cacheData, d.data);
-        },
-      );
-
-      queryClient.setQueryData(
-        [QUERY_KEYS.GET_FULL_GIFTS],
-        (cacheData: GetFullGiftsResponseType) => {
-          if (!cacheData) return cacheData;
-          return prepareGifts(cacheData, d.data);
-        },
-      );
-
-      queryClient.setQueryData(
-        [QUERY_KEYS.GET_FULL_TRANSACTIONS],
-        (cacheData: GetFullTransactionsResponseType) => {
-          if (!cacheData) return cacheData;
-          return prepareTransactions(cacheData, d.data);
+          return prepareCache(cacheData, d.data.gifts);
         },
       );
     },

@@ -12,9 +12,13 @@ import {useNewTransaction} from '../hooks/subscriptions/useNewTransaction';
 import {useUpdatePrice} from '../hooks/subscriptions/useUpdatePrice';
 import {useNewPrice} from '../hooks/subscriptions/useNewPrice';
 import {useUpdateAvgGift} from '../hooks/subscriptions/useUpdateAvgGift';
+import {useGetInfo} from '../hooks/data/queries/useGetInfo';
+import {useGetFullGifts} from '../hooks/data/queries/useGetFullGifts';
+import {useGetFullGiftsProfile} from '../hooks/data/queries/useGetFullGiftsProfile';
+import {useGetFullTransactions} from '../hooks/data/queries/useGetFullTransactions';
+import {useGetPrices} from '../hooks/data/queries/useGetPrices';
 
 import {Layout} from '../components/Layout';
-import {useGetInfo} from '../hooks/data/queries/useGetInfo';
 
 const router = createBrowserRouter([
   {
@@ -33,8 +37,13 @@ const router = createBrowserRouter([
 ]);
 
 export const Router = () => {
-  // Move subscriptions to the Additional Layer
+  // Move queries & subscriptions to the Additional Layer
   useGetInfo();
+  useGetPrices();
+  useGetFullGifts();
+  useGetFullGiftsProfile();
+  useGetFullTransactions();
+
   useNewTransaction();
   useUpdatePrice();
   useNewPrice();

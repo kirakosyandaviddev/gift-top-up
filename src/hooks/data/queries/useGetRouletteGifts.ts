@@ -7,9 +7,10 @@ import {ResponseType} from '../../../etities/types/ResponseType';
 import {useWebApp} from '../../../hooks/useWebApp';
 import {Gift} from '../../../etities/types/Gift';
 
-export type GetRouletteGiftsResponseType = ResponseType<Gift[]>;
+type GetRouletteGiftsResponseType = ResponseType<Gift[]>;
 
-export const useGetRouletteGifts = () => {
+// @ts-ignore
+const useGetRouletteGifts = () => {
   const WebApp = useWebApp();
 
   const {data} = useQuery({
