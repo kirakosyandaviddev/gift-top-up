@@ -104,14 +104,14 @@ export const RoulettePage = () => {
         <div className={s.rouletteContent}>
           <Roulette
             isRunning={isRunning}
-            targetId={getRandomGiftData?.data?.winGift?.id}
+            targetId={getRandomGiftData?.data?.gift?.id}
             onRunEnd={() => {
               console.log('==========================onRunEnd');
               setIsRouletteVisible(false);
               setIsRunning(false);
 
-              if (getRandomGiftData?.data.winGift) {
-                setWinGift(getRandomGiftData?.data.winGift);
+              if (getRandomGiftData?.data.gift) {
+                setWinGift(getRandomGiftData?.data.gift);
               }
 
               setTimeout(() => {
