@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 import classNames from 'classnames';
 import {useNavigate} from 'react-router-dom';
 import lottie from 'lottie-web';
@@ -24,6 +24,7 @@ import {Confetti} from './components/Confetti/Confetti';
 import {Roulette} from './components/Roulette/Roulette';
 import {Gift} from '../../etities/types/Gift';
 import {GiftIcons} from './components/GiftIcons/GiftIcons';
+import {useGetPrices} from '../../hooks/data/queries/useGetPrices';
 
 import circle from './svg/circle.svg';
 
@@ -57,11 +58,13 @@ export const RoulettePage = () => {
     data: getRandomGiftData,
     error: getRandomGiftError,
   } = useRandomGiftMutation();
+  const {data: pricesData} = useGetPrices();
   console.log('data-----------------useRandomGiftMutation', getRandomGiftData);
   console.log(
     'error-----------------useRandomGiftMutation',
     getRandomGiftError,
   );
+  console.log('data-----------------pricesData', pricesData);
 
   const [isRunning, setIsRunning] = useState(false);
   const [isRouletteVisible, setIsRouletteVisible] = useState(true);
@@ -74,6 +77,12 @@ export const RoulettePage = () => {
       loadTGS(winGift.model.animationUrl, winGift.title, ref?.current);
     }
   }, [winGift]);
+
+  const targetId = useMemo<string>(() => {
+    const index = getRandomGiftData?.data?.index || 0;
+    const price = pricesData?.data.find((_, i) => i === index);
+    return price?.id || '';
+  }, [pricesData?.data]);
 
   return (
     <div className={s.wrapper}>
@@ -104,8 +113,9 @@ export const RoulettePage = () => {
       {isRouletteVisible && (
         <div className={s.rouletteContent}>
           <Roulette
+            pricesData={pricesData?.data}
             isRunning={isRunning}
-            targetId={getRandomGiftData?.data?.gift?.id}
+            targetId={targetId}
             onRunEnd={() => {
               console.log('==========================onRunEnd');
               setIsRouletteVisible(false);

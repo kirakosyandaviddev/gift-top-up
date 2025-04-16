@@ -17,6 +17,7 @@ import {useGetFullGifts} from '../hooks/data/queries/useGetFullGifts';
 import {useGetFullGiftsProfile} from '../hooks/data/queries/useGetFullGiftsProfile';
 import {useGetFullTransactions} from '../hooks/data/queries/useGetFullTransactions';
 import {useGetPrices} from '../hooks/data/queries/useGetPrices';
+import {useFullscreen} from '../hooks/useFullscreen';
 
 import {Layout} from '../components/Layout';
 
@@ -37,6 +38,7 @@ const router = createBrowserRouter([
 ]);
 
 export const Router = () => {
+  useFullscreen();
   // Move queries & subscriptions to the Additional Layer
   useGetInfo();
   useGetPrices();

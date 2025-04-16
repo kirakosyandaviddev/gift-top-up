@@ -70,7 +70,7 @@ export const TopUpWith = () => {
 
   return (
     <div className={s.wrapper}>
-      <p className={s.text}>top up with...</p>
+      <p className={s.text}>Top Up with...</p>
       <div className={s.container}>
         <button className={classNames(s.btn, s.ton)} onClick={onTopUpByTon}>
           <TonIcon16 />

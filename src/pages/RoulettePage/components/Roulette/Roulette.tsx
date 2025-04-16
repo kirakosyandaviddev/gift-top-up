@@ -1,32 +1,33 @@
 import {useRef, useEffect, useMemo} from 'react';
 import gsap from 'gsap';
 
-import {useGetPrices} from '../../../../hooks/data/queries/useGetPrices';
+import {Price} from '../../../../etities/types/Price';
 
 import s from './Roulette.module.css';
 
-const ITEM_WIDTH = 204;
+const ITEM_WIDTH = 152; // 128+24
 
 export const Roulette = ({
   isRunning,
   targetId,
+  pricesData,
   onRunEnd,
 }: {
   isRunning: boolean;
   targetId?: string;
+  pricesData?: Price[];
   onRunEnd: () => void;
 }) => {
-  const {data} = useGetPrices();
   const trackRef = useRef<HTMLDivElement>(null);
   const scrollTween = useRef<gsap.core.Tween | gsap.core.Timeline | null>(null);
 
   const dublicatedData = useMemo(() => {
-    if (!data?.data) return [];
-    return [...data.data, ...data.data, ...data.data];
-  }, [data?.data]);
+    if (!pricesData) return [];
+    return [...pricesData, ...pricesData, ...pricesData];
+  }, [pricesData]);
 
   useEffect(() => {
-    const prices = data?.data || [];
+    const prices = pricesData || [];
     if (!isRunning || !prices.length) return;
 
     const runAnimation = () => {
@@ -85,12 +86,16 @@ export const Roulette = ({
     <div className={s.sliderContainer}>
       <div ref={trackRef} className={s.sliderTrack}>
         {!!dublicatedData.length &&
-          dublicatedData.map((price) => (
-            <div className={s.slide} key={price.id} id={price.id}>
+          dublicatedData.map((price, i) => (
+            <div
+              className={s.slide}
+              key={`${price.id}-${i}`}
+              id={i <= Number(pricesData?.length) ? price.id : ''}
+            >
               <img
                 src={price.photoUrl}
-                width={180}
-                height={180}
+                width={128}
+                height={128}
                 draggable={false}
               />
             </div>

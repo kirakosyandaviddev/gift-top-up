@@ -92,8 +92,12 @@ export const Gifts: FC<PropsType> = ({
       <Tabs.Panel tab="my">
         {!!profileGifts.length ? (
           <div className={s.container}>
-            {profileGifts.map((gift) => (
-              <GiftCard key={gift.id} gift={gift} onPrice={onPriceClick} />
+            {profileGifts.map((gift, i) => (
+              <GiftCard
+                key={`${gift.id}-${i}`}
+                gift={gift}
+                onPrice={onPriceClick}
+              />
             ))}
           </div>
         ) : (
