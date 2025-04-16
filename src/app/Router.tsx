@@ -19,9 +19,9 @@ import {useGetFullTransactions} from '../hooks/data/queries/useGetFullTransactio
 import {useGetPrices} from '../hooks/data/queries/useGetPrices';
 import {useFullscreen} from '../hooks/useFullscreen';
 import {useNewGift} from '../hooks/subscriptions/useNewGift';
+import {useUpdateGift} from '../hooks/subscriptions/useUpdateGift';
 
 import {Layout} from '../components/Layout';
-import {useUpdateGift} from '../hooks/subscriptions/useUpdateGift';
 
 const router = createBrowserRouter([
   {
