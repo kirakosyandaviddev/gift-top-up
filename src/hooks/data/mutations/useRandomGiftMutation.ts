@@ -14,7 +14,7 @@ type RandomGiftResponseType = {
   index: number;
 };
 
-const prepareCache = (
+const preparePrices = (
   cacheData: GetPricesResponseType,
   data: string[], // array of ids in desired order
 ): GetPricesResponseType => {
@@ -48,7 +48,7 @@ export const useRandomGiftMutation = () => {
         [QUERY_KEYS.GET_PRICES],
         (cacheData: GetPricesResponseType) => {
           if (!cacheData) return cacheData;
-          return prepareCache(cacheData, d.data.gifts);
+          return preparePrices(cacheData, d.data.gifts);
         },
       );
     },
