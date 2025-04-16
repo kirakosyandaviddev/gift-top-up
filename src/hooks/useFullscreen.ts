@@ -12,6 +12,9 @@ export const useFullscreen = () => {
       if (!WebApp?.isExpanded) {
         WebApp?.expand();
       }
+      if (WebApp?.isVerticalSwipesEnabled) {
+        WebApp?.disableVerticalSwipes();
+      }
     }, 100);
   }, []);
 };
