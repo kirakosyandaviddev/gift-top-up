@@ -9,12 +9,12 @@
   align-items: center;
   width: max-content;
   height: 320px;
-  transform: translateX(-90px);
+  transform: translateX(-64px);
 }
 
 .slide {
-  flex: 0 0 180px;
-  height: 180px;
+  flex: 0 0 128px;
+  height: 128px;
   margin-right: 24px;
   display: flex;
   justify-content: center;

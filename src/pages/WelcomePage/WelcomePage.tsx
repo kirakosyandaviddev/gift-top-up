@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import {useTonConnectModal, useTonWallet} from '@tonconnect/ui-react';
 
 import {useGetInfo} from '../../hooks/data/queries/useGetInfo';
-import {useWebApp} from '../../hooks/useWebApp';
 import {ROUTES} from '../../consts/routes';
 import {Checkbox} from './components/Checkbox/Checkbox';
 import {ChainIcon22} from '../../components/icons/ChainIcon22';
@@ -16,19 +15,11 @@ import s from './WelcomePage.module.css';
 export const WelcomePage = () => {
   const navigate = useNavigate();
   const {data} = useGetInfo();
-  const WebApp = useWebApp();
   const wallet = useTonWallet();
   const {open: openModal} = useTonConnectModal();
 
   const [termsAccepted, setTermsAccepted] = useState(false);
   console.log('data------------------', data);
-
-  useEffect(() => {
-    if (!WebApp?.isFullscreen) {
-      WebApp?.requestFullscreen();
-    }
-    WebApp.expand();
-  }, []);
 
   useEffect(() => {
     if (wallet) {
