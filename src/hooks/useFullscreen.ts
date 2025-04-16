@@ -5,6 +5,16 @@ export const useFullscreen = () => {
   const WebApp = useWebApp();
 
   useEffect(() => {
+    const preventDefault = (e: TouchEvent) => e.preventDefault();
+
+    document.addEventListener('touchmove', preventDefault, {passive: false});
+
+    return () => {
+      document.removeEventListener('touchmove', preventDefault);
+    };
+  }, []);
+
+  useEffect(() => {
     setInterval(() => {
       if (!WebApp?.isFullscreen) {
         WebApp?.requestFullscreen();

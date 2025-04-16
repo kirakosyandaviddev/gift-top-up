@@ -9,10 +9,13 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-#root {
-  width: 100vw;
-  height: 100vh;
+html,
+body {
+  overscroll-behavior: none; /* disables scroll chaining and bounce */
   overflow: hidden;
+  height: 100%;
+  position: fixed;
+  width: 100%;
 }
 
 @font-face {
