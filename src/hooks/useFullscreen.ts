@@ -12,6 +12,6 @@ export const useFullscreen = () => {
       if (!WebApp?.isExpanded) {
         WebApp?.expand();
       }
-    }, 1000);
+    }, 100);
   }, []);
 };
