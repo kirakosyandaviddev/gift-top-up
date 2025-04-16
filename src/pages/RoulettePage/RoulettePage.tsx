@@ -82,7 +82,8 @@ export const RoulettePage = () => {
           <h3 className={s.title}>Roulette</h3>
           <img src={titleOverlay} draggable={false} />
         </div>
-        <button
+        <div
+          role="button"
           className={classNames(s.balanceContainer, {
             [s.empty]: data?.data?.user ? !userBalance : false,
           })}
@@ -95,7 +96,7 @@ export const RoulettePage = () => {
           <span className={s.chevron}>
             <ChevronRight22 />
           </span>
-        </button>
+        </div>
       </div>
 
       {winGift && <Confetti />}
