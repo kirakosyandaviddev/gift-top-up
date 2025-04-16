@@ -18,6 +18,8 @@ import {useGetFullGiftsProfile} from '../hooks/data/queries/useGetFullGiftsProfi
 import {useGetFullTransactions} from '../hooks/data/queries/useGetFullTransactions';
 import {useGetPrices} from '../hooks/data/queries/useGetPrices';
 import {useFullscreen} from '../hooks/useFullscreen';
+import {useNewGift} from '../hooks/subscriptions/useNewGift';
+import {useUpdateGift} from '../hooks/subscriptions/useUpdateGift';
 
 import {Layout} from '../components/Layout';
 
@@ -50,6 +52,8 @@ export const Router = () => {
   useUpdatePrice();
   useNewPrice();
   useUpdateAvgGift();
+  useUpdateGift();
+  useNewGift();
 
   return <RouterProvider router={router} />;
 };

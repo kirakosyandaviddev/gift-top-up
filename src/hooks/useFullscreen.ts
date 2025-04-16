@@ -15,6 +15,6 @@ export const useFullscreen = () => {
       if (WebApp?.isVerticalSwipesEnabled) {
         WebApp?.disableVerticalSwipes();
       }
-    }, 100);
+    }, 1000);
   }, []);
 };
