@@ -6,7 +6,6 @@ import {ENDPOINTS} from '../../../consts/endpoints';
 import {ResponseType} from '../../../etities/types/ResponseType';
 import {useWebApp} from '../../useWebApp';
 import {GetInfoResponseType} from '../queries/useGetInfo';
-import {GetFullGiftsResponseType} from '../queries/useGetFullGifts';
 
 type SwapGiftToTonResponseType = {
   balance: number;
@@ -28,16 +27,6 @@ const prepareInfo = (
   };
 };
 
-const prepareGifts = (
-  cacheData: GetFullGiftsResponseType,
-  giftId: string,
-): GetFullGiftsResponseType => {
-  return {
-    ...cacheData,
-    data: [...cacheData.data].filter((gift) => gift.id !== giftId),
-  };
-};
-
 export const useSwapGiftToTonMutation = () => {
   const WebApp = useWebApp();
   const queryClient = useQueryClient();
@@ -54,20 +43,12 @@ export const useSwapGiftToTonMutation = () => {
       });
       return response.data;
     },
-    onSuccess: (d, v) => {
+    onSuccess: (d) => {
       queryClient.setQueryData(
         [QUERY_KEYS.GET_INFO],
         (cacheData: GetInfoResponseType) => {
           if (!cacheData) return cacheData;
           return prepareInfo(cacheData, d.data);
-        },
-      );
-
-      queryClient.setQueryData(
-        [QUERY_KEYS.GET_FULL_GIFTS],
-        (cacheData: GetFullGiftsResponseType) => {
-          if (!cacheData) return cacheData;
-          return prepareGifts(cacheData, v);
         },
       );
     },
