@@ -6,14 +6,16 @@ import {QUERY_KEYS} from '../../consts/queryKeys';
 import {GetFullGiftsResponseType} from '../data/queries/useGetFullGifts';
 import {Gift} from '../../etities/types/Gift';
 
+type UpdateGift = {gift: Gift};
+
 const prepareGifts = (
   cacheData: GetFullGiftsResponseType,
-  data: Gift,
+  data: UpdateGift,
 ): GetFullGiftsResponseType => {
   return {
     ...cacheData,
     data: [...cacheData.data].map((gift) =>
-      gift.id === data.id ? data : gift,
+      gift.id === data.gift.id ? data.gift : gift,
     ),
   };
 };
@@ -22,7 +24,7 @@ export const useUpdateGift = () => {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    const onUpdateGift = (data: Gift) => {
+    const onUpdateGift = (data: UpdateGift) => {
       console.log('onUpdateGift fires::: ', data);
 
       queryClient.setQueryData(
