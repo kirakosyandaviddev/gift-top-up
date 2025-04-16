@@ -7,6 +7,7 @@ type PriceHistory = {
 export type Price = {
   id: string;
   photoUrl: string;
+  animationUrl: string;
   title: string;
   price: number;
   historyPrice: PriceHistory[];

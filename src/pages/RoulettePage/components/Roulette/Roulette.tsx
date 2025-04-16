@@ -1,11 +1,40 @@
 import {useRef, useEffect, useMemo} from 'react';
 import gsap from 'gsap';
+import lottie from 'lottie-web';
 
 import {Price} from '../../../../etities/types/Price';
 
 import s from './Roulette.module.css';
 
 const ITEM_WIDTH = 152; // 128+24
+
+export const LottieSticker = ({
+  animationUrl,
+  width = 128,
+  height = 128,
+}: {
+  animationUrl: string;
+  width?: number;
+  height?: number;
+}) => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const anim = lottie.loadAnimation({
+      container: containerRef.current,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: animationUrl,
+    });
+
+    return () => anim.destroy();
+  }, [animationUrl]);
+
+  return <div style={{width, height}} ref={containerRef} />;
+};
 
 export const Roulette = ({
   isRunning,
@@ -92,6 +121,11 @@ export const Roulette = ({
               key={`${price.id}-${i}`}
               id={i <= Number(pricesData?.length) ? price.id : ''}
             >
+              {/* <LottieSticker
+                animationUrl={price.animationUrl}
+                width={128}
+                height={128}
+              /> */}
               <img
                 src={price.photoUrl}
                 width={128}
