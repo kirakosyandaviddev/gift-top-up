@@ -1,5 +1,13 @@
 .card {
   display: flex;
+}
+
+.img {
+  width: 100%;
+}
+/* 
+.card {
+  display: flex;
   align-items: flex-end;
   position: relative;
   height: 216px;
@@ -12,6 +20,7 @@
     rgba(113, 64, 204, 1) 50%,
     rgba(252, 16, 144, 1) 100%
   );
+  gap: 25px;
 }
 
 .roulette-card {
@@ -33,7 +42,7 @@
 .content {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 15px;
 }
 
 .title {
@@ -46,7 +55,7 @@
 
 .subtitle {
   font-weight: 600;
-  font-size: 16px;
+  font-size: 17px;
   line-height: 12px;
   color: rgba(255, 255, 255, 0.5);
-}
+} */
