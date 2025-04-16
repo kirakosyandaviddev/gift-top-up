@@ -9,6 +9,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+#root {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
 @font-face {
   font-family: 'SF Pro';
   src: url('/fonts/SFNS.woff2') format('woff2');
