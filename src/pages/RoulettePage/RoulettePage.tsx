@@ -52,7 +52,7 @@ export const RoulettePage = () => {
   useBackButton();
   const ref = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
-  const {data} = useGetInfo();
+  const {data: getInfoData} = useGetInfo();
   const {
     mutate: getRandomGift,
     data: getRandomGiftData,
@@ -70,7 +70,7 @@ export const RoulettePage = () => {
   const [isRouletteVisible, setIsRouletteVisible] = useState(true);
   const [winGift, setWinGift] = useState<null | Gift>(null);
 
-  const userBalance = data?.data?.user?.balance || 0;
+  const userBalance = getInfoData?.data?.user?.balance || 0;
 
   useEffect(() => {
     if (ref?.current && winGift) {
@@ -94,7 +94,7 @@ export const RoulettePage = () => {
         <div
           role="button"
           className={classNames(s.balanceContainer, {
-            [s.empty]: data?.data?.user ? !userBalance : false,
+            [s.empty]: getInfoData?.data?.user ? !userBalance : false,
           })}
           onClick={() => {
             navigate(ROUTES.BALANCE);
@@ -163,6 +163,7 @@ export const RoulettePage = () => {
               }}
               isRunning={isRunning}
               showDisabled={!isRouletteVisible || isRunning}
+              playAmount={getInfoData?.data?.play}
             />
           ) : (
             <TopUpButton

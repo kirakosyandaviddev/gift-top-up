@@ -12,8 +12,14 @@ type PropsType = {
   isRunning: boolean;
   showDisabled: boolean;
   onSwipe: () => void;
+  playAmount?: number;
 };
-export const SwipeButton = ({onSwipe, isRunning, showDisabled}: PropsType) => {
+export const SwipeButton = ({
+  onSwipe,
+  isRunning,
+  showDisabled,
+  playAmount = 1,
+}: PropsType) => {
   const [isSwiped, setIsSwiped] = useState(false);
   const ref = useRef(null);
   const [startX, setStartX] = useState<number | null>(null);
@@ -68,7 +74,7 @@ export const SwipeButton = ({onSwipe, isRunning, showDisabled}: PropsType) => {
       onMouseUp={handleMouseUp}
     >
       <div className={s.content}>
-        <span>Swipe to Spin for 1</span>
+        <span>Swipe to Spin for {playAmount}</span>
         <svg
           width="16"
           height="15"
