@@ -1,12 +1,12 @@
 import {useState, useRef, useEffect} from 'react';
+import classNames from 'classnames';
 
-import background from './svg/background.svg';
-import noBackground from './svg/no-background.svg';
+// import background from './svg/background.svg';
+// import noBackground from './svg/no-background.svg';
 
 import {Arrows} from './Arrows';
 
 import s from './SwipeButton.module.css';
-import classNames from 'classnames';
 
 type PropsType = {
   isRunning: boolean;
@@ -24,6 +24,7 @@ export const SwipeButton = ({
   const ref = useRef(null);
   const [startX, setStartX] = useState<number | null>(null);
   const isTouch = useRef(false); // to prevent overlap
+  const [bgX, setBgX] = useState<number | null>(null);
 
   const handleStart = (x: number, touch = false) => {
     setStartX(x);
@@ -36,6 +37,7 @@ export const SwipeButton = ({
       setIsSwiped(true);
     }
     setStartX(null);
+    setBgX(0);
   };
 
   // Touch handlers
@@ -50,19 +52,42 @@ export const SwipeButton = ({
   const handleMouseDown = (e: React.MouseEvent) => {
     handleStart(e.clientX, false);
   };
+
   const handleMouseUp = (e: React.MouseEvent) => {
     if (!isTouch.current) {
       handleEnd(e.clientX);
     }
   };
 
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (startX !== null) {
+      const deltaX = e.touches[0].clientX - startX;
+      setBgX(Math.min(deltaX, 0)); // limit translateX
+    }
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (startX !== null && !isTouch.current) {
+      const deltaX = e.clientX - startX;
+      setBgX(Math.min(deltaX, 0));
+    }
+  };
+
   useEffect(() => {
     if (isSwiped && !isRunning) {
       onSwipe();
+      setBgX(-500);
       setIsSwiped(false);
     }
   }, [isSwiped]);
 
+  useEffect(() => {
+    if (!showDisabled) {
+      setBgX(0);
+    }
+  }, [showDisabled]);
+
+  console.log('bgX', bgX);
   return (
     <div
       role="button"
@@ -72,6 +97,8 @@ export const SwipeButton = ({
       onTouchEnd={handleTouchEnd}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
+      onTouchMove={handleTouchMove}
+      onMouseMove={handleMouseMove}
     >
       <div className={s.content}>
         <span>Swipe to Spin for {playAmount}</span>
@@ -92,11 +119,49 @@ export const SwipeButton = ({
       </div>
 
       {!showDisabled && <Arrows className={s.arrowsWrapper} />}
-      <img
-        src={showDisabled ? noBackground : background}
-        className={s.background}
-        draggable={false}
-      />
+      {/* <span
+        className={s.colors}
+        style={{
+          transform: `translateX(${bgX ?? 0}px)`,
+          transition: startX === null ? 'transform 0.3s ease-out' : 'none',
+        }}
+      /> */}
+      {/* <img src={noBackground} className={s.background} draggable={false} /> */}
+
+      <svg
+        width="361"
+        height="68"
+        viewBox="0 0 361 68"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="gradientStroke" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="rgba(0, 176, 245, 1)" />
+            <stop offset="25%" stopColor="rgba(113, 64, 204, 1)" />
+            <stop offset="50%" stopColor="rgba(255, 0, 162, 1)" />
+            <stop offset="100%" stopColor="rgba(227, 94, 62, 1)" />
+          </linearGradient>
+        </defs>
+
+        {!showDisabled && (
+          <path
+            d="M25 43C73.4363 31.3593 125.823 25 180.5 25C235.177 25 287.564 31.3593 336 43"
+            stroke="url(#gradientStroke)"
+            strokeWidth="50"
+            strokeLinecap="round"
+          />
+        )}
+
+        {showDisabled && (
+          <path
+            d="M25 43C73.4363 31.3593 125.823 25 180.5 25C235.177 25 287.564 31.3593 336 43"
+            stroke="rgba(255, 255, 255, 0.1)"
+            strokeWidth="50"
+            strokeLinecap="round"
+          />
+        )}
+      </svg>
     </div>
   );
 };

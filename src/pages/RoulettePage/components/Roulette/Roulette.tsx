@@ -99,7 +99,6 @@ export const Roulette = ({
             const y = radius * Math.sin(angle);
 
             const deg = (angle * 180) / Math.PI + 90;
-
             const normalizedDeg = (deg + 360) % 360;
             const isTop = normalizedDeg >= 345 || normalizedDeg <= 15;
 
