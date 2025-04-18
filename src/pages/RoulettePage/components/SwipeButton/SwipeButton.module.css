@@ -3,6 +3,13 @@
   height: 68px;
   cursor: pointer;
   user-select: none;
+  /* background: rgba(255, 255, 255, 0.1); */
+  overflow: hidden;
+
+  /* background-image: url('./svg/background.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center; */
 }
 
 .content {
@@ -24,6 +31,22 @@
   bottom: 0;
   margin: auto;
   height: 14px;
+}
+
+.colors {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: rgba(255, 255, 255, 0.1);
+  /* background: linear-gradient(
+    90deg,
+    rgba(0, 176, 245, 1) 0%,
+    rgba(113, 64, 204, 1) 25%,
+    rgba(255, 0, 162, 1) 50%,
+    rgba(227, 94, 62, 1) 100%
+  ); */
 }
 
 .disabled {
