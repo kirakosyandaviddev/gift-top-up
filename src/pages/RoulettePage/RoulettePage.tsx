@@ -25,7 +25,7 @@ import {Roulette} from './components/Roulette/Roulette';
 import {Gift} from '../../etities/types/Gift';
 import {GiftIcons} from './components/GiftIcons/GiftIcons';
 import {useGetPrices} from '../../hooks/data/queries/useGetPrices';
-import {BackdropAnimation} from './components/BackdropAnimation/BackdropAnimation';
+// import {BackdropAnimation} from './components/BackdropAnimation/BackdropAnimation';
 
 import circle from './svg/circle.svg';
 
@@ -131,13 +131,13 @@ export const RoulettePage = () => {
         </div>
       )}
 
-      {isRouletteVisible && isRunning && (
+      {/* {isRouletteVisible && isRunning && (
         <BackdropAnimation
           pricesData={pricesData?.data}
           isRunning={isRunning}
           targetId={targetId}
         />
-      )}
+      )} */}
 
       {winGift && (
         <div className={s.giftContent}>

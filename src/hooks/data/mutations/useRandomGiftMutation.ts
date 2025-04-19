@@ -1,12 +1,11 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
 import {QUERY_KEYS} from '../../../consts/queryKeys';
-import {axiosClient} from '../../../libs/axiosClient';
-import {ENDPOINTS} from '../../../consts/endpoints';
 import {ResponseType} from '../../../etities/types/ResponseType';
-import {useWebApp} from '../../useWebApp';
 import {Gift} from '../../../etities/types/Gift';
 import {GetPricesResponseType} from '../queries/useGetPrices';
+import {wsClient} from '../../../libs/wsClient';
+import {ENDPOINTS} from '../../../consts/endpoints';
 
 type RandomGiftResponseType = {
   gifts: string[];
@@ -30,18 +29,34 @@ const preparePrices = (
 };
 
 export const useRandomGiftMutation = () => {
-  const WebApp = useWebApp();
   const queryClient = useQueryClient();
 
   const {data, mutate, isSuccess, isPending, error} = useMutation({
     mutationKey: [QUERY_KEYS.RANDOM_GIFT],
     mutationFn: async () => {
-      const response = await axiosClient<ResponseType<RandomGiftResponseType>>({
-        method: 'POST',
-        url: ENDPOINTS.RANDOM_GIFT,
-        data: {initData: WebApp?.initData},
-      });
-      return response.data;
+      // const response = await axiosClient<ResponseType<RandomGiftResponseType>>({
+      //   method: 'POST',
+      //   url: ENDPOINTS.RANDOM_GIFT,
+      //   data: {initData: WebApp?.initData},
+      // });
+      // return response.data;
+
+      return new Promise<ResponseType<RandomGiftResponseType>>(
+        (resolve, reject) => {
+          wsClient.emit(
+            ENDPOINTS.RANDOM_GIFT,
+            {},
+            (result: ResponseType<RandomGiftResponseType>) => {
+              if (result.error) {
+                console.error(result.error);
+                reject(result.error);
+              } else {
+                resolve(result);
+              }
+            },
+          );
+        },
+      );
     },
     onSuccess: (d) => {
       queryClient.setQueryData(

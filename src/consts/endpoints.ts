@@ -5,7 +5,7 @@ export const ENDPOINTS = {
   GET_ROULETTE_GIFTS: '/getRouletteGifts',
   GET_PRICES: '/getPrices',
   GET_FULL_TRANSACTIONS: '/getFullTransactions',
-  RANDOM_GIFT: '/randomGift',
-  PICK_UP_GIFT: '/pickUpGift',
-  SWAP_GIFT_TO_TON: '/swapGiftToTon',
+  RANDOM_GIFT: 'randomGift',
+  PICK_UP_GIFT: 'pickUpGift',
+  SWAP_GIFT_TO_TON: 'swapGiftToTon',
 };
