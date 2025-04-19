@@ -22,6 +22,7 @@ import {useNewGift} from '../hooks/subscriptions/useNewGift';
 import {useUpdateGift} from '../hooks/subscriptions/useUpdateGift';
 import {useUpdateBalance} from '../hooks/subscriptions/useUpdateBalance';
 import {useNewNFT} from '../hooks/subscriptions/useNewNFT';
+import {useNewInfo} from '../hooks/subscriptions/useNewInfo';
 
 import {Layout} from '../components/Layout';
 
@@ -50,6 +51,8 @@ export const Router = () => {
   useGetFullGiftsProfile();
   useGetFullTransactions();
 
+  // subscriptions
+  useNewInfo();
   useUpdateBalance();
   useNewTransaction();
   useUpdatePrice();

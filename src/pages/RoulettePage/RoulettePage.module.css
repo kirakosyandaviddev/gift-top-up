@@ -81,7 +81,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 30%;
+  top: 25%;
   height: 320px;
   margin: auto;
 }
@@ -93,6 +93,7 @@
   flex: 1;
   width: 100%;
   position: relative;
+  padding-bottom: 136px;
 }
 
 .gift-title {
