@@ -25,6 +25,7 @@ import {Roulette} from './components/Roulette/Roulette';
 import {Gift} from '../../etities/types/Gift';
 import {GiftIcons} from './components/GiftIcons/GiftIcons';
 import {useGetPrices} from '../../hooks/data/queries/useGetPrices';
+import {BackdropAnimation} from './components/BackdropAnimation/BackdropAnimation';
 
 import circle from './svg/circle.svg';
 
@@ -53,18 +54,9 @@ export const RoulettePage = () => {
   const ref = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
   const {data: getInfoData} = useGetInfo();
-  const {
-    mutate: getRandomGift,
-    data: getRandomGiftData,
-    error: getRandomGiftError,
-  } = useRandomGiftMutation();
+  const {mutate: getRandomGift, data: getRandomGiftData} =
+    useRandomGiftMutation();
   const {data: pricesData} = useGetPrices();
-  console.log('data-----------------useRandomGiftMutation', getRandomGiftData);
-  console.log(
-    'error-----------------useRandomGiftMutation',
-    getRandomGiftError,
-  );
-  console.log('data-----------------pricesData', pricesData);
 
   const [isRunning, setIsRunning] = useState(false);
   const [isRouletteVisible, setIsRouletteVisible] = useState(true);
@@ -72,10 +64,21 @@ export const RoulettePage = () => {
 
   const userBalance = getInfoData?.data?.user?.balance || 0;
 
+  const handleCloseWinScreen = () => {
+    setIsRouletteVisible(true);
+    setWinGift(null);
+    lottie.destroy(winGift?.title);
+  };
+
   useEffect(() => {
     if (ref?.current && winGift) {
       loadTGS(winGift.model.animationUrl, winGift.title, ref?.current);
+      window.addEventListener('click', handleCloseWinScreen);
     }
+
+    return () => {
+      window.removeEventListener('click', handleCloseWinScreen);
+    };
   }, [winGift]);
 
   const targetId = useMemo<string>(() => {
@@ -117,27 +120,23 @@ export const RoulettePage = () => {
             isRunning={isRunning}
             targetId={targetId}
             onRunEnd={() => {
-              console.log('==========================onRunEnd');
               setIsRouletteVisible(false);
               setIsRunning(false);
 
               if (getRandomGiftData?.data.gift) {
                 setWinGift(getRandomGiftData?.data.gift);
               }
-
-              setTimeout(() => {
-                setIsRouletteVisible(true);
-                setWinGift(null);
-                lottie.destroy(winGift?.title);
-              }, 5000);
             }}
           />
-          <div
-            className={classNames(s.backdrop, {
-              [s.backdropAnimation]: isRunning,
-            })}
-          />
         </div>
+      )}
+
+      {isRouletteVisible && isRunning && (
+        <BackdropAnimation
+          pricesData={pricesData?.data}
+          isRunning={isRunning}
+          targetId={targetId}
+        />
       )}
 
       {winGift && (
@@ -176,6 +175,7 @@ export const RoulettePage = () => {
 
         <MyGifts />
       </div>
+
       {!isRunning && (
         <BG style={{color: getHex(winGift?.backdrop?.edgeColor || 0)}} />
       )}

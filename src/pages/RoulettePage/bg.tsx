@@ -5,7 +5,11 @@ export const BG = ({style}: any) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     className={s.bg}
-    style={style}
+    style={{
+      ...style,
+    }}
+    viewBox="0 0 393 852"
+    preserveAspectRatio="xMidYMid meet"
   >
     <g filter="url(#filter0_f_203_5174)">
       <circle cx="196.5" cy="425.5" r="317.475" fill="currentColor" />

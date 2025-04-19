@@ -26,6 +26,8 @@ export const Gifts: FC<PropsType> = ({
   const {mutate: swapGiftToTon} = useSwapGiftToTonMutation();
   const [searchParams] = useSearchParams();
 
+  const sortedPrices = [...prices].sort((a, b) => b.price - a.price);
+
   // giftsProfile should be after gifts
   const profileGifts = [
     ...gifts.filter((g) => g.status === 'awaiting'),
@@ -78,9 +80,9 @@ export const Gifts: FC<PropsType> = ({
       </Tabs.List>
 
       <Tabs.Panel tab="all">
-        {!!prices.length ? (
+        {!!sortedPrices.length ? (
           <div className={s.list}>
-            {prices.map((price) => (
+            {sortedPrices.map((price) => (
               <PriceCard key={price.id} price={price} />
             ))}
           </div>

@@ -78,7 +78,9 @@ export const HomePage = () => {
         ))}
       </div>
 
-      <MyGifts />
+      <div className={s.footer}>
+        <MyGifts />
+      </div>
     </div>
   );
 };
