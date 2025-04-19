@@ -81,7 +81,8 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 25%;
+  top: 50%;
+  transform: translateY(-50%);
   height: 320px;
   margin: auto;
 }
