@@ -6,11 +6,10 @@
   padding: 114px 16px 38px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
 }
 
 .title-container {
-  margin-bottom: 16px;
+  margin-bottom: 36px;
   position: relative;
   width: fit-content;
   z-index: 10;

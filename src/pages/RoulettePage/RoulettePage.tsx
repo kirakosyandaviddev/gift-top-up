@@ -1,11 +1,8 @@
-import {useEffect, useMemo, useRef, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import classNames from 'classnames';
 import {useNavigate} from 'react-router-dom';
-import lottie from 'lottie-web';
-import pako from 'pako';
 
 import {useRandomGiftMutation} from '../../hooks/data/mutations/useRandomGiftMutation';
-import {useBackButton} from '../../hooks/data/useBackButton';
 import {TonIcon22} from '../../components/icons/TonIcon22';
 import {ChevronRight22} from '../../components/icons/ChevronRight22';
 import {ROUTES} from '../../consts/routes';
@@ -28,30 +25,9 @@ import {useGetPrices} from '../../hooks/data/queries/useGetPrices';
 // import {BackdropAnimation} from './components/BackdropAnimation/BackdropAnimation';
 
 import circle from './svg/circle.svg';
-
-const loadTGS = async (
-  tgsUrl: string,
-  name: string,
-  container: HTMLDivElement,
-) => {
-  const response = await fetch(tgsUrl);
-  const buffer = await response.arrayBuffer();
-  const decompressed = pako.ungzip(new Uint8Array(buffer), {to: 'string'});
-  const animationData = JSON.parse(decompressed);
-
-  lottie.loadAnimation({
-    name: name,
-    container,
-    renderer: 'svg',
-    loop: true,
-    autoplay: true,
-    animationData,
-  });
-};
+import {LottiePlayer} from '../../components/LottiePlayer/LottiePlayer';
 
 export const RoulettePage = () => {
-  useBackButton();
-  const ref = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
   const {data: getInfoData} = useGetInfo();
   const {mutate: getRandomGift, data: getRandomGiftData} =
@@ -63,16 +39,16 @@ export const RoulettePage = () => {
   const [winGift, setWinGift] = useState<null | Gift>(null);
 
   const userBalance = getInfoData?.data?.user?.balance || 0;
+  const play = getInfoData?.data?.play || 0;
+  const insufficientBalance = userBalance < play;
 
   const handleCloseWinScreen = () => {
     setIsRouletteVisible(true);
     setWinGift(null);
-    lottie.destroy(winGift?.title);
   };
 
   useEffect(() => {
-    if (ref?.current && winGift) {
-      loadTGS(winGift.model.animationUrl, winGift.title, ref?.current);
+    if (winGift) {
       window.addEventListener('click', handleCloseWinScreen);
     }
 
@@ -97,7 +73,7 @@ export const RoulettePage = () => {
         <div
           role="button"
           className={classNames(s.balanceContainer, {
-            [s.empty]: getInfoData?.data?.user ? !userBalance : false,
+            [s.empty]: getInfoData?.data?.user ? !insufficientBalance : false,
           })}
           onClick={() => {
             navigate(ROUTES.BALANCE);
@@ -141,10 +117,20 @@ export const RoulettePage = () => {
 
       {winGift && (
         <div className={s.giftContent}>
-          <GiftIcons animationUrl={winGift.pattern.animationUrl} />
+          <GiftIcons
+            animationUrl={winGift.pattern.animationUrl}
+            title={winGift.title}
+          />
           <div className={s.giftContainer}>
             <img className={s.circle} src={circle} width={206} height={206} />
-            <div ref={ref} style={{width: 200, height: 200}} />
+            <LottiePlayer
+              animationUrl={winGift.model.animationUrl}
+              title={winGift.title}
+              autoplay
+              loop
+              width={200}
+              height={200}
+            />
             <span className={s.giftTitle}>
               {`${winGift?.title} #${winGift?.num}`}
             </span>
@@ -154,7 +140,7 @@ export const RoulettePage = () => {
 
       <div className={s.footer}>
         <div className={s.btnContainer}>
-          {!!userBalance ? (
+          {!insufficientBalance ? (
             <SwipeButton
               onSwipe={() => {
                 setIsRunning(true);

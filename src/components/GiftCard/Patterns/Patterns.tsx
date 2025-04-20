@@ -1,8 +1,8 @@
-import {LottiePlayer} from '../../../../components/LottiePlayer/LottiePlayer';
+import {LottiePlayer} from '../../LottiePlayer/LottiePlayer';
 
-import s from './GiftIcons.module.css';
+import s from './Patterns.module.css';
 
-export const GiftIcons = ({
+export const Patterns = ({
   animationUrl,
   title,
 }: {
@@ -12,15 +12,15 @@ export const GiftIcons = ({
   return (
     <div className={s.wrapper}>
       <div className={s.container}>
-        {Array.from({length: 10}).map((_, i) => (
+        {Array.from({length: 12}).map((_, i) => (
           <span key={i} className={s.item}>
             <LottiePlayer
               animationUrl={animationUrl}
               title={title}
               autoplay={false}
               loop={false}
-              width={28}
-              height={28}
+              width={25}
+              height={25}
             />
           </span>
         ))}

@@ -1,37 +1,16 @@
 import {useRef, useEffect} from 'react';
 import gsap from 'gsap';
-import lottie from 'lottie-web';
 
 import {Price} from '../../../../etities/types/Price';
+import {LottiePlayer} from '../../../../components/LottiePlayer/LottiePlayer';
 
 import s from './Roulette.module.css';
 
-export const LottieSticker = ({
-  animationUrl,
-  width = 128,
-  height = 128,
-}: {
-  animationUrl: string;
-  width?: number;
-  height?: number;
-}) => {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    const anim = lottie.loadAnimation({
-      container: containerRef.current,
-      renderer: 'svg',
-      loop: true,
-      autoplay: true,
-      path: animationUrl,
-    });
-
-    return () => anim.destroy();
-  }, [animationUrl]);
-
-  return <div style={{width, height}} ref={containerRef} />;
+const getRandomSpinDuration = () => {
+  const random = Math.random();
+  if (random < 0.2) return 4; // 0.0 - 0.2 → 20%
+  if (random < 0.4) return 6; // 0.2 - 0.4 → 20%
+  return 5; // 0.4 - 1.0 → 60%
 };
 
 export const Roulette = ({
@@ -63,10 +42,12 @@ export const Roulette = ({
       const spins = 3; // full 360° spins
       const finalRotation = -(spins * 360 + targetAngle + 90);
 
+      const duration = getRandomSpinDuration();
+
       gsap.to(wheelRef.current, {
         rotate: finalRotation,
-        duration: 8,
-        ease: 'power3.out',
+        duration: duration,
+        ease: 'power4.out',
         onComplete: onRunEnd,
       });
     };
@@ -115,11 +96,13 @@ export const Roulette = ({
                 key={price.id}
                 id={price.id}
               >
-                <img
-                  src={price.photoUrl}
-                  width={128}
-                  height={128}
-                  draggable={false}
+                <LottiePlayer
+                  animationUrl={price.animationUrl}
+                  title={price.title}
+                  autoplay={false}
+                  loop={false}
+                  width={180}
+                  height={180}
                 />
               </div>
             );
