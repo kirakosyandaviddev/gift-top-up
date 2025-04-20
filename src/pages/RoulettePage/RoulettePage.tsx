@@ -73,7 +73,7 @@ export const RoulettePage = () => {
         <div
           role="button"
           className={classNames(s.balanceContainer, {
-            [s.empty]: getInfoData?.data?.user ? !insufficientBalance : false,
+            [s.empty]: getInfoData?.data?.user ? insufficientBalance : false,
           })}
           onClick={() => {
             navigate(ROUTES.BALANCE);
