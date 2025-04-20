@@ -164,7 +164,7 @@ export const SwipeButton = ({
           </textPath>
         </text>
 
-        <g transform="translate(260, 22) scale(0.9) rotate(6)">
+        <g transform="translate(255, 22) scale(0.9) rotate(6)">
           <path
             fillRule="evenodd"
             clipRule="evenodd"
