@@ -5,6 +5,7 @@ import {TonIcon12} from '../icons/TonIcon12';
 import {useWebApp} from '../../hooks/useWebApp';
 
 import s from './GiftCard.module.css';
+import {Patterns} from './Patterns/Patterns';
 
 type PropsType = {
   gift: Gift;
@@ -31,12 +32,13 @@ export const GiftCard: FC<PropsType> = ({gift, onAdd, onSell, onPrice}) => {
       <div className={s.imgContainer} role="button" onClick={onCardClick}>
         <img
           className={s.img}
-          src={gift.photoUrl}
-          width={180}
-          height={180}
+          src={gift.model.photoUrl}
+          width={100}
+          height={100}
           draggable={false}
         />
         <p className={s.title}>{`${gift.title || ''} #${gift.num}`}</p>
+        <Patterns animationUrl={gift.pattern.animationUrl} title={gift.title} />
       </div>
 
       {(onAdd || onSell || onPrice) && (

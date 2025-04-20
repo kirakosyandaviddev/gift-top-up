@@ -1,4 +1,3 @@
-import {useBackButton} from '../../hooks/data/useBackButton';
 import {CopyNote} from './components/CopyNote/CopyNote';
 import {Gifts} from './components/Gifts/Gifts';
 import {WarningNote} from './components/WarningNote/WarningNote';
@@ -11,7 +10,6 @@ import titleOverlay from '/svg/topUpPage-title-overlay.svg';
 import s from './GiftTopUpPage.module.css';
 
 export const GiftTopUpPage = () => {
-  useBackButton();
   const {data: prices} = useGetPrices();
   const {data: gifts} = useGetFullGifts();
   const {data: giftsProfile} = useGetFullGiftsProfile();

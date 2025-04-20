@@ -1,5 +1,3 @@
-import {useBackButton} from '../../hooks/data/useBackButton';
-
 import {BalanceInfo} from './components/BalanceInfo/BalanceInfo';
 import {TopUpWith} from './components/TopUpWith/TopUpWith';
 import {Transactions} from './components/Transactions/Transactions';
@@ -11,7 +9,6 @@ import titleOverlay from '/svg/balancePage-title-overlay.svg';
 import s from './BalancePage.module.css';
 
 export const BalancePage = () => {
-  useBackButton();
   const {data} = useGetInfo();
   const {data: transactionsData} = useGetFullTransactions();
 

@@ -2,7 +2,6 @@ import {GiftCard} from '../../components/GiftCard/GiftCard';
 import {Tabs} from '../../components/Tabs/Tabs';
 import {usePickUpGiftMutation} from '../../hooks/data/mutations/usePickUpGiftMutation';
 import {useSwapGiftToTonMutation} from '../../hooks/data/mutations/useSwapGiftToTonMutation';
-import {useBackButton} from '../../hooks/data/useBackButton';
 import {useWebApp} from '../../hooks/useWebApp';
 import {useGetFullGiftsProfile} from '../../hooks/data/queries/useGetFullGiftsProfile';
 import {useGetFullGifts} from '../../hooks/data/queries/useGetFullGifts';
@@ -12,7 +11,6 @@ import titleOverlay from '/svg/giftsPage-title-overlay.svg';
 import s from './GiftsPage.module.css';
 
 export const GiftsPage = () => {
-  useBackButton();
   const WebApp = useWebApp();
   const {data: gifts} = useGetFullGifts();
   const {data: giftsProfile} = useGetFullGiftsProfile();

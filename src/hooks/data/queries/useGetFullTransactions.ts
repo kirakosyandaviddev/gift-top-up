@@ -22,7 +22,7 @@ export const useGetFullTransactions = () => {
       });
       return response.data;
     },
-    staleTime: 3 * 60 * 1000,
+    enabled: false,
   });
 
   return {

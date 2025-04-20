@@ -7,7 +7,6 @@ import {RouletteCard} from './components/RouletteCard/RouletteCard';
 import {GiftboxesCard} from './components/GiftboxesCard/GiftboxesCard';
 import {MyGifts} from '../../components/MyGifts/MyGifts';
 import {useGetInfo} from '../../hooks/data/queries/useGetInfo';
-import {useWebApp} from '../../hooks/useWebApp';
 
 import titleOverlay from '/svg/homePage-title-overlay.svg';
 
@@ -17,15 +16,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 export const HomePage = () => {
   const {data} = useGetInfo();
-  const WebApp = useWebApp();
-  WebApp.BackButton.hide();
-  const cardsRef = useRef<HTMLDivElement[]>([]);
 
-  useEffect(() => {
-    if (WebApp?.BackButton?.isVisible) {
-      WebApp?.BackButton.hide();
-    }
-  }, []);
+  const cardsRef = useRef<HTMLDivElement[]>([]);
 
   useEffect(() => {
     if (!cardsRef.current.length) return;
