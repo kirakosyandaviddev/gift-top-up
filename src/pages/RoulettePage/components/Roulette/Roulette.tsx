@@ -2,7 +2,6 @@ import {useRef, useEffect} from 'react';
 import gsap from 'gsap';
 
 import {Price} from '../../../../etities/types/Price';
-import {LottiePlayer} from '../../../../components/LottiePlayer/LottiePlayer';
 
 import s from './Roulette.module.css';
 
@@ -96,14 +95,20 @@ export const Roulette = ({
                 key={price.id}
                 id={price.id}
               >
-                <LottiePlayer
+                <img
+                  src={price.photoUrl}
+                  width={128}
+                  height={128}
+                  draggable={false}
+                />
+                {/* <LottiePlayer
                   animationUrl={price.animationUrl}
                   title={price.title}
                   autoplay={false}
                   loop={false}
                   width={180}
                   height={180}
-                />
+                /> */}
               </div>
             );
           })}

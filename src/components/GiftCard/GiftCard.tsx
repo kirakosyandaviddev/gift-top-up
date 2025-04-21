@@ -5,7 +5,6 @@ import {TonIcon12} from '../icons/TonIcon12';
 import {useWebApp} from '../../hooks/useWebApp';
 
 import s from './GiftCard.module.css';
-import {Patterns} from './Patterns/Patterns';
 
 type PropsType = {
   gift: Gift;
@@ -27,18 +26,19 @@ export const GiftCard: FC<PropsType> = ({gift, onAdd, onSell, onPrice}) => {
   return (
     <div
       className={s.container}
-      style={{backgroundColor: getHex(gift.backdrop.edgeColor)}}
+      style={{
+        background: `radial-gradient(${getHex(gift.backdrop.edgeColor)}, ${getHex(gift.backdrop.edgeColor)})`,
+      }}
     >
       <div className={s.imgContainer} role="button" onClick={onCardClick}>
         <img
           className={s.img}
-          src={gift.model.photoUrl}
-          width={100}
-          height={100}
+          src={gift.photoUrl}
+          width={215}
+          height={180}
           draggable={false}
         />
         <p className={s.title}>{`${gift.title || ''} #${gift.num}`}</p>
-        <Patterns animationUrl={gift.pattern.animationUrl} title={gift.title} />
       </div>
 
       {(onAdd || onSell || onPrice) && (
