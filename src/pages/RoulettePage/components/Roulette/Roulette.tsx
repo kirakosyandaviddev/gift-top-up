@@ -5,7 +5,7 @@ import {Price} from '../../../../etities/types/Price';
 
 import s from './Roulette.module.css';
 
-const getRandomSpinDuration = () => {
+export const getRandomSpinDuration = () => {
   const random = Math.random();
   if (random < 0.2) return 4; // 0.0 - 0.2 → 20%
   if (random < 0.4) return 6; // 0.2 - 0.4 → 20%
@@ -14,11 +14,13 @@ const getRandomSpinDuration = () => {
 
 export const Roulette = ({
   isRunning,
+  duration,
   targetId,
   pricesData,
   onRunEnd,
 }: {
   isRunning: boolean;
+  duration: number;
   targetId?: string;
   pricesData?: Price[];
   onRunEnd: () => void;
@@ -41,8 +43,6 @@ export const Roulette = ({
       const spins = 3; // full 360° spins
       const finalRotation = -(spins * 360 + targetAngle + 90);
 
-      const duration = getRandomSpinDuration();
-
       gsap.to(wheelRef.current, {
         rotate: finalRotation,
         duration: duration,
@@ -53,6 +53,22 @@ export const Roulette = ({
 
     runAnimation();
   }, [isRunning, targetId]);
+
+  // Idle State
+  useEffect(() => {
+    if (isRunning || !pricesData?.length) return;
+
+    const runAnimation = () => {
+      console.log('run');
+      gsap.to(wheelRef.current, {
+        rotate: -360,
+        duration: 15 * pricesData.length,
+        ease: 'power4.out',
+      });
+    };
+
+    runAnimation();
+  }, [isRunning, pricesData]);
 
   const itemSize = 180;
   const spacing = 24;
