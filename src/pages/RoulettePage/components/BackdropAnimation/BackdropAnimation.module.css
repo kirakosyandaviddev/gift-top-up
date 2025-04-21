@@ -5,7 +5,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  z-index: -1;
+  /* z-index: -1; */
 }
 
 .backdrop-wrapper {
@@ -14,14 +14,41 @@
   position: relative;
 }
 
-.backdrop-track {
+/* .backdrop-track {
   position: absolute;
   transform: translate(-50%, -50%);
+  border-radius: 50%;
 
   background-repeat: no-repeat;
   background-position: center;
-  background-size: contain;
+  background-size: cover;
 
   top: 50%;
+  left: 50%;
+} */
+
+.backdrop-track {
+  border-radius: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  filter: blur(82px);
+
+  background: conic-gradient(
+    #fc0c95 10%,
+    #8e53bf 10%,
+    #238deb 32%,
+    #644dd1 39%,
+    #ff00a2 45%,
+    #f12f6f 52%,
+    #3d73df 57%,
+    #446ddc 62%,
+    #7140cc 67%,
+    #00b0f5 77%,
+    #f0326d 88%,
+    #f0356a 94%,
+    #e35e3e 100%
+  );
+
+  top: 100%;
   left: 50%;
 }

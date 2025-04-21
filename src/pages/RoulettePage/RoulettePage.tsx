@@ -18,11 +18,11 @@ import {TopUpButton} from './components/TopUpButton/TopUpButton';
 import {BG} from './bg';
 import {getHex} from '../../components/GiftCard/GiftCard';
 import {Confetti} from './components/Confetti/Confetti';
-import {Roulette} from './components/Roulette/Roulette';
+import {getRandomSpinDuration, Roulette} from './components/Roulette/Roulette';
 import {Gift} from '../../etities/types/Gift';
 import {GiftIcons} from './components/GiftIcons/GiftIcons';
 import {useGetPrices} from '../../hooks/data/queries/useGetPrices';
-// import {BackdropAnimation} from './components/BackdropAnimation/BackdropAnimation';
+import {BackdropAnimation} from './components/BackdropAnimation/BackdropAnimation';
 
 import circle from './svg/circle.svg';
 import {LottiePlayer} from '../../components/LottiePlayer/LottiePlayer';
@@ -63,6 +63,8 @@ export const RoulettePage = () => {
     return price?.id || '';
   }, [pricesData?.data]);
 
+  const spinDuration = useMemo(() => getRandomSpinDuration(), [isRunning]);
+
   return (
     <div className={s.wrapper}>
       <div className={s.header}>
@@ -94,6 +96,7 @@ export const RoulettePage = () => {
           <Roulette
             pricesData={pricesData?.data}
             isRunning={isRunning}
+            duration={spinDuration}
             targetId={targetId}
             onRunEnd={() => {
               setIsRouletteVisible(false);
@@ -107,13 +110,14 @@ export const RoulettePage = () => {
         </div>
       )}
 
-      {/* {isRouletteVisible && isRunning && (
+      {isRouletteVisible && isRunning && (
         <BackdropAnimation
           pricesData={pricesData?.data}
           isRunning={isRunning}
+          duration={spinDuration}
           targetId={targetId}
         />
-      )} */}
+      )}
 
       {winGift && (
         <div className={s.giftContent}>
