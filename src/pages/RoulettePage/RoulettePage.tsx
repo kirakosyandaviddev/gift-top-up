@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from 'react';
+import {useMemo, useState} from 'react';
 import classNames from 'classnames';
 import {useNavigate} from 'react-router-dom';
 
@@ -49,19 +49,9 @@ export const RoulettePage = () => {
   const winGift = getRandomGiftData?.data?.gift;
 
   const handleCloseWinScreen = () => {
-    setIsRouletteVisible(true);
     resetGetRandomGift();
+    setIsRouletteVisible(true);
   };
-
-  useEffect(() => {
-    if (winGift && !isRouletteVisible) {
-      window.addEventListener('click', handleCloseWinScreen);
-    }
-
-    return () => {
-      window.removeEventListener('click', handleCloseWinScreen);
-    };
-  }, [winGift, isRouletteVisible]);
 
   const targetId = useMemo<string>(() => {
     const index = getRandomGiftData?.data?.index || 0;
@@ -73,6 +63,12 @@ export const RoulettePage = () => {
 
   return (
     <div className={s.wrapper}>
+      <div
+        onClick={handleCloseWinScreen}
+        className={classNames(s.winScreenLayer, {
+          [s.winScreenLayerHidden]: isRouletteVisible,
+        })}
+      />
       <div className={s.header}>
         <div className={s.titleContainer}>
           <h3 className={s.title}>Roulette</h3>

@@ -5,6 +5,7 @@ import {useSocketConnection} from '../hooks/useSocketConnection';
 import {queryClient} from '../libs/queryClient';
 import {useWebApp} from '../hooks/useWebApp';
 import {Router} from './Router';
+import {FPSMonitor} from './FPSMonitor';
 
 function App() {
   useSocketConnection();
@@ -26,6 +27,7 @@ function App() {
           <Router />
         </QueryClientProvider>
       </TonConnectUIProvider>
+      <FPSMonitor />
     </div>
   );
 }

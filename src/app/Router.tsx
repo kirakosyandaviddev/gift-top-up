@@ -8,16 +8,9 @@ import {BalancePage} from '../pages/BalancePage/BalancePage';
 import {NotFoundPage} from '../pages/NotFoundPage/NotFoundPage';
 import {GiftTopUpPage} from '../pages/GiftTopUpPage/GiftTopUpPage';
 
-import {useNewTransaction} from '../hooks/subscriptions/useNewTransaction';
-import {useUpdatePrice} from '../hooks/subscriptions/useUpdatePrice';
-import {useNewPrice} from '../hooks/subscriptions/useNewPrice';
-import {useUpdateAvgGift} from '../hooks/subscriptions/useUpdateAvgGift';
 import {useGetInfo} from '../hooks/data/queries/useGetInfo';
 import {useFullscreen} from '../hooks/useFullscreen';
-import {useNewGift} from '../hooks/subscriptions/useNewGift';
-import {useUpdateGift} from '../hooks/subscriptions/useUpdateGift';
 import {useUpdateBalance} from '../hooks/subscriptions/useUpdateBalance';
-import {useNewNFT} from '../hooks/subscriptions/useNewNFT';
 import {useUpdateInfo} from '../hooks/subscriptions/useUpdateInfo';
 
 import {Layout} from '../components/Layout';
@@ -46,13 +39,6 @@ export const Router = () => {
   // subscriptions
   useUpdateInfo();
   useUpdateBalance();
-  useNewTransaction();
-  useUpdatePrice();
-  useNewPrice();
-  useUpdateAvgGift();
-  useUpdateGift();
-  useNewGift();
-  useNewNFT();
 
   return <RouterProvider router={router} />;
 };

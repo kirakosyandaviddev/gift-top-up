@@ -1,3 +1,4 @@
+import {memo, useRef} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import {ArrowDown} from '../icons/ArrowDown';
@@ -9,9 +10,8 @@ import stone from './stone.svg';
 
 import {Star} from './Star';
 import s from './MyGifts.module.css';
-import {useRef} from 'react';
 
-export const MyGifts = () => {
+export const MyGifts = memo(() => {
   const navigate = useNavigate();
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -58,4 +58,4 @@ export const MyGifts = () => {
       <ArrowDown />
     </button>
   );
-};
+});

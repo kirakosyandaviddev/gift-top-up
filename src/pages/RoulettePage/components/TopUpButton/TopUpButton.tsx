@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import {FC, memo} from 'react';
 
 import {PlusIcon16} from '../../../../components/icons/PlusIcon16';
 
@@ -8,11 +8,11 @@ type PropsType = {
   onClick: () => void;
 };
 
-export const TopUpButton: FC<PropsType> = ({onClick}) => {
+export const TopUpButton: FC<PropsType> = memo(({onClick}) => {
   return (
     <button className={s.container} onClick={onClick}>
       <PlusIcon16 />
       <span>Top Up Balance to Spin</span>
     </button>
   );
-};
+});

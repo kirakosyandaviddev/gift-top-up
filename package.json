@@ -30,6 +30,7 @@
     "react-router-dom": "^7.4.0",
     "remove": "^0.1.5",
     "socket.io-client": "^4.8.1",
+    "stats.js": "^0.17.0",
     "vite-plugin-node-polyfills": "^0.23.0",
     "yarn": "^1.22.22"
   },
@@ -38,6 +39,7 @@
     "@types/pako": "^2.0.3",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
+    "@types/stats.js": "^0.17.3",
     "@types/telegram-web-app": "^7.10.1",
     "@typescript-eslint/eslint-plugin": "^8.28.0",
     "@typescript-eslint/parser": "^8.28.0",
