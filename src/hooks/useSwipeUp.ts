@@ -1,28 +1,51 @@
 import {useEffect} from 'react';
 
-export function useSwipeUp(callback: () => void, threshold = 50) {
+export function useSwipeUp(
+  ref: React.RefObject<HTMLElement | null>,
+  callback: () => void,
+  threshold = 50,
+) {
   useEffect(() => {
     let startY = 0;
+    let validStart = false;
 
     const handleTouchStart = (e: TouchEvent) => {
-      startY = e.touches[0].clientY;
+      if (!ref.current) return;
+
+      const touch = e.touches[0];
+      const bounds = ref.current.getBoundingClientRect();
+
+      // Check if touch started inside the element
+      if (
+        touch.clientX >= bounds.left &&
+        touch.clientX <= bounds.right &&
+        touch.clientY >= bounds.top &&
+        touch.clientY <= bounds.bottom
+      ) {
+        startY = touch.clientY;
+        validStart = true;
+      }
     };
 
     const handleTouchEnd = (e: TouchEvent) => {
+      if (!validStart) return;
+
       const endY = e.changedTouches[0].clientY;
       const deltaY = startY - endY;
 
       if (deltaY > threshold) {
         callback();
       }
+
+      validStart = false;
     };
 
-    window.addEventListener('touchstart', handleTouchStart);
-    window.addEventListener('touchend', handleTouchEnd);
+    document.addEventListener('touchstart', handleTouchStart);
+    document.addEventListener('touchend', handleTouchEnd);
 
     return () => {
-      window.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchend', handleTouchEnd);
+      document.removeEventListener('touchstart', handleTouchStart);
+      document.removeEventListener('touchend', handleTouchEnd);
     };
-  }, [callback, threshold]);
+  }, [ref, callback, threshold]);
 }

@@ -9,18 +9,20 @@ import stone from './stone.svg';
 
 import {Star} from './Star';
 import s from './MyGifts.module.css';
+import {useRef} from 'react';
 
 export const MyGifts = () => {
   const navigate = useNavigate();
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   const handleClick = () => {
     navigate(ROUTES.GIFTS);
   };
 
-  useSwipeUp(handleClick);
+  useSwipeUp(buttonRef, handleClick);
 
   return (
-    <button onClick={handleClick} className={s.container}>
+    <button ref={buttonRef} onClick={handleClick} className={s.container}>
       <div className={s.group}>
         <div className={s.imgGroup}>
           <img
