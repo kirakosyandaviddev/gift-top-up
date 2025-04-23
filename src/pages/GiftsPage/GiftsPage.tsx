@@ -5,12 +5,21 @@ import {useSwapGiftToTonMutation} from '../../hooks/data/mutations/useSwapGiftTo
 import {useWebApp} from '../../hooks/useWebApp';
 import {useGetFullGiftsProfile} from '../../hooks/data/queries/useGetFullGiftsProfile';
 import {useGetFullGifts} from '../../hooks/data/queries/useGetFullGifts';
+import {useNewNFT} from '../../hooks/subscriptions/useNewNFT';
+import {useUpdateAvgGift} from '../../hooks/subscriptions/useUpdateAvgGift';
+import {useNewGift} from '../../hooks/subscriptions/useNewGift';
+import {useUpdateGift} from '../../hooks/subscriptions/useUpdateGift';
 
 import titleOverlay from '/svg/giftsPage-title-overlay.svg';
 
 import s from './GiftsPage.module.css';
 
 export const GiftsPage = () => {
+  useNewGift();
+  useUpdateGift();
+  useNewNFT();
+  useUpdateAvgGift();
+
   const WebApp = useWebApp();
   const {data: gifts} = useGetFullGifts();
   const {data: giftsProfile} = useGetFullGiftsProfile();

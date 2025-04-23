@@ -156,3 +156,18 @@
   top: 0;
   left: 0;
 }
+
+.winScreenLayer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.winScreenLayerHidden {
+  z-index: -1;
+}

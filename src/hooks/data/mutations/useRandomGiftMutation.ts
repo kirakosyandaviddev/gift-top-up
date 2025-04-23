@@ -34,6 +34,7 @@ export const useRandomGiftMutation = () => {
   const {data, mutate, isSuccess, isPending, error, reset} = useMutation({
     mutationKey: [QUERY_KEYS.RANDOM_GIFT],
     mutationFn: async () => {
+      console.log('useRandomGiftMutation=============useRandomGiftMutation');
       // const response = await axiosClient<ResponseType<RandomGiftResponseType>>({
       //   method: 'POST',
       //   url: ENDPOINTS.RANDOM_GIFT,

@@ -25,6 +25,7 @@ export const Roulette = ({
   pricesData?: Price[];
   onRunEnd: () => void;
 }) => {
+  console.log('Roulette------------------');
   const wheelRef = useRef(null);
 
   useEffect(() => {
@@ -47,7 +48,16 @@ export const Roulette = ({
         rotate: finalRotation,
         duration: duration,
         ease: 'power4.out',
-        onComplete: onRunEnd,
+        onComplete: () => {
+          // Optional: clean rotation (e.g., within 0-360)
+          const cleanedRotation = finalRotation % 360;
+
+          // Instantly reset to clean version
+          gsap.set(wheelRef.current, {rotate: cleanedRotation});
+
+          // Then call your existing logic
+          onRunEnd?.();
+        },
       });
     };
 

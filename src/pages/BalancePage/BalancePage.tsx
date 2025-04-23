@@ -3,12 +3,15 @@ import {TopUpWith} from './components/TopUpWith/TopUpWith';
 import {Transactions} from './components/Transactions/Transactions';
 import {useGetFullTransactions} from '../../hooks/data/queries/useGetFullTransactions';
 import {useGetInfo} from '../../hooks/data/queries/useGetInfo';
+import {useNewTransaction} from '../../hooks/subscriptions/useNewTransaction';
 
 import titleOverlay from '/svg/balancePage-title-overlay.svg';
 
 import s from './BalancePage.module.css';
 
 export const BalancePage = () => {
+  useNewTransaction();
+
   const {data} = useGetInfo();
   const {data: transactionsData} = useGetFullTransactions();
 
