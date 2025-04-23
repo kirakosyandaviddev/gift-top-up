@@ -31,7 +31,7 @@ const preparePrices = (
 export const useRandomGiftMutation = () => {
   const queryClient = useQueryClient();
 
-  const {data, mutate, isSuccess, isPending, error} = useMutation({
+  const {data, mutate, isSuccess, isPending, error, reset} = useMutation({
     mutationKey: [QUERY_KEYS.RANDOM_GIFT],
     mutationFn: async () => {
       // const response = await axiosClient<ResponseType<RandomGiftResponseType>>({
@@ -75,5 +75,6 @@ export const useRandomGiftMutation = () => {
     mutate,
     isSuccess,
     isPending,
+    reset,
   };
 };
