@@ -29,6 +29,86 @@
 .colors {
   position: absolute;
   left: 0;
+  .wrapper {
+    position: relative;
+    height: 68px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    font-size: 17px;
+    line-height: 12px;
+    font-weight: 600;
+    color: #ffffff;
+
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    right: 0;
+    top: -16px;
+    bottom: 0;
+    margin: auto;
+    height: 14px;
+  }
+
+  .colors {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .disabled {
+    pointer-events: none;
+  }
+
+  .arrowsWrapper {
+    position: absolute;
+    left: 14px;
+    right: 0;
+    top: 20px;
+    bottom: 0;
+    margin: auto;
+    z-index: 1;
+
+    color: rgba(255, 255, 255, 1);
+
+    /* mask setup */
+    -webkit-mask-image: linear-gradient(to left, black 0%, transparent 100%);
+    mask-image: linear-gradient(to left, black 0%, transparent 100%);
+
+    -webkit-mask-size: 200% 100%;
+    mask-size: 200% 100%;
+
+    -webkit-mask-position: right;
+    mask-position: right;
+
+    animation: revealLeft 1s ease-in-out infinite alternate;
+  }
+
+  @keyframes revealLeft {
+    from {
+      -webkit-mask-position: right;
+      mask-position: right;
+    }
+    to {
+      -webkit-mask-position: left;
+      mask-position: left;
+    }
+  }
+
+  .background {
+    position: absolute;
+  }
+
   right: 0;
   bottom: 0;
   top: 0;

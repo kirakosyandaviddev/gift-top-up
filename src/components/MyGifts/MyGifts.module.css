@@ -5,6 +5,10 @@
   align-items: center;
   justify-content: center;
   margin-top: auto;
+  background: none;
+  border: none;
+  user-select: none;
+  cursor: pointer;
 }
 
 .group {

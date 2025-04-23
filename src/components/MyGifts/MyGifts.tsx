@@ -1,7 +1,8 @@
-import {Link} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 import {ArrowDown} from '../icons/ArrowDown';
 import {ROUTES} from '../../consts/routes';
+import {useSwipeUp} from '../../hooks/useSwipeUp';
 
 import bear from './bear.svg';
 import stone from './stone.svg';
@@ -10,8 +11,16 @@ import {Star} from './Star';
 import s from './MyGifts.module.css';
 
 export const MyGifts = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(ROUTES.GIFTS);
+  };
+
+  useSwipeUp(handleClick);
+
   return (
-    <Link to={ROUTES.GIFTS} className={s.container}>
+    <button onClick={handleClick} className={s.container}>
       <div className={s.group}>
         <div className={s.imgGroup}>
           <img
@@ -45,6 +54,6 @@ export const MyGifts = () => {
         <span className={s.text}>My Gifts</span>
       </div>
       <ArrowDown />
-    </Link>
+    </button>
   );
 };

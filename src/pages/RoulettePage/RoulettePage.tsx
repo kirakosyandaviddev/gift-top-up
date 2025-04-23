@@ -19,43 +19,49 @@ import {BG} from './bg';
 import {getHex} from '../../components/GiftCard/GiftCard';
 import {Confetti} from './components/Confetti/Confetti';
 import {getRandomSpinDuration, Roulette} from './components/Roulette/Roulette';
-import {Gift} from '../../etities/types/Gift';
 import {GiftIcons} from './components/GiftIcons/GiftIcons';
 import {useGetPrices} from '../../hooks/data/queries/useGetPrices';
 import {BackdropAnimation} from './components/BackdropAnimation/BackdropAnimation';
 
 import circle from './svg/circle.svg';
 import {LottiePlayer} from '../../components/LottiePlayer/LottiePlayer';
+import {DesktopButton} from './components/DesktopButton/DesktopButton';
+import {useIsDesktop} from '../../hooks/useIsDesktop';
 
 export const RoulettePage = () => {
   const navigate = useNavigate();
+  const isDesktop = useIsDesktop();
   const {data: getInfoData} = useGetInfo();
-  const {mutate: getRandomGift, data: getRandomGiftData} =
-    useRandomGiftMutation();
+  const {
+    mutate: getRandomGift,
+    data: getRandomGiftData,
+    reset: resetGetRandomGift,
+  } = useRandomGiftMutation();
   const {data: pricesData} = useGetPrices();
 
   const [isRunning, setIsRunning] = useState(false);
   const [isRouletteVisible, setIsRouletteVisible] = useState(true);
-  const [winGift, setWinGift] = useState<null | Gift>(null);
 
   const userBalance = getInfoData?.data?.user?.balance || 0;
   const play = getInfoData?.data?.play || 0;
   const insufficientBalance = userBalance < play;
 
+  const winGift = getRandomGiftData?.data?.gift;
+
   const handleCloseWinScreen = () => {
     setIsRouletteVisible(true);
-    setWinGift(null);
+    resetGetRandomGift();
   };
 
   useEffect(() => {
-    if (winGift) {
+    if (winGift && !isRouletteVisible) {
       window.addEventListener('click', handleCloseWinScreen);
     }
 
     return () => {
       window.removeEventListener('click', handleCloseWinScreen);
     };
-  }, [winGift]);
+  }, [winGift, isRouletteVisible]);
 
   const targetId = useMemo<string>(() => {
     const index = getRandomGiftData?.data?.index || 0;
@@ -89,7 +95,7 @@ export const RoulettePage = () => {
         </div>
       </div>
 
-      {winGift && <Confetti />}
+      {!isRouletteVisible && winGift && <Confetti />}
 
       {isRouletteVisible && (
         <div className={s.rouletteContent}>
@@ -101,10 +107,6 @@ export const RoulettePage = () => {
             onRunEnd={() => {
               setIsRouletteVisible(false);
               setIsRunning(false);
-
-              if (getRandomGiftData?.data.gift) {
-                setWinGift(getRandomGiftData?.data.gift);
-              }
             }}
           />
         </div>
@@ -119,41 +121,53 @@ export const RoulettePage = () => {
         />
       )}
 
-      {winGift && (
-        <div className={s.giftContent}>
-          <GiftIcons
-            animationUrl={winGift.pattern.animationUrl}
-            title={winGift.title}
+      <div
+        className={s.giftContent}
+        style={{opacity: isRouletteVisible ? 0 : 1}}
+      >
+        <GiftIcons
+          animationUrl={winGift?.pattern.animationUrl || ''}
+          title={winGift?.title || ''}
+        />
+        <div className={s.giftContainer}>
+          <img className={s.circle} src={circle} width={206} height={206} />
+          <LottiePlayer
+            animationUrl={winGift?.model?.animationUrl || ''}
+            title={winGift?.title}
+            autoplay
+            loop
+            width={200}
+            height={200}
           />
-          <div className={s.giftContainer}>
-            <img className={s.circle} src={circle} width={206} height={206} />
-            <LottiePlayer
-              animationUrl={winGift.model.animationUrl}
-              title={winGift.title}
-              autoplay
-              loop
-              width={200}
-              height={200}
-            />
-            <span className={s.giftTitle}>
-              {`${winGift?.title} #${winGift?.num}`}
-            </span>
-          </div>
+          <span className={s.giftTitle}>
+            {`${winGift?.title} #${winGift?.num}`}
+          </span>
         </div>
-      )}
+      </div>
 
       <div className={s.footer}>
         <div className={s.btnContainer}>
           {!insufficientBalance ? (
-            <SwipeButton
-              onSwipe={() => {
-                setIsRunning(true);
-                getRandomGift();
-              }}
-              isRunning={isRunning}
-              showDisabled={!isRouletteVisible || isRunning}
-              playAmount={getInfoData?.data?.play}
-            />
+            isDesktop ? (
+              <DesktopButton
+                onClick={() => {
+                  setIsRunning(true);
+                  getRandomGift();
+                }}
+                showDisabled={!isRouletteVisible || isRunning}
+                playAmount={getInfoData?.data?.play}
+              />
+            ) : (
+              <SwipeButton
+                onSwipe={() => {
+                  setIsRunning(true);
+                  getRandomGift();
+                }}
+                isRunning={isRunning}
+                showDisabled={!isRouletteVisible || isRunning}
+                playAmount={getInfoData?.data?.play}
+              />
+            )
           ) : (
             <TopUpButton
               onClick={() => {
@@ -167,7 +181,11 @@ export const RoulettePage = () => {
       </div>
 
       {!isRunning && (
-        <BG style={{color: getHex(winGift?.backdrop?.edgeColor || 0)}} />
+        <BG
+          style={{
+            color: getHex(winGift?.backdrop?.edgeColor || 0),
+          }}
+        />
       )}
     </div>
   );
