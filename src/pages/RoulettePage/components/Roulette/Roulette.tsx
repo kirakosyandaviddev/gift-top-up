@@ -16,55 +16,64 @@ export const Roulette = memo(
   ({
     isRunning,
     duration,
-    targetId,
+    targetIndex = 0,
     pricesData,
     onRunEnd,
   }: {
     isRunning: boolean;
     duration: number;
-    targetId?: string;
+    targetIndex?: number;
     pricesData?: Price[];
     onRunEnd: () => void;
   }) => {
-    console.log('targetId------------------', targetId);
     console.log('Roulette------------------');
-    console.log('duration------------------', duration);
     const wheelRef = useRef(null);
 
     useEffect(() => {
       const prices = pricesData || [];
-      if (!isRunning || !prices.length) return;
-
-      const targetIndex = prices.findIndex((item) => item.id === targetId);
+      if (!isRunning || !prices.length || !wheelRef.current) return;
+      console.log('targetIndex------------------', targetIndex);
 
       const totalItems = prices.length;
       const anglePerItem = 360 / totalItems;
-      const targetAngle = targetIndex * anglePerItem;
 
-      // const offset = anglePerItem / 2;
+      let anim: gsap.core.Tween;
 
-      const spins = 5; // full 360° spins
-      const finalRotation = -(spins * 360 + targetAngle + 90);
+      if (!targetIndex) {
+        // PHASE 1: Infinite spin until targetIndex becomes available
+        anim = gsap.to(wheelRef.current, {
+          rotate: -360,
+          duration: duration,
+          ease: 'linear',
+          repeat: -1, // infinite
+        });
+      } else {
+        // PHASE 2: Stop on the target index
+        const targetAngle = targetIndex * anglePerItem;
+        const spins = 5;
+        const finalRotation = -(spins * 360 + targetAngle + 90);
 
-      const anim = gsap.to(wheelRef.current, {
-        rotate: finalRotation,
-        duration: duration,
-        ease: 'power4.out',
-        onComplete: () => {
-          onRunEnd();
-        },
-      });
+        // Kill the infinite animation before starting the stop animation
+        gsap.killTweensOf(wheelRef.current);
+
+        anim = gsap.to(wheelRef.current, {
+          rotate: finalRotation,
+          duration: duration,
+          ease: 'power4.out',
+          onComplete: onRunEnd,
+        });
+      }
 
       return () => {
-        anim.kill();
+        anim?.kill();
       };
-    }, [isRunning]);
+    }, [isRunning, targetIndex]);
 
     // Idle State
     useEffect(() => {
       if (isRunning || !pricesData?.length) return;
-
       console.log('idle');
+
       const anim = gsap.to(wheelRef.current, {
         rotate: -360,
         duration: 15 * pricesData.length,

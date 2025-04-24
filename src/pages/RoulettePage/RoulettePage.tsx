@@ -47,17 +47,12 @@ export const RoulettePage = () => {
   const insufficientBalance = userBalance < play;
 
   const winGift = getRandomGiftData?.data?.gift;
+  const winGiftIndex = getRandomGiftData?.data?.index;
 
   const handleCloseWinScreen = () => {
     resetGetRandomGift();
     setIsRouletteVisible(true);
   };
-
-  const targetId = useMemo<string>(() => {
-    const index = getRandomGiftData?.data?.index || 0;
-    const price = pricesData?.data.find((_, i) => i === index);
-    return price?.id || '';
-  }, [pricesData?.data]);
 
   const spinDuration = useMemo(() => getRandomSpinDuration(), [isRunning]);
 
@@ -99,7 +94,7 @@ export const RoulettePage = () => {
             pricesData={pricesData?.data}
             isRunning={isRunning}
             duration={spinDuration}
-            targetId={targetId}
+            targetIndex={winGiftIndex}
             onRunEnd={() => {
               setIsRouletteVisible(false);
               setIsRunning(false);
