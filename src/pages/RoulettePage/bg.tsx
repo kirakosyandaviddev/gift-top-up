@@ -1,6 +1,7 @@
+import {memo} from 'react';
 import s from './RoulettePage.module.css';
 
-export const BG = ({style}: any) => (
+export const BG = memo(({style}: any) => (
   <svg
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -38,4 +39,4 @@ export const BG = ({style}: any) => (
       </filter>
     </defs>
   </svg>
-);
+));

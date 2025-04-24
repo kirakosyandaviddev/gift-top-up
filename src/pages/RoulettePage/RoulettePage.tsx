@@ -113,7 +113,6 @@ export const RoulettePage = () => {
           pricesData={pricesData?.data}
           isRunning={isRunning}
           duration={spinDuration}
-          targetId={targetId}
         />
       )}
 
@@ -151,7 +150,7 @@ export const RoulettePage = () => {
                   getRandomGift();
                 }}
                 showDisabled={!isRouletteVisible || isRunning}
-                playAmount={getInfoData?.data?.play}
+                playAmount={play}
               />
             ) : (
               <SwipeButton
@@ -161,7 +160,7 @@ export const RoulettePage = () => {
                 }}
                 isRunning={isRunning}
                 showDisabled={!isRouletteVisible || isRunning}
-                playAmount={getInfoData?.data?.play}
+                playAmount={play}
               />
             )
           ) : (
