@@ -35,9 +35,7 @@ export const Roulette = memo(
       const prices = pricesData || [];
       if (!isRunning || !prices.length) return;
 
-      const targetIndex = prices.findIndex(
-        (item) => item.id === '68022fdb5ae49971d43150ca',
-      );
+      const targetIndex = prices.findIndex((item) => item.id === targetId);
 
       const totalItems = prices.length;
       const anglePerItem = 360 / totalItems;
@@ -46,21 +44,14 @@ export const Roulette = memo(
       // const offset = anglePerItem / 2;
 
       const spins = 5; // full 360° spins
-      // const finalRotation = -(spins * 360 + targetAngle + 90);
-      const finalRotation = -(spins * 360 + 90);
+      const finalRotation = -(spins * 360 + targetAngle + 90);
 
       const anim = gsap.to(wheelRef.current, {
         rotate: finalRotation,
         duration: duration,
         ease: 'power4.out',
         onComplete: () => {
-          // Optional: clean rotation (e.g., within 0-360)
-          const cleanedRotation = finalRotation % 360;
-
-          // Instantly reset to clean version
-          gsap.set(wheelRef.current, {rotate: cleanedRotation});
-
-          onRunEnd?.();
+          onRunEnd();
         },
       });
 
